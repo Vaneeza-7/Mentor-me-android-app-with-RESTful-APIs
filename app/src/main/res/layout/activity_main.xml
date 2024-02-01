@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="264dp"
+        android:layout_height="284dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-43dp"
+        android:layout_marginTop="-53dp"
+        android:src="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/boogaloo"
+        android:text="mentor"
+        android:textColor="#2FA8AF"
+        android:textSize="70sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/boogaloo"
+        android:layout_toRightOf="@id/textView1"
+        android:layout_alignBaseline="@id/textView1"
+        android:text="me"
+        android:textColor="#FEC80A"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView1"
+        android:text="connect.ask.learn."
+        android:textSize="25sp"
+        android:textColor="#2FA8AF"
+        android:textStyle="normal"
+        android:layout_alignStart="@id/textView1"/>
+
+</RelativeLayout>
