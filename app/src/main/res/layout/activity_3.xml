@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="26"
+    android:weightSum="30"
     android:background="#DDF7F7"
     tools:context=".Activity3">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6">
+        android:layout_weight="7">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -56,190 +56,247 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
+        android:layout_weight="25"
         android:background="#50C1C8"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:text="Get Started!"
-            android:textColor="#FFFFFF"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:text="Name"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:text="Get Started!"
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="2dp"
-            android:background="#FFFFFF"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Enter Name"
-            android:inputType="textPersonName"
-            android:padding="5dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_alignStart="@id/textView3"
+                android:layout_below="@id/textView3" />
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/textView3"
+                android:layout_below="@id/textView4"
+                android:background="#FFFFFF"
+                android:padding="7dp"
+                android:textSize="20sp"
+                android:textColor="#908B8B"
+                android:textStyle="bold"
+                android:hint="Enter Name"
+                android:inputType="textPersonName"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:layout_alignStart="@id/editTextTextPersonName"
+                android:layout_below="@id/editTextTextPersonName" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:text="Email"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/editTextTextPersonName"
+                android:layout_below="@id/textView5"
+                android:background="#FFFFFF"
+                android:padding="7dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#908B8B"
+                android:hint="Enter Email"
+                android:inputType="textEmailAddress"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                />
+            <TextView
+                android:text="Contact Number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@id/editEmailAddress"
+                android:layout_below="@id/editEmailAddress"
+                android:id="@+id/textView6"
+                />
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/editEmailAddress"
+                android:layout_below="@id/textView6"
+                android:background="#FFFFFF"
+                android:padding="7dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#908B8B"
+                android:hint="Enter Contact Number"
+                android:inputType="phone"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                />
+            <TextView
+                android:text="Country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@id/editTextPhone"
+                android:layout_below="@id/editTextPhone"
+                android:id="@+id/textView7"
+                />
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/editTextPhone"
+                android:layout_below="@id/textView7"
+                android:background="#FFFFFF"
+                android:padding="3dp"
+                android:textSize="20sp"
+                android:textColor="#A8A7A9"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                android:hint="Select your country"
+                android:id="@+id/spinner"
+                />
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="2dp"
-            android:background="#FFFFFF"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Enter Email"
-            android:inputType="textEmailAddress"
-            android:padding="7dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:text="City"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@id/spinner"
+                android:layout_below="@id/spinner"
+                android:id="@+id/textView8"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:text="Contact Number"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/cityspinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/spinner"
+                android:layout_below="@id/textView8"
+                android:background="#FFFFFF"
+                android:padding="3dp"
+                android:textSize="20sp"
+                android:textColor="#A8A7A9"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                android:hint="Select your city"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@id/cityspinner"
+                android:layout_below="@id/cityspinner"
+                android:id="@+id/textView9"
+                />
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/cityspinner"
+                android:layout_below="@id/textView9"
+                android:background="#FFFFFF"
+                android:padding="7dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#908B8B"
+                android:hint="Enter Password"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                android:inputType="textPassword"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password must be atleast 8 characters long"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@id/editTextTextPassword"
+                android:layout_below="@id/editTextTextPassword"
+                android:id="@+id/textView10"
+                />
 
-        <EditText
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="2dp"
-            android:background="#FFFFFF"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Enter Contact Number"
-            android:inputType="phone"
-            android:padding="7dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView10"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FFFFFF"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="15dp"
+                android:text="Sign Up"
+                android:textColor="#2FA8AF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:text="Country"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account? Login"
+                android:layout_below="@id/button"
+                android:layout_centerInParent="true"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="10dp"
+                android:id="@+id/textView11"
+                />
+        </RelativeLayout>
 
-        <com.hbb20.CountryPickerView
-            android:id="@+id/countryPicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="2dp"
-            android:autofillHints="Select Country"
-            android:background="#FFFFFF"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="7dp"
-            android:textColor="#A8A7A9"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="5dp"
-            android:text="City"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.jaredrummler.materialspinner.MaterialSpinner
-            android:id="@+id/cityspinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="2dp"
-            android:background="#FFFFFF"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="7dp"
-            android:textColor="#A8A7A9"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="10dp"
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="7dp"
-            android:layout_margin="15dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Enter your password"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:inputType="textPassword"
-            android:id="@+id/password"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password must be 8 characters long"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:textStyle="normal"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="10dp"
-            />
     </LinearLayout>
 
 </LinearLayout>

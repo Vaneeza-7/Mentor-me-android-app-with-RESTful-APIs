@@ -13,7 +13,7 @@ class Activity3 : AppCompatActivity() {
         setContentView(R.layout.activity_3)
 
         val spinner = findViewById<View>(R.id.cityspinner) as MaterialSpinner
-        spinner.setItems("Islamabad", "Karachi", "Lahore", "Quetta", "Rawalpindi", "Peshawar", "Faisalabad", "Gujranwala", "Rahim Yar Khan", "Gujrat")
+        spinner.setItems("Select City","Islamabad", "Karachi", "Lahore", "Quetta", "Rawalpindi", "Peshawar", "Faisalabad", "Gujranwala", "Rahim Yar Khan", "Gujrat")
         spinner.setOnItemSelectedListener { view, position, id, item ->
             Snackbar.make(
                 view,
@@ -22,6 +22,17 @@ class Activity3 : AppCompatActivity() {
             ).show()
         }
 
+        val spinner2 = findViewById<View>(R.id.spinner) as MaterialSpinner
+        spinner2.setItems("Select Country","United States", "Canada", "United Kingdom", "Germany", "France",
+            "Japan", "Australia", "India", "Brazil", "South Africa", "Pakistan",
+            "China", "Russia", "Mexico", "Italy", "Spain", "South Korea", "Indonesia", "Netherlands", "Saudi Arabia", "Turkey")
+        spinner2.setOnItemSelectedListener { view, position, id, item ->
+            Snackbar.make(
+                view,
+                "Selected $item",
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
 
     }
 }
