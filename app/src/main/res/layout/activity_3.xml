@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="26"
+    android:background="#DDF7F7"
+    tools:context=".Activity3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="264dp"
+            android:layout_height="284dp"
+            android:layout_marginStart="-43dp"
+            android:layout_marginTop="-53dp"
+            android:src="@drawable/circle" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/boogaloo"
+                android:layout_centerInParent="true"
+                android:layout_alignEnd="@id/logo"
+                android:text="mentor"
+                android:textColor="#2FA8AF"
+                android:textSize="70sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/textView1"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@id/textView1"
+                android:fontFamily="@font/boogaloo"
+                android:text="me"
+                android:textColor="#FEC80A"
+                android:textSize="70sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:background="#50C1C8"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:text="Get Started!"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:text="Name"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="2dp"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:text="Email"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="2dp"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:padding="7dp"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:text="Contact Number"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="2dp"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Enter Contact Number"
+            android:inputType="phone"
+            android:padding="7dp"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:text="Country"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.hbb20.CountryPickerView
+            android:id="@+id/countryPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="2dp"
+            android:autofillHints="Select Country"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="7dp"
+            android:textColor="#A8A7A9"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:text="City"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/cityspinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="2dp"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="7dp"
+            android:textColor="#A8A7A9"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="10dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="7dp"
+            android:layout_margin="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Enter your password"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:inputType="textPassword"
+            android:id="@+id/password"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password must be 8 characters long"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

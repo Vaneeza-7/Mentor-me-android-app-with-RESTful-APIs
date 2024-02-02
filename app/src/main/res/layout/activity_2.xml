@@ -152,6 +152,7 @@
             app:cornerRadius="@dimen/cardview_default_radius" />
 
         <TextView
+            android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account? Sign Up"
