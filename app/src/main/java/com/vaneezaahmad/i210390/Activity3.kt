@@ -1,5 +1,6 @@
 package com.vaneezaahmad.i210390
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -34,5 +35,18 @@ class Activity3 : AppCompatActivity() {
             ).show()
         }
 
+        var button = findViewById<View>(R.id.button)
+        button.setOnClickListener {
+            startActivity(
+                Intent(this, Activity4::class.java)
+            );
+        }
+
+        var back = findViewById<View>(R.id.textView11)
+        back.setOnClickListener {
+            startActivity(
+                Intent(this, Activity2::class.java)
+            );
+        }
     }
 }

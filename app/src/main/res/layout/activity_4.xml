@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="30"
+    android:background="#DDF7F7"
+    tools:context=".Activity4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="12">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/imageView1"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify your Phone Number"
+            android:textSize="30sp"
+            android:textColor="#157177"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/textView1"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We've sent a code to +92 321 22420222"
+            android:textSize="15sp"
+            android:textColor="#157177"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_gravity="center"
+            android:id="@+id/textView2"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/hollow_circle"
+            android:layout_marginEnd="20dp"
+            android:layout_gravity="center" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hollow_circle"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hollow_circle"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hollow_circle"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hollow_circle"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Verify"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:backgroundTint="#157177"
+            android:layout_gravity="center"
+            android:id="@+id/button1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send code again 00:20"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:padding="4dp"
+            android:id="@+id/codeTimer" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:background="#50C1C8"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="1"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num1"
+                android:background="@drawable/square_rounded"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="2"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num2"
+                android:background="@drawable/square_rounded"
+                android:layout_toRightOf="@id/num1"
+                android:layout_alignBaseline="@id/num1"
+                android:layout_marginLeft="70dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="3"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num3"
+                android:background="@drawable/square_rounded"
+                android:layout_toRightOf="@id/num2"
+                android:layout_alignBaseline="@id/num2"
+                android:layout_marginLeft="70dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="4"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num4"
+                android:background="@drawable/square_rounded"
+                android:layout_below="@id/num1"
+                android:layout_alignLeft="@id/num1"
+                android:layout_marginTop="50dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="5"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num5"
+                android:background="@drawable/square_rounded"
+                android:layout_toRightOf="@id/num4"
+                android:layout_alignBaseline="@id/num4"
+                android:layout_marginLeft="70dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="6"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num6"
+                android:background="@drawable/square_rounded"
+                android:layout_toRightOf="@id/num5"
+                android:layout_alignBaseline="@id/num5"
+                android:layout_marginLeft="70dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="7"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num7"
+                android:background="@drawable/square_rounded"
+                android:layout_below="@id/num4"
+                android:layout_alignLeft="@id/num4"
+                android:layout_marginTop="50dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="8"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num8"
+                android:background="@drawable/square_rounded"
+                android:layout_toRightOf="@id/num7"
+                android:layout_alignBaseline="@id/num7"
+                android:layout_marginLeft="70dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="9"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num9"
+                android:background="@drawable/square_rounded"
+                android:layout_toRightOf="@id/num8"
+                android:layout_alignBaseline="@id/num8"
+                android:layout_marginLeft="70dp"
+                />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="center"
+                android:id="@+id/num0"
+                android:background="@drawable/square_rounded"
+                android:layout_below="@id/num8"
+                android:layout_alignLeft="@id/num8"
+                android:layout_marginTop="50dp"
+                />
+
+            <ImageView
+                android:id="@+id/backspace"
+                android:layout_width="71dp"
+                android:layout_height="57dp"
+                android:layout_below="@id/num9"
+                android:layout_alignLeft="@id/num9"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/baseline_backspace_24" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
