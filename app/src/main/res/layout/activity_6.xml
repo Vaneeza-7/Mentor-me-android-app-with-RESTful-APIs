@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    android:orientation="vertical"
+    tools:context=".Activity6">
+
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="20dp"
+        android:padding="15dp"
+        android:src="@drawable/baseline_arrow_back_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Reset Password?"
+        android:textColor="#157177"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="10dp"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Please type a new password and re-enter the password. Type something you will remember!"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="50dp"
+        android:padding="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="New Password"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="10dp"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#FFFFFF"
+        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Enter new password"
+        android:id="@+id/newPassword"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Re-enter Password"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_marginStart="25dp"
+        android:padding="10dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="10dp"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#FFFFFF"
+        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Re-enter new password"
+        android:id="@+id/reEnterPassword"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="Reset Password"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:padding="15dp"
+        android:background="@drawable/square_rounded"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:id="@+id/submit"
+        android:backgroundTint="#157177"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't want to reset password?"
+        android:layout_gravity="center"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="10dp"
+        android:layout_marginStart="15dp"
+        />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_gravity="center"
+        android:textColor="#157177"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-condensed"
+        />
+
+    </LinearLayout>
+
+
+</LinearLayout>

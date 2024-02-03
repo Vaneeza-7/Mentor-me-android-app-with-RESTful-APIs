@@ -86,9 +86,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@drawable/square_rounded"
+            android:backgroundTint="#FFFFFF"
             android:padding="15dp"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:fontFamily="sans-serif-condensed"
             android:hint="Enter Email"
             android:textSize="20sp"
@@ -111,9 +113,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@drawable/square_rounded"
+            android:backgroundTint="#FFFFFF"
             android:padding="15dp"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:fontFamily="sans-serif-condensed"
             android:hint="Enter your password"
             android:textSize="20sp"
@@ -137,9 +141,9 @@
             android:layout_marginStart="15dp"
             />
 
-        <Button
+<!--        <Button
             android:id="@+id/login"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="15dp"
@@ -150,13 +154,35 @@
             android:textColor="#50C0C7"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:cornerRadius="@dimen/cardview_default_radius" />
+            app:cornerRadius="@dimen/cardview_default_radius" />-->
 
         <TextView
-            android:id="@+id/signUp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="#50C0C7"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/square_rounded"
+            android:backgroundTint="#FFFFFF"
+            android:id="@+id/login"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="match_parent">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? Sign Up"
+            android:text="Don't have an account?"
             android:layout_gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -164,8 +190,24 @@
             android:fontFamily="sans-serif-condensed"
             android:padding="10dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+
             />
 
+            <TextView
+                android:id="@+id/signUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:layout_gravity="center"
+                android:textColor="#157177"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="40dp"
+                />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
