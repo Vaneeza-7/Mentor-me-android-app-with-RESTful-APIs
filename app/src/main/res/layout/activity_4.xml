@@ -35,18 +35,39 @@
             android:gravity="center"
             android:id="@+id/textView1"
             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="We've sent a code to +92 321 22420222"
+            android:text="We've sent a code to "
             android:textSize="15sp"
-            android:textColor="#157177"
+            android:textColor="#000000"
             android:textStyle="normal"
             android:gravity="center"
             android:fontFamily="sans-serif-condensed"
             android:layout_gravity="center"
             android:id="@+id/textView2"
             />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+92 321 22420222"
+                android:textSize="15sp"
+                android:textColor="#157177"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_gravity="center"
+                android:id="@+id/textView3"
+                />
+
+            </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -89,23 +110,33 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="100dp"
+        <TextView
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             android:text="Verify"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
             android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:padding="13dp"
+            android:background="@drawable/square_rounded"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:fontFamily="sans-serif-condensed"
             android:backgroundTint="#157177"
+            android:id="@+id/submit"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:id="@+id/button1"
-            />
+            android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send code again 00:20"
+            android:text="Send code again"
             android:textSize="15sp"
             android:textColor="#000000"
             android:textStyle="normal"
@@ -114,6 +145,20 @@
             android:layout_marginTop="2dp"
             android:padding="4dp"
             android:id="@+id/codeTimer" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:20"
+            android:textSize="15sp"
+            android:textColor="#157177"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:padding="4dp"
+            android:id="@+id/countdown" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -156,7 +201,7 @@
                 android:background="@drawable/square_rounded"
                 android:layout_toRightOf="@id/num1"
                 android:layout_alignBaseline="@id/num1"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="60dp"
                 />
 
             <TextView
@@ -172,7 +217,7 @@
                 android:background="@drawable/square_rounded"
                 android:layout_toRightOf="@id/num2"
                 android:layout_alignBaseline="@id/num2"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="60dp"
                 />
 
             <TextView
@@ -204,7 +249,7 @@
                 android:background="@drawable/square_rounded"
                 android:layout_toRightOf="@id/num4"
                 android:layout_alignBaseline="@id/num4"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="60dp"
                 />
 
             <TextView
@@ -220,7 +265,7 @@
                 android:background="@drawable/square_rounded"
                 android:layout_toRightOf="@id/num5"
                 android:layout_alignBaseline="@id/num5"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="60dp"
                 />
 
             <TextView
@@ -252,7 +297,7 @@
                 android:background="@drawable/square_rounded"
                 android:layout_toRightOf="@id/num7"
                 android:layout_alignBaseline="@id/num7"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="60dp"
                 />
 
             <TextView
@@ -268,7 +313,7 @@
                 android:background="@drawable/square_rounded"
                 android:layout_toRightOf="@id/num8"
                 android:layout_alignBaseline="@id/num8"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="60dp"
                 />
 
             <TextView

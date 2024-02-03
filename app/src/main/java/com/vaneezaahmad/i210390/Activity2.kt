@@ -17,5 +17,14 @@ class Activity2 : AppCompatActivity() {
             );
 
         }
+
+        var btn2 = findViewById<TextView>(R.id.forgotPassword)
+        btn2.setOnClickListener {
+            startActivity(
+                Intent(this, Activity5::class.java)
+            );
+        }
+
+
     }
 }

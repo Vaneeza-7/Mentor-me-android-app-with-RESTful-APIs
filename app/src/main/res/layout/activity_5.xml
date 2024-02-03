@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    android:orientation="vertical"
+    tools:context=".Activity5">
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="20dp"
+        android:padding="15dp"
+        android:src="@drawable/baseline_arrow_back_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Forgot Password?"
+        android:textColor="#157177"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="10dp"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Don't worry! It happens. Please enter the email associated with your account"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="50dp"
+        android:padding="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Email"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#FFFFFF"
+        android:padding="10dp"
+        android:hint="Enter Email"
+        android:inputType="textEmailAddress"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_gravity="left"
+        android:id="@+id/email"
+        />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="Send"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:padding="15dp"
+        android:background="@drawable/square_rounded"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:backgroundTint="#157177"
+        android:id="@+id/submit"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+android:layout_gravity="center"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember your password?"
+        android:layout_gravity="center"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="10dp"
+        />
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_gravity="center"
+            android:textColor="#157177"
+            android:textSize="13sp"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif-condensed"
+            />
+    </LinearLayout>
+
+</LinearLayout>
