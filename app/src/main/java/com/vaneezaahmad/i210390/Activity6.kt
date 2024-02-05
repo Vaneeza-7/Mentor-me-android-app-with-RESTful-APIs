@@ -25,6 +25,13 @@ class Activity6 : AppCompatActivity() {
                 Intent(this, Activity2::class.java)
             );
         }
+
+        var home = findViewById<View>(R.id.submit)
+        home.setOnClickListener {
+            startActivity(
+                Intent(this, Activity7::class.java)
+            );
+        }
     }
 
 }

@@ -25,6 +25,13 @@ class Activity2 : AppCompatActivity() {
             );
         }
 
+        var login = findViewById<TextView>(R.id.login)
+        login.setOnClickListener {
+            startActivity(
+                Intent(this, Activity7::class.java)
+            );
+        }
+
 
     }
 }
