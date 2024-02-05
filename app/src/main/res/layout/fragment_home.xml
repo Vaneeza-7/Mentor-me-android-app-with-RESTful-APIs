@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/fragment_homeView"
     android:background="#DDF7F7"
     android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#DDF7F7"
+        android:layout_height="match_parent">
+
 
     <ImageView
         android:layout_width="269dp"
@@ -144,59 +152,175 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="5dp"/>
 
-    <ImageView
-        android:id="@+id/card1"
-        android:layout_width="200dp"
-        android:layout_height="207dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/card"
-        app:layout_constraintLeft_toLeftOf="@id/top_picks"
-        app:layout_constraintTop_toBottomOf="@id/top_picks" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="225dp"
+        android:layout_height="270dp"
+        android:layout_margin="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_picks">
 
-    <TextView
-        android:id="@+id/john"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/square_rounded"
-        android:backgroundTint="@color/white"
-        android:fontFamily="sans-serif-condensed"
-        android:paddingStart="5dp"
-        android:paddingTop="3dp"
-        android:paddingRight="30dp"
-        android:text="John Cooper      "
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/card1"
-        app:layout_constraintLeft_toLeftOf="@id/card1"
-        app:layout_constraintRight_toRightOf="@id/card1"
-        app:layout_constraintStart_toStartOf="@id/card1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/john_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="5dp"
-        android:text="UX Designer @ Google"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@id/john"
-        app:layout_constraintLeft_toLeftOf="@id/john" />
+            <!-- Media -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
+                android:contentDescription="My mentor"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/card" />
 
-    <TextView
-        android:layout_width="159dp"
-        android:layout_height="21dp"
-        android:text="⦿ Available"
-        android:textColor="#3EAC00"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="@id/john_desc"
-        app:layout_constraintTop_toBottomOf="@id/john_desc"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="16dp">
 
+                <!-- Title, secondary and supporting text -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="John Cooper"
+                    android:textColor="@color/black"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="$1500/Session"
+                     android:textSize="9sp"
+                     android:textColor="#FFC107"
+                     android:textStyle="bold"
+                     android:layout_marginLeft="11dp"/>
+                </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="UX Designer @ Google"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="@color/black" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="⦿ Available"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="#3EAC00"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/red_heart_svgrepo_com"
+                    android:layout_toRightOf="@id/available"
+                    android:layout_marginLeft="70dp"/>
+                    
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card2"
+            android:layout_width="225dp"
+            android:layout_height="270dp"
+            android:layout_margin="4dp"
+            app:layout_constraintLeft_toLeftOf="@id/card"
+            app:layout_constraintTop_toBottomOf="@id/card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Media -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="158dp"
+                    android:contentDescription="My mentor"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/card" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="16dp">
+
+                    <!-- Title, secondary and supporting text -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="John Cooper"
+                            android:textColor="@color/black"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$1500/Session"
+                            android:textSize="9sp"
+                            android:textColor="#FFC107"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="11dp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="UX Designer @ Google"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/black" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/available2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="⦿ Available"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="#3EAC00"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/red_heart_svgrepo_com"
+                            android:layout_toRightOf="@id/available2"
+                            android:layout_marginLeft="70dp"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
