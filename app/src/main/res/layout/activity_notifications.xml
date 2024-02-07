@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".NotificationsActivity">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/newcircle"
+            android:id="@+id/newcircle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="37dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Notifications"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="40sp"
+            android:textColor="#157177"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/arrow" />
+
+        <ImageView
+            android:id="@+id/bell"
+            android:layout_width="40dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/baseline_circle_notifications_24"
+            app:layout_constraintLeft_toRightOf="@id/notifications"
+            app:layout_constraintTop_toTopOf="@id/notifications" />
+
+        <TextView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Clear All"
+            android:textSize="20sp"
+            android:textColor="#FFC107"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notifications" />
+
+        <TextView
+            android:id="@+id/notify1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="You have added a mentor, Alex. Thank you!"
+            android:textSize="19sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clear" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_cancel_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/notify1"
+            app:layout_constraintLeft_toRightOf="@id/notify1"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#50C1C8"
+            app:layout_constraintTop_toBottomOf="@id/notify1"/>
+
+        <TextView
+            android:id="@+id/notify2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="Your favorites list is expanding. Impressive"
+            android:textSize="19sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notify1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_cancel_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/notify2"
+            app:layout_constraintLeft_toRightOf="@id/notify2"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#50C1C8"
+            app:layout_constraintTop_toBottomOf="@id/notify2"/>
+
+        <TextView
+            android:id="@+id/notify3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="You have a new message in community 👀"
+            android:textSize="19sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notify2" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_cancel_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/notify3"
+            app:layout_constraintLeft_toRightOf="@id/notify3"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#50C1C8"
+            app:layout_constraintTop_toBottomOf="@id/notify3"/>
+
+        <TextView
+            android:id="@+id/notify4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="Your favorite mentor is Online. Say Hello👋"
+            android:textSize="19sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notify3" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_cancel_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/notify4"
+            app:layout_constraintLeft_toRightOf="@id/notify4"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#50C1C8"
+            app:layout_constraintTop_toBottomOf="@id/notify4"/>
+
+        <TextView
+            android:id="@+id/notify5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="Thank you for booking a session.Good Luck"
+            android:textSize="19sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notify4" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_cancel_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/notify5"
+            app:layout_constraintLeft_toRightOf="@id/notify5"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#50C1C8"
+            app:layout_constraintTop_toBottomOf="@id/notify5"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
