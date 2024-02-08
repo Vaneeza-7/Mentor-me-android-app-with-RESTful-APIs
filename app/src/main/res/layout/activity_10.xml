@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".Activity10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/newcircle"
+                android:id="@+id/newcircle"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="81dp"
+                android:layout_height="87dp"
+                android:layout_gravity="start"
+                android:padding="20dp"
+                android:src="@drawable/baseline_arrow_back_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="Add New Mentor"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="40sp"
+                android:textColor="#157177"
+                android:layout_marginStart="20dp"
+                android:id="@+id/addmentor"
+                android:layout_below="@id/arrow"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help us expand!"
+                android:textSize="20sp"
+                android:textColor="#157177"
+                android:layout_marginStart="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_below="@id/addmentor"
+                android:layout_alignEnd="@id/addmentor"
+                android:id="@+id/helpus"
+                />
+        </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="7"
+            android:background="#50C1C8">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mentor"
+                    android:layout_width="150dp"
+                    android:layout_height="138dp"
+                    android:layout_gravity="left"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/square_rounded"
+                    android:backgroundTint="@color/white"
+                    android:padding="30dp"
+                    android:src="@drawable/baseline_emergency_recording_24"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/uploadvideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mentor"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="-30dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Upload Video"
+                    android:textColor="#157076"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/mentor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+                <ImageView
+                    android:id="@+id/camera"
+                    android:layout_width="150dp"
+                    android:layout_height="138dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/square_rounded"
+                    android:backgroundTint="@color/white"
+                    android:padding="30dp"
+                    android:src="@drawable/outline_camera_alt_24"
+                    app:layout_constraintLeft_toRightOf="@id/mentor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            
+                <TextView
+                    android:id="@+id/uploadphoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mentor"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="-30dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Upload Photo"
+                    android:textColor="#157076"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/camera"
+                    app:layout_constraintStart_toStartOf="@id/camera"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="text"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Name"
+                android:id="@+id/name"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:inputType="text"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Despcription"
+                android:id="@+id/description"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+
+            <TextView
+                android:text="Upload"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="30dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#157177"
+                android:gravity="center"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
