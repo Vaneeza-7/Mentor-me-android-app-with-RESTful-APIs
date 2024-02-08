@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".Activity9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:background="#50C1C8">
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="20dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/hi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="start"
+                    android:layout_gravity="center_vertical"
+                    android:text="Hi, I'm John Cooper"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/john_cooper"
+                    app:civ_border_color="#7ED8D2"
+                    app:civ_border_width="10dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:background="#7ED8D2" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dropReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drop me a review"
+                    android:textStyle="normal"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:gravity="start"
+                    android:padding="10dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/baseline_add_reaction_24"
+                    app:layout_constraintStart_toEndOf="@+id/dropReview"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/review"
+                android:layout_width="match_parent"
+                android:layout_height="268dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="@color/white"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start"
+                android:hint="Type your experience..."
+                android:inputType="textMultiLine"
+                android:padding="20dp"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="262dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:outlineAmbientShadowColor="#157177"
+                android:padding="10dp"
+                android:rating="0"
+                android:stepSize="0.1" />
+
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_margin="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#157177"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Submit Feedback"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
