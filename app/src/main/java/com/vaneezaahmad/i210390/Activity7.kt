@@ -1,10 +1,12 @@
 package com.vaneezaahmad.i210390
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class Activity7 : AppCompatActivity() {
@@ -28,6 +30,13 @@ class Activity7 : AppCompatActivity() {
                 R.id.navigation_profile -> setCurrentFragment(fragment4)
             }
             true
+        }
+
+        val plus = findViewById<FloatingActionButton>(R.id.fab)
+        plus.setOnClickListener {
+            startActivity(
+                Intent(this, Activity8::class.java)
+            );
         }
 
     }
