@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".Activity11">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DDF7F7">
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#50C1C8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+        android:id="@+id/back"
+        android:layout_width="48dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book your Session"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="20dp"
+        android:textColor="#157177"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@id/back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="John Cooper"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="@id/back"
+        app:layout_constraintTop_toBottomOf="@id/back" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="121dp"
+                android:layout_height="110dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/john_cooper"
+                app:civ_border_color="#7ED8D2"
+                app:civ_border_width="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/heading" />
+            
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⭐ 4.8"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#FFFFFF"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="@id/heading"
+            app:layout_constraintTop_toBottomOf="@id/heading" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:background="#7ED7D1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profile_pic"/>
+
+           <TextView
+               android:id="@+id/price"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="$ 1500/Session "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#FEC80A"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+               app:layout_constraintStart_toStartOf="@id/rating"
+                app:layout_constraintTop_toBottomOf="@id/line" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_insert_comment_24"
+                android:background="@drawable/circle_filled"
+                android:padding="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/call"
+                app:layout_constraintTop_toTopOf="@id/price" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_call_24"
+                android:background="@drawable/circle_filled"
+                android:padding="10dp"
+                app:layout_constraintEnd_toStartOf="@id/video"
+                app:layout_constraintTop_toTopOf="@id/price" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_emergency_recording_24"
+                android:background="@drawable/circle_filled"
+                android:padding="10dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/price" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+    
+    <!--<CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Small"
+        android:dateTextAppearance="@style/TextAppearance.AppCompat.Small"
+        android:firstDayOfWeek="2"
+        />-->
+
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="377dp"
+        android:padding="10dp"
+        app:abbreviationsBarColor="#DDF7F7"
+        app:abbreviationsLabelsColor="@color/black"
+        app:daysLabelsColor="@color/black"
+        app:firstDayOfWeek="monday"
+        app:headerColor="#DDF7F7"
+        app:headerLabelColor="#157177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:pagesColor="#DDF7F7"
+        app:selectionColor="#157177"
+        app:selectionLabelColor="#DDF7F7"
+        app:todayLabelColor="#157177" />
+
+    <TextView
+        android:id="@+id/availableTimeSlots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available Time Slots"
+        app:layout_constraintTop_toBottomOf="@id/calendarView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/black"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/timeSlot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:00 AM"
+        app:layout_constraintTop_toBottomOf="@id/availableTimeSlots"
+        app:layout_constraintStart_toStartOf="@id/availableTimeSlots"
+        app:layout_constraintEnd_toStartOf="@+id/timeSlot2"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#DBEDED"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:id="@+id/timeSlot2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11:00 AM"
+        app:layout_constraintTop_toBottomOf="@id/availableTimeSlots"
+        app:layout_constraintStart_toEndOf="@id/timeSlot1"
+        app:layout_constraintEnd_toStartOf="@+id/timeSlot3"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#0B8EAB"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:id="@+id/timeSlot3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00 PM"
+        app:layout_constraintTop_toBottomOf="@id/availableTimeSlots"
+        app:layout_constraintStart_toEndOf="@id/timeSlot2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#DBEDED"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        />
+
+    <TextView
+        android:id="@+id/book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Book an Appointment"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:background="@drawable/square_rounded"
+        android:backgroundTint="#157177"
+        app:layout_constraintTop_toBottomOf="@id/timeSlot3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

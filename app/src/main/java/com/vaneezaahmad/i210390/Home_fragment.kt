@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ScrollView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 
 
@@ -24,8 +25,12 @@ class Home_fragment : Fragment(R.layout.fragment_home){
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<ImageView>(R.id.bell).setOnClickListener {
-            // Create an Intent to start the target activity
             val intent = Intent(requireContext(), NotificationsActivity::class.java)
+            startActivity(intent)
+        }
+
+        view.findViewById<CardView>(R.id.card).setOnClickListener {
+            val intent = Intent(requireContext(), Activity8::class.java)
             startActivity(intent)
         }
     }

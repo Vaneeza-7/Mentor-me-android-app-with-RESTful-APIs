@@ -1,10 +1,12 @@
 package com.vaneezaahmad.i210390
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.jaredrummler.materialspinner.MaterialSpinner
@@ -34,5 +36,10 @@ class second_search_fragment : Fragment(R.layout.second_fragment_search) {
             ).show()
         }
 
+
+        view.findViewById<CardView>(R.id.card).setOnClickListener {
+            val intent = Intent(requireContext(), Activity8::class.java)
+            startActivity(intent)
+        }
     }
 }

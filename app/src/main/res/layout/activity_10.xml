@@ -19,55 +19,55 @@
             android:orientation="vertical"
             android:layout_weight="3"
             >
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/newcircle"
-                android:id="@+id/newcircle"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="81dp"
-                android:layout_height="87dp"
-                android:layout_gravity="start"
-                android:padding="20dp"
-                android:src="@drawable/baseline_arrow_back_24" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/newcircle"
+                    android:id="@+id/newcircle"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:text="Add New Mentor"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="40sp"
-                android:textColor="#157177"
-                android:layout_marginStart="20dp"
-                android:id="@+id/addmentor"
-                android:layout_below="@id/arrow"
-                />
+                <ImageView
+                    android:id="@+id/arrow"
+                    android:layout_width="81dp"
+                    android:layout_height="87dp"
+                    android:layout_gravity="start"
+                    android:padding="20dp"
+                    android:src="@drawable/baseline_arrow_back_24" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Help us expand!"
-                android:textSize="20sp"
-                android:textColor="#157177"
-                android:layout_marginStart="20dp"
-                android:fontFamily="sans-serif-condensed"
-                android:layout_below="@id/addmentor"
-                android:layout_alignEnd="@id/addmentor"
-                android:id="@+id/helpus"
-                />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="Add New Mentor"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="40sp"
+                    android:textColor="#157177"
+                    android:layout_marginStart="20dp"
+                    android:id="@+id/addmentor"
+                    android:layout_below="@id/arrow"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Help us expand!"
+                    android:textSize="20sp"
+                    android:textColor="#157177"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_below="@id/addmentor"
+                    android:layout_alignEnd="@id/addmentor"
+                    android:id="@+id/helpus"
+                    />
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,8 +86,7 @@
                     android:layout_height="138dp"
                     android:layout_gravity="left"
                     android:layout_margin="20dp"
-                    android:background="@drawable/square_rounded"
-                    android:backgroundTint="@color/white"
+                    android:background="@drawable/dotted_rectangle"
                     android:padding="30dp"
                     android:src="@drawable/baseline_emergency_recording_24"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -114,14 +113,13 @@
                     android:layout_width="150dp"
                     android:layout_height="138dp"
                     android:layout_margin="20dp"
-                    android:background="@drawable/square_rounded"
-                    android:backgroundTint="@color/white"
+                    android:background="@drawable/dotted_rectangle"
                     android:padding="30dp"
                     android:src="@drawable/outline_camera_alt_24"
                     app:layout_constraintLeft_toRightOf="@id/mentor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            
+
                 <TextView
                     android:id="@+id/uploadphoto"
                     android:layout_width="wrap_content"
