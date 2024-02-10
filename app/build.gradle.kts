@@ -46,6 +46,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("com.applandeo:material-calendar-view:1.7.0")
     implementation("com.applandeo:material-calendar-view:1.9.0-rc04")
+    implementation("com.robertlevonyan.view:CustomFloatingActionButton:3.1.5")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.hbb20:android-country-picker:0.0.7")

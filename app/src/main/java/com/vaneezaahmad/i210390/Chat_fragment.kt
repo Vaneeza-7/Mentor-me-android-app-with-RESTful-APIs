@@ -20,5 +20,14 @@ class Chat_fragment : Fragment(R.layout.fragment_chat){
             fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
             fragmentTransaction.commit()
         }
+
+        val openChat = view.findViewById<TextView>(R.id.msg1)
+        openChat.setOnClickListener {
+            // Replace the current fragment with the new fragment
+            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container_view, Chat_fragment2())
+            fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
+            fragmentTransaction.commit()
+        }
     }
 }

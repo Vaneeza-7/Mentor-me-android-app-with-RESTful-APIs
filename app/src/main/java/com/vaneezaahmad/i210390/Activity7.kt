@@ -39,7 +39,7 @@ class Activity7 : AppCompatActivity() {
             );
         }*/
 
-        val plus = findViewById<FloatingActionButton>(R.id.fab)
+        val plus = findViewById<com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton>(R.id.custom_fab)
         plus.setOnClickListener {
             startActivity(
                 Intent(this, Activity10::class.java)
