@@ -2,6 +2,7 @@ package com.vaneezaahmad.i210390
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -11,7 +12,7 @@ class Chat_fragment2 : Fragment(R.layout.fragment2_chat){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val back = view.findViewById<TextView>(R.id.back)
+        val back = view.findViewById<ImageButton>(R.id.back)
 
         back.setOnClickListener {
             // Replace the current fragment with the new fragment
