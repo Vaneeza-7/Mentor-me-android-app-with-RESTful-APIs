@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 
-class Activity12 : AppCompatActivity() {
+class Activity13 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_12)
+        setContentView(R.layout.activity_13)
 
         val back = findViewById<ImageButton>(R.id.back)
         back.setOnClickListener {
@@ -18,18 +18,19 @@ class Activity12 : AppCompatActivity() {
             );
         }
 
-        val vid = findViewById<Button>(R.id.video)
-        vid.setOnClickListener {
+        val pic = findViewById<Button>(R.id.photo)
+        pic.setOnClickListener {
             startActivity(
-                Intent(this, Activity13::class.java)
+                Intent(this, Activity12::class.java)
             );
         }
 
-        val vid2 = findViewById<ImageButton>(R.id.imageButton2)
-        vid2.setOnClickListener {
+        val pic2 = findViewById<ImageButton>(R.id.imageButton2)
+        pic2.setOnClickListener {
             startActivity(
-                Intent(this, Activity13::class.java)
+                Intent(this, Activity12::class.java)
             );
         }
+
     }
 }
