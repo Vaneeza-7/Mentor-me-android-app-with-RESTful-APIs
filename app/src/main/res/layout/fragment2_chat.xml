@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello, you there?"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:fontFamily="sans-serif-condensed"
             android:textColor="#FFFFFF"
@@ -96,6 +96,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linear_layout"
             android:layout_margin="20dp"/>
+
+        <TextClock
+            android:id="@+id/textClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10:00"
+            android:textColor="#A9A9A9"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/message1"
+            app:layout_constraintTop_toBottomOf="@id/message1" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/john_cooper"
@@ -114,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Yes"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:fontFamily="sans-serif-condensed"
             android:textColor="#000000"
@@ -128,12 +141,24 @@
             android:layout_marginTop="30dp"
             />
 
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10:01"
+            android:textColor="#A9A9A9"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/message2"
+            app:layout_constraintTop_toBottomOf="@id/message2" />
+
         <TextView
             android:id="@+id/message3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I need your guidance."
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:fontFamily="sans-serif-condensed"
             android:textColor="#FFFFFF"
@@ -143,6 +168,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/message2"
             android:layout_margin="20dp"/>
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10:02"
+            android:textColor="#A9A9A9"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/message3"
+            app:layout_constraintTop_toBottomOf="@id/message3" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/john_cooper2"
@@ -161,7 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="How can I help you?"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:fontFamily="sans-serif-condensed"
             android:textColor="#000000"
@@ -175,12 +212,24 @@
             android:layout_marginTop="30dp"
             />
 
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10:03"
+            android:textColor="#A9A9A9"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/message4"
+            app:layout_constraintTop_toBottomOf="@id/message4" />
+
         <TextView
             android:id="@+id/message5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="What is a good way to start an app?"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:fontFamily="sans-serif-condensed"
             android:textColor="#FFFFFF"
@@ -190,6 +239,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/message4"
             android:layout_margin="20dp"/>
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10:04"
+            android:textColor="#A9A9A9"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/message5"
+            app:layout_constraintTop_toBottomOf="@id/message5" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/john_cooper3"
@@ -208,7 +269,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hmm, Start with the basics."
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:fontFamily="sans-serif-condensed"
             android:textColor="#000000"
@@ -222,6 +283,20 @@
             android:layout_marginTop="30dp"
             />
 
+        <TextClock
+            android:id="@+id/textClock2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10:05"
+            android:textColor="#A9A9A9"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/message6"
+            app:layout_constraintTop_toBottomOf="@id/message6" />
+
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/message_box"
             android:layout_width="match_parent"
@@ -231,7 +306,7 @@
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/message6"
+            app:layout_constraintTop_toBottomOf="@+id/textClock2"
             app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/black"
             android:textSize="20sp"

@@ -1,0 +1,38 @@
+package com.vaneezaahmad.i210390
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.ImageButton
+import androidx.fragment.app.Fragment
+
+class Comunity_fragment : Fragment(R.layout.fragment_community){
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val back = view.findViewById<ImageButton>(R.id.back)
+
+        back.setOnClickListener {
+            // Replace the current fragment with the new fragment
+            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container_view, Chat_fragment())
+            fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
+            fragmentTransaction.commit()
+        }
+        view.findViewById<ImageButton>(R.id.camera).setOnClickListener {
+            val intent = Intent(requireContext(), Activity12::class.java)
+            startActivity(intent)
+        }
+
+        view.findViewById<ImageButton>(R.id.video).setOnClickListener {
+            val intent = Intent(requireContext(), Activity14::class.java)
+            startActivity(intent)
+        }
+
+        view.findViewById<ImageButton>(R.id.call).setOnClickListener {
+            val intent = Intent(requireContext(), Activity15::class.java)
+            startActivity(intent)
+        }
+    }
+}

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import de.hdodenhof.circleimageview.CircleImageView
 
 class Chat_fragment : Fragment(R.layout.fragment_chat){
 
@@ -26,6 +27,15 @@ class Chat_fragment : Fragment(R.layout.fragment_chat){
             // Replace the current fragment with the new fragment
             val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container_view, Chat_fragment2())
+            fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
+            fragmentTransaction.commit()
+        }
+
+        val openCommunity = view.findViewById<CircleImageView>(R.id.status1)
+        openCommunity.setOnClickListener {
+            // Replace the current fragment with the new fragment
+            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container_view, Comunity_fragment())
             fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
             fragmentTransaction.commit()
         }
