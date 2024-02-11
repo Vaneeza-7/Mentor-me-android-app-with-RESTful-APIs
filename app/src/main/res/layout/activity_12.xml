@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".Activity12">
+
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="411dp"
+        android:layout_height="500dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/baseline_close_24"
+        android:backgroundTint="#000000"
+        android:id="@+id/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HDR"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"
+        />
+
+    <ImageButton
+        android:id="@+id/brightness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/baseline_brightness_low_24"
+        android:backgroundTint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"
+        />
+
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="112dp"
+        android:layout_height="115dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/search_view_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="80dp"
+        android:layout_height="75dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/circle_filled"
+        android:backgroundTint="#157177"
+        android:src="@drawable/baseline_image_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="80dp"
+        android:layout_height="75dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/circle_filled"
+        android:backgroundTint="#157177"
+        android:src="@drawable/baseline_emergency_recording_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/button"
+        app:layout_constraintStart_toStartOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/button"
+        app:layout_constraintStart_toStartOf="parent">
+
+    <Button
+        android:id="@+id/slomo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Slo-mo"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#DDF7F7"
+        />
+
+    <Button
+        android:id="@+id/video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Video"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintStart_toEndOf="@id/slomo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#DDF7F7"
+        />
+
+
+    <Button
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photo"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintStart_toEndOf="@id/video"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#DDF7F7"
+        />
+
+    <Button
+        android:id="@+id/Square"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Square"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintStart_toEndOf="@id/photo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#DDF7F7"
+        />
+
+    <Button
+        android:id="@+id/portrait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Portrait"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintStart_toEndOf="@id/Square"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#DDF7F7"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

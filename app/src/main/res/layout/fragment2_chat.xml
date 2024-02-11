@@ -286,6 +286,7 @@
             android:contentDescription="Mic"/>
 
         <ImageButton
+            android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/outline_camera_alt_24"

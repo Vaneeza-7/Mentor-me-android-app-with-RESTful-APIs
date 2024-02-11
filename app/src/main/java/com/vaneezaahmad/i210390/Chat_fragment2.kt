@@ -1,5 +1,6 @@
 package com.vaneezaahmad.i210390
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -20,6 +21,10 @@ class Chat_fragment2 : Fragment(R.layout.fragment2_chat){
             fragmentTransaction.replace(R.id.fragment_container_view, Chat_fragment())
             fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
             fragmentTransaction.commit()
+        }
+        view.findViewById<ImageButton>(R.id.camera).setOnClickListener {
+            val intent = Intent(requireContext(), Activity12::class.java)
+            startActivity(intent)
         }
     }
 }
