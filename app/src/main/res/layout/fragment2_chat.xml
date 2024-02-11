@@ -72,7 +72,7 @@
                     android:layout_marginEnd="20dp"
                     android:padding="10dp"
                     android:backgroundTint="@color/white"
-                    android:background="@drawable/baseline_emergency_recording_24"
+                    android:background="@drawable/video_camera_fill_svgrepo_com"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/heading"
                     app:layout_constraintBottom_toBottomOf="@id/heading"/>

@@ -88,7 +88,7 @@
                     android:layout_margin="20dp"
                     android:background="@drawable/dotted_rectangle"
                     android:padding="30dp"
-                    android:src="@drawable/baseline_emergency_recording_24"
+                    android:src="@drawable/video_camera_fill_svgrepo_com"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

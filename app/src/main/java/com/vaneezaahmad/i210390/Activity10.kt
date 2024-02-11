@@ -29,5 +29,19 @@ class Activity10 : AppCompatActivity() {
                 Snackbar.LENGTH_LONG
             ).show()
         }
+
+        val nextvid = findViewById<ImageView>(R.id.mentor)
+        nextvid.setOnClickListener {
+            startActivity(
+                Intent(this, Activity13::class.java)
+            );
+        }
+
+        val nextcam = findViewById<ImageView>(R.id.camera)
+        nextcam.setOnClickListener {
+            startActivity(
+                Intent(this, Activity12::class.java)
+            );
+        }
     }
 }

@@ -83,7 +83,7 @@
         android:layout_margin="30dp"
         android:background="@drawable/circle_filled"
         android:backgroundTint="#157177"
-        android:src="@drawable/baseline_emergency_recording_white"
+        android:src="@drawable/video_svgrepo_com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button" />
 

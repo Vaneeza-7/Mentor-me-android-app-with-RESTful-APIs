@@ -26,5 +26,10 @@ class Chat_fragment2 : Fragment(R.layout.fragment2_chat){
             val intent = Intent(requireContext(), Activity12::class.java)
             startActivity(intent)
         }
+
+        view.findViewById<ImageButton>(R.id.video).setOnClickListener {
+            val intent = Intent(requireContext(), Activity14::class.java)
+            startActivity(intent)
+        }
     }
 }
