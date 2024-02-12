@@ -50,5 +50,10 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             startActivity(intent)
         }
 
+        view.findViewById<Button>(R.id.bookedSessions).setOnClickListener {
+            val intent = Intent(requireContext(), Activity17::class.java)
+            startActivity(intent)
+        }
+
     }
 }
