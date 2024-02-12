@@ -13,9 +13,10 @@ class Activity13 : AppCompatActivity() {
 
         val back = findViewById<ImageButton>(R.id.back)
         back.setOnClickListener {
-            startActivity(
+            /*startActivity(
                 Intent(this, Activity7::class.java)
-            );
+            );*/
+            finish();
         }
 
         val pic = findViewById<Button>(R.id.photo)

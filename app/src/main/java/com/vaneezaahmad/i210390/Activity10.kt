@@ -15,9 +15,10 @@ class Activity10 : AppCompatActivity() {
 
         val back = findViewById<ImageView>(R.id.arrow)
         back.setOnClickListener {
-            startActivity(
+           /* startActivity(
                 Intent(this, Activity7::class.java)
-            );
+            );*/
+            finish();
         }
 
         val spinner = findViewById<View>(R.id.status) as MaterialSpinner

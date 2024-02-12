@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
@@ -41,6 +42,11 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
         view.findViewById<Button>(R.id.iconButton2).setOnClickListener {
             val intent = Intent(requireContext(), Activity12::class.java)
+            startActivity(intent)
+        }
+
+        view.findViewById<ImageButton>(R.id.more).setOnClickListener {
+            val intent = Intent(requireContext(), Activity16::class.java)
             startActivity(intent)
         }
 

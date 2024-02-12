@@ -13,9 +13,10 @@ class Activity15 : AppCompatActivity() {
         val close = findViewById<ImageButton>(R.id.closeButton)
         close.setOnClickListener{
 
-            startActivity(
+            /*startActivity(
                 Intent(this, Activity7::class.java)
-            ) ;
+            ) ;*/
+            finish();
         }
     }
 }
