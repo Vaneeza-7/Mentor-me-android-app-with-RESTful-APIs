@@ -32,4 +32,11 @@ class ExampleInstrumentedTest {
     @Test fun listGoesOverTheFold() {
         onView(withText("Hello, Ali!")).check(matches(isDisplayed()))
     }*/
+
+    /*
+    @get:Rule
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    @Test fun listGoesOverTheFold() {
+        onView(withText("Hello, Ali!")).check(matches(isDisplayed()))
+    }*/
 }
