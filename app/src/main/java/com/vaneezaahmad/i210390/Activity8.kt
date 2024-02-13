@@ -17,6 +17,7 @@ class Activity8 : AppCompatActivity() {
             startActivity(
                 Intent(this, Activity7::class.java)
             );
+
         }
 
         val review = findViewById<Button>(R.id.review1)
