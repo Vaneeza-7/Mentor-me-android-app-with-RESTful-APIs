@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 
 class Activity4 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +16,13 @@ class Activity4 : AppCompatActivity() {
         back.setOnClickListener {
             startActivity(
                 Intent(this, Activity3::class.java)
+            );
+        }
+
+        var next = findViewById<TextView>(R.id.submit)
+        back.setOnClickListener {
+            startActivity(
+                Intent(this, Activity7::class.java)
             );
         }
 

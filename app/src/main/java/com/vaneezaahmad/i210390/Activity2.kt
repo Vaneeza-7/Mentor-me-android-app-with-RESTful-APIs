@@ -16,6 +16,8 @@ class Activity2 : AppCompatActivity() {
                 Intent(this, Activity3::class.java)
             );
 
+            //implicit intent
+
         }
 
         var btn2 = findViewById<TextView>(R.id.forgotPassword)

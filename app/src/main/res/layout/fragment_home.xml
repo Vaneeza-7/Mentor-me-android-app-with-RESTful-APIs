@@ -193,7 +193,8 @@
         android:fontFamily="sans-serif-condensed"
         app:layout_constraintTop_toBottomOf="@id/horizontal_scroll1"
         app:layout_constraintStart_toStartOf="@id/horizontal_scroll1"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:textSize="25dp"
         android:textColor="#157177"/>
 
@@ -488,6 +489,7 @@
             android:fontFamily="sans-serif-condensed"
             app:layout_constraintTop_toBottomOf="@id/horizontal_scroll2"
             app:layout_constraintStart_toStartOf="@id/horizontal_scroll2"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="15dp"
             android:textSize="25dp"
             android:textColor="#157177"/>
@@ -782,6 +784,7 @@
             android:fontFamily="sans-serif-condensed"
             app:layout_constraintTop_toBottomOf="@id/horizontal_scroll3"
             app:layout_constraintStart_toStartOf="@id/horizontal_scroll3"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="15dp"
             android:textSize="25dp"
             android:textColor="#157177"/>

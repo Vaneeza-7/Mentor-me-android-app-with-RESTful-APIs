@@ -25,7 +25,7 @@ class Activity3 : AppCompatActivity() {
             ).show()
         }
 
-        val spinner2 = findViewById<View>(R.id.spinner) as MaterialSpinner
+        /*val spinner2 = findViewById<View>(R.id.spinner) as MaterialSpinner
         spinner2.setItems("Select Country","United States", "Canada", "United Kingdom", "Germany", "France",
             "Japan", "Australia", "India", "Brazil", "South Africa", "Pakistan",
             "China", "Russia", "Mexico", "Italy", "Spain", "South Korea", "Indonesia", "Netherlands", "Saudi Arabia", "Turkey")
@@ -35,7 +35,7 @@ class Activity3 : AppCompatActivity() {
                 "Selected $item",
                 Snackbar.LENGTH_LONG
             ).show()
-        }
+        }*/
 
         var button = findViewById<View>(R.id.button)
         button.setOnClickListener {
