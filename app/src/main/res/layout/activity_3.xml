@@ -188,7 +188,8 @@
                 android:layout_below="@id/editTextPhone"
                 android:id="@+id/textView7"
                 />
-            <com.jaredrummler.materialspinner.MaterialSpinner
+
+            <!--<com.jaredrummler.materialspinner.MaterialSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@id/editTextPhone"
@@ -201,7 +202,21 @@
                 android:layout_marginRight="15dp"
                 android:hint="Select your country"
                 android:id="@+id/spinner"
-                />
+                />-->
+
+            <com.hbb20.CountryPickerView
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:layout_alignStart="@id/editTextPhone"
+                android:layout_below="@id/textView7"
+                android:textSize="20sp"
+                android:textColor="#A8A7A9"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginRight="15dp"
+                android:hint="Select your country"
+                android:id="@+id/spinner" />
 
             <TextView
                 android:text="City"

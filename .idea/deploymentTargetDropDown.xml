@@ -11,6 +11,12 @@
       <entry key="listGoesOverTheFold()">
         <State />
       </entry>
+      <entry key="testBackButton()">
+        <State />
+      </entry>
+      <entry key="testLogin()">
+        <State />
+      </entry>
       <entry key="useAppContext()">
         <State />
       </entry>
