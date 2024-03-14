@@ -75,38 +75,72 @@
             android:layout_weight="5"
             android:layout_gravity="center"
             android:orientation="horizontal">
-        <ImageView
+        <TextView
+            android:id="@+id/circle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/hollow_circle"
-            android:layout_marginEnd="20dp"
+            android:textColor="#50C0C7"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:background="@drawable/hollow_circle"
+            android:layout_marginEnd="10dp"
             android:layout_gravity="center" />
 
-            <ImageView
+            <TextView
+                android:textColor="#50C0C7"
+                android:textSize="30sp"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/hollow_circle"
+                android:background="@drawable/hollow_circle"
+                android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="20dp"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/hollow_circle"
-                android:layout_marginEnd="20dp"
-                android:layout_gravity="center" />
+                android:id="@+id/circle2" />
 
-            <ImageView
+            <TextView
+                android:textColor="#50C0C7"
+                android:textSize="30sp"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/hollow_circle"
+                android:background="@drawable/hollow_circle"
+                android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="20dp"/>
-            <ImageView
+                android:id="@+id/circle3" />
+
+            <TextView
+                android:textColor="#50C0C7"
+                android:textSize="30sp"
+                android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/hollow_circle"
-                android:layout_marginEnd="20dp"
-                android:layout_gravity="center" />
+                android:background="@drawable/hollow_circle"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/circle4" />
+
+            <TextView
+                android:textColor="#50C0C7"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/hollow_circle"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/circle5" />
+
+            <TextView
+                android:textColor="#50C0C7"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/hollow_circle"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center"
+                android:id="@+id/circle6" />
+
 
         </LinearLayout>
 
