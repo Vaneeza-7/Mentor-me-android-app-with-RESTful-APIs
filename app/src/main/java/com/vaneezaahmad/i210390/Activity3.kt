@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -142,6 +140,7 @@ class Activity3 : AppCompatActivity() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                 Toast.makeText(this@Activity3, "Verification completed", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@Activity3, Activity7::class.java) )
+
             }
 
             override fun onVerificationFailed(p0: FirebaseException) {
@@ -153,6 +152,7 @@ class Activity3 : AppCompatActivity() {
                 super.onCodeSent(p0, p1)
                 var i = Intent(this@Activity3, Activity4::class.java)
                 i.putExtra("token", p0)
+                i.putExtra("phone", phoneStr)
                 startActivity(i)
                 Log.d("Code sent", "Code sent" )
                 Toast.makeText(this@Activity3, "Code sent", Toast.LENGTH_SHORT).show()

@@ -1,14 +1,14 @@
 package com.vaneezaahmad.i210390
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 
@@ -20,6 +20,9 @@ class Activity4 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_4)
 
+        var number = findViewById<TextView>(R.id.textView3)
+        var countdown = findViewById<TextView>(R.id.countdown)
+
         var back = findViewById<ImageView>(R.id.imageView1)
         back.setOnClickListener {
             startActivity(
@@ -27,13 +30,31 @@ class Activity4 : AppCompatActivity() {
             );
         }
 
-        var next = findViewById<TextView>(R.id.submit)
-        back.setOnClickListener {
+        /*var next = findViewById<TextView>(R.id.submit)
+        next.setOnClickListener {
             startActivity(
                 Intent(this, Activity7::class.java)
             );
-        }
+        }*/
 
+
+        val intent = intent
+        val phoneNumber = intent.getStringExtra("phone")
+        number.text = phoneNumber
+        val totalTime = 2 * 60 * 1000 // 2 minutes in milliseconds
+        val countDownInterval = 1000 // 1 second in milliseconds
+        val timer = object : CountDownTimer(totalTime.toLong(), countDownInterval.toLong()) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / 1000 / 60
+                val seconds = millisUntilFinished / 1000 % 60
+                countdown.text = "$minutes:$seconds"
+            }
+
+            override fun onFinish() {
+                countdown.text = "00:00"
+            }
+        }
+        timer.start()
 
         var circle1 = findViewById<TextView>(R.id.circle1)
         var circle2 = findViewById<TextView>(R.id.circle2)
@@ -90,24 +111,32 @@ class Activity4 : AppCompatActivity() {
                 otpIndex--
             }
         }
+
         val token = intent.getStringExtra("token")
-        val otpStr = otp.joinToString("") // convert the OTP array to a string
 
         var btn = findViewById<TextView>(R.id.submit)
         btn.setOnClickListener {
-            var credential =PhoneAuthProvider.getCredential(token!!, otpStr)
-            var auth = FirebaseAuth.getInstance()
-            auth.signInWithCredential(credential)
-                .addOnSuccessListener {
-                    var i = Intent (this, Activity7::class.java)
-                    i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(i)
-                }
+            val otpStr = otp.joinToString(separator = "") { it ?: "" } // convert the OTP array to a string
+            if(token != null && otpStr.length == 6) {
+                var credential = PhoneAuthProvider.getCredential(token!!, otpStr)
+                var auth = FirebaseAuth.getInstance()
+                auth.signInWithCredential(credential)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Login successful", LENGTH_LONG).show()
+                        var i = Intent(this, Activity7::class.java)
+                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(i)
+                    }
 
-                .addOnFailureListener {
-                    Toast.makeText(this, "Failed to login", LENGTH_LONG).show()
-                    Log.d("Failed to login", it.localizedMessage)
-                }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(this, "Failed to login: ${exception.localizedMessage}", LENGTH_LONG).show()
+                        Log.d("Failed to login", exception.localizedMessage ?: "Error")
+                    }
+            }
+            else
+            {
+                Toast.makeText(this, "Invalid OTP", LENGTH_LONG).show()
+            }
         }
     }
     fun appendNumber (number : String, circles : Array<TextView>) {
