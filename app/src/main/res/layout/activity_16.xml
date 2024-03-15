@@ -91,7 +91,6 @@
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="ali"
                 app:layout_constraintTop_toBottomOf="@id/name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +126,6 @@
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="ali97@gmail.com"
                 app:layout_constraintTop_toBottomOf="@id/email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +161,6 @@
                 android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="+92 3331 181818"
                 app:layout_constraintTop_toBottomOf="@id/phone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +208,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 />
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
+            <EditText
                 android:id="@+id/editcity"
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
@@ -221,10 +218,8 @@
                 android:background="@drawable/square_rounded"
                 android:backgroundTint="#FFFFFF"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="Enter City"
                 android:inputType="text"
                 android:padding="10dp"
-                android:text="Islamabad"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/city" />
 

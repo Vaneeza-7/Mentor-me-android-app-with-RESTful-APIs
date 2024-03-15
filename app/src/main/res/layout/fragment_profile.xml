@@ -37,9 +37,19 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/baseline_logout_24"
+            android:id="@+id/logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title"
+            android:layout_margin="20dp"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/baseline_more_horiz_24"
             android:id="@+id/more"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/title"
             app:layout_constraintTop_toTopOf="@id/title"
             android:layout_margin="20dp"
             />
@@ -100,7 +110,6 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ali"
             android:textColor="#157177"
             android:textSize="30sp"
             android:layout_marginStart="50dp"
@@ -124,7 +133,6 @@
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Islamabad"
             android:textColor="#908B8B"
             android:textSize="15sp"
             android:layout_marginTop="5dp"
