@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
@@ -25,6 +26,10 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class Profile_fragment : Fragment(R.layout.fragment_profile){
     var mAuth = FirebaseAuth.getInstance();
+    var uid = mAuth.currentUser?.uid.toString()
+    val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
+    //private lateinit var selectImageLauncher: ActivityResultLauncher<String>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,8 +74,8 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             activity?.finish()
         }
 
-        var uid = mAuth.currentUser?.uid.toString()
-        val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
+        //var uid = mAuth.currentUser?.uid.toString()
+        //val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
         firebaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -89,6 +94,16 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
                     {
                         imageView.setImageResource(R.drawable.profile_modified)
                     }
+
+                    val coverImage = dataSnapshot.child("coverImage").value.toString()
+                    val coverImageView = view.findViewById<ImageView>(R.id.editProfile)
+                    if(coverImage.isNotEmpty() && coverImage != "null") {
+                        Glide.with(this@Profile_fragment).load(coverImage).into(coverImageView)
+                    }
+                    else
+                    {
+                        coverImageView.setImageResource(R.drawable.editprofile)
+                    }
                 }
             }
 
@@ -103,14 +118,38 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
                     storageRef.downloadUrl.addOnSuccessListener {
                         val url = it.toString()
                         val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
-                        firebaseRef.child("image").setValue(url)
+                        firebaseRef.child("image").setValue(url).addOnSuccessListener {
 
                         // Load the image into the ImageView
                         val imageView = view.findViewById<CircleImageView>(R.id.profileImage)
                         Glide.with(this).load(url).into(imageView)
+                        }
                     }
+                }.addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Failed to upload image: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+
+        val selectCoverLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if(uri != null) {
+                val storageRef = FirebaseStorage.getInstance().reference.child("coverImages/${mAuth.currentUser?.uid.toString()}")
+                storageRef.putFile(uri).addOnSuccessListener {
+                    storageRef.downloadUrl.addOnSuccessListener {
+                        val url = it.toString()
+                        val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
+                        firebaseRef.child("coverImage").setValue(url).addOnSuccessListener {
+
+                            // Load the image into the ImageView
+                            val imageView = view.findViewById<ImageView>(R.id.editProfile)
+                            Glide.with(this).load(url).into(imageView)
+                        }
+                    }
+                }.addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Failed to upload image: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+
         }
 
         view.findViewById<Button>(R.id.iconButton).setOnClickListener {
@@ -118,11 +157,14 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             selectImageLauncher.launch("image/*")
             /*val intent = Intent(requireContext(), Activity12::class.java)
             startActivity(intent)*/
+
+            //selectAndUploadImage(view, "images", R.drawable.profile_modified)
         }
 
         view.findViewById<Button>(R.id.iconButton2).setOnClickListener {
-            //selectImageLauncher.launch("image/*")
+            selectCoverLauncher.launch("image/*")
+            //selectAndUploadImage(view, "coverImages", R.drawable.editprofile)
         }
-
     }
+
 }
