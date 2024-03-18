@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,8 +22,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 
 
-class Home_fragment : Fragment(R.layout.fragment_home){
+class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemClickListener {
 
+    private lateinit var mentors: ArrayList<Mentor>
+    private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,10 +43,10 @@ class Home_fragment : Fragment(R.layout.fragment_home){
             startActivity(intent)
         }
 
-        view.findViewById<CardView>(R.id.card).setOnClickListener {
-            val intent = Intent(requireContext(), Activity8::class.java)
-            startActivity(intent)
-        }
+        //view.findViewById<CardView>(R.id.card).setOnClickListener {
+          //  val intent = Intent(requireContext(), Activity8::class.java)
+           // startActivity(intent)
+        //}
 
         var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
@@ -59,5 +63,41 @@ class Home_fragment : Fragment(R.layout.fragment_home){
             }
         })
 
+        //category recycler view
+        val categories = ArrayList<Category>()
+        categories.add(Category("All"))
+        categories.add(Category("Education"))
+        categories.add(Category("Entrepreneurship"))
+        categories.add(Category("Personal Growth"))
+        categories.add(Category("Career Development"))
+        categories.add(Category("Stress Management"))
+
+        val categoriesRecyclerView = view.findViewById<RecyclerView>(R.id.categoriesRecyclerView)
+        categoriesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        categoriesRecyclerView.adapter = CategoryAdapter(categories, this)
+
+        //mentor recycler view
+        mentors = ArrayList<Mentor>()
+        mentors.add(Mentor("John Cooper", "Rs. 1000", "Mentor", "Available", R.drawable.john_cooper, "Education"))
+        mentors.add(Mentor("Mentor 2", "Rs. 1500", "Mentor", "Available", R.drawable.card, "Education"))
+        mentors.add(Mentor("Mentor 3", "Rs. 2000", "Mentor", "Available", R.drawable.card, "Education"))
+        mentors.add(Mentor("Mentor 4", "Rs. 2500", "Mentor", "Available", R.drawable.card, "Technology"))
+
+        recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = MentorAdapter(mentors)
+
+    }
+    fun filterMentors(category: String) {
+        val filteredMentors = if (category == "All") {
+            mentors
+        } else {
+            mentors.filter { it.category == category }
+        }
+
+        (recyclerView.adapter as MentorAdapter).updateMentors(filteredMentors)
+    }
+    override fun onItemClick(category: Category) {
+        filterMentors(category.name)
     }
 }

@@ -15,6 +15,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -44,10 +46,10 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
 
 
-        view.findViewById<CardView>(R.id.card).setOnClickListener {
-            val intent = Intent(requireContext(), Activity8::class.java)
-            startActivity(intent)
-        }
+        //view.findViewById<CardView>(R.id.card).setOnClickListener {
+          //  val intent = Intent(requireContext(), Activity8::class.java)
+            //startActivity(intent)
+        //}
 
 
         view.findViewById<ImageView>(R.id.backButton).setOnClickListener {
@@ -165,6 +167,26 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             selectCoverLauncher.launch("image/*")
             //selectAndUploadImage(view, "coverImages", R.drawable.editprofile)
         }
+
+        val mentors = ArrayList<Mentor>()
+        mentors.add(Mentor("John Cooper", "Rs. 1000", "Mentor", "Available", R.drawable.john_cooper, "Education"))
+        mentors.add(Mentor("Mentor 2", "Rs. 1500", "Mentor", "Available", R.drawable.card, "Education"))
+        mentors.add(Mentor("Mentor 3", "Rs. 2000", "Mentor", "Available", R.drawable.card, "Education"))
+        mentors.add(Mentor("Mentor 4", "Rs. 2500", "Mentor", "Available", R.drawable.card, "Technology"))
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMentorsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = MentorAdapter(mentors)
+
+        //review recycler view
+        val reviews = ArrayList<Review>()
+        reviews.add(Review("John Cooper", 4.5f, "My experience with John was amazing. He is a great mentor and a great person."))
+        reviews.add(Review("Martina Watson", 4f, "My experience with Martina was amazing. She is a great mentor and a great person."))
+        reviews.add(Review("Emma Rose", 3.5f, "My experience with Emma was amazing. She is a great mentor and a great person."))
+
+        val review_recyclerView = view.findViewById<RecyclerView>(R.id.myReviewsRecyclerView)
+        review_recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        review_recyclerView.adapter = ReviewAdapter(reviews)
     }
 
 }
