@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DDF7F7"
+    android:fillViewport="true"
     tools:context=".Activity10">
 
     <LinearLayout
@@ -17,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="3"
+            android:layout_weight="2"
             >
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -68,12 +69,25 @@
                     android:id="@+id/helpus"
                     />
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already a part of our community? Login"
+                android:textSize="20sp"
+                android:textColor="#157177"
+                android:layout_marginStart="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="20dp"
+                android:id="@+id/login"
+                />
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:background="#50C1C8">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -170,6 +184,66 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="text"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Email"
+                android:id="@+id/email"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Role"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="text"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Role"
+                android:id="@+id/role"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Description"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -200,6 +274,36 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Price"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:inputType="text"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Price"
+                android:id="@+id/price"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Status"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -225,14 +329,75 @@
                 android:layout_marginRight="20dp"
                 />
 
+
             <TextView
+                android:id="@+id/text_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:background="@drawable/square_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Password"
+                android:id="@+id/password"
+                />
+
+            <TextView
+                android:id="@+id/upload"
                 android:text="Upload"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="60dp"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -244,4 +409,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

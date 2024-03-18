@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         else
         {
             Handler(Looper.getMainLooper()).postDelayed({
-                startActivity(Intent(this, Activity2::class.java))
+                startActivity(Intent(this, ActivityChoose::class.java))
                 finish()
             }, 5000) // 5000 milliseconds = 5 seconds
 
