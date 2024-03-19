@@ -3,6 +3,7 @@ package com.vaneezaahmad.i210390
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -179,8 +178,8 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
                 if (dataSnapshot.exists()) {
                     val favoriteMentorUids = dataSnapshot.children.map { it.key ?: "" }
                     mentorsRef.get().addOnSuccessListener { mentorSnapshot ->
-                        val allMentors = mentorSnapshot.children.mapNotNull { it.getValue(Mentor::class.java) }
-                        val favoriteMentors = allMentors.filter { favoriteMentorUids.contains(it.uid) }
+                        val allMentors = mentorSnapshot.children.mapNotNull { Pair(it.key, it.getValue(Mentor::class.java)) }
+                        val favoriteMentors = allMentors.filter { favoriteMentorUids.contains(it.first) }.mapNotNull { it.second }
                         // Now, favoriteMentors contains the mentors whose UIDs are in the favorites.
                         // You can update your RecyclerView adapter with this list.
                         (recyclerView.adapter as MentorAdapter).updateMentors(favoriteMentors)
@@ -199,21 +198,27 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
         val reviews = ArrayList<Review>()
         val review_recyclerView = view.findViewById<RecyclerView>(R.id.myReviewsRecyclerView)
 
-        val firebaseRevRef = FirebaseDatabase.getInstance().getReference("reviews").child(uid.toString())
-        firebaseRevRef.addValueEventListener(object : ValueEventListener {
+        val reviewsRef = FirebaseDatabase.getInstance().getReference("reviews")
+        reviewsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (reviewSnapshot in dataSnapshot.children) {
-                        val review = reviewSnapshot.getValue(Review::class.java)
+                    val reviews = mutableListOf<Review>()
+                    // Loop through each child (each child is a review keyed by the user's UID)
+                    for (uidSnapshot in dataSnapshot.children) {
+                        // get the Review object from the UID snapshot
+                        val review = uidSnapshot.getValue(Review::class.java)
                         if (review != null) {
                             reviews.add(review)
                         }
                     }
+                    review_recyclerView.adapter = ReviewAdapter(reviews)
                     review_recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                // Handle possible errors
+                Log.e("Firebase", "Error fetching data", databaseError.toException())
             }
         })
 

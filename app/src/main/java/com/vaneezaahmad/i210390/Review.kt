@@ -5,3 +5,6 @@ data class Review(
     val rating: Float,
     val reviewText: String
 )
+{
+    constructor() : this("", 0.0F, "")
+}
