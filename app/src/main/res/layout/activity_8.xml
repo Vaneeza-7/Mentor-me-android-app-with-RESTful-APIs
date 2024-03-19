@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/hi"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -42,7 +42,6 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="start"
                 android:layout_gravity="center_vertical"
-                android:text="Hi, I'm John Cooper"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -51,11 +50,11 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/john_cooper"
                 app:civ_border_color="#7ED8D2"
-                app:civ_border_width="10dp"
+                app:civ_border_width="3dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="30dp"
@@ -77,9 +76,9 @@
                 android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="UX Designer at Google"
                 android:textStyle="normal"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="#FFFFFF"
@@ -127,9 +126,9 @@
                 android:layout_marginStart="10dp" />
 
             <TextView
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I am a UX Designer at Google. I am passionate about creating beautiful and functional designs. I am also a big fan of the color blue. With 10 years of experience, I have worked with many clients and have created some amazing designs. I am also a big fan of the color blue."
                 android:textStyle="normal"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="#FFFFFF"

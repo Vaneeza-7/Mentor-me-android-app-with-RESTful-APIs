@@ -5,6 +5,12 @@ data class Mentor(
     val price: String,
     val role: String,
     val status: String,
-    val imageResource: Int,
-    val category: String
+    val image: String,
+    val category: String,
+    val description: String,
+    val email: String,
+    val video : String
 )
+{
+    constructor() : this("", "", "", "", "", "", "", "", "")
+}

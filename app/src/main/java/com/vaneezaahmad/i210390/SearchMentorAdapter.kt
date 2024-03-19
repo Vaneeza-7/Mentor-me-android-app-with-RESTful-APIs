@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 
 class SearchMentorAdapter(private val items: List<Mentor>) : RecyclerView.Adapter<SearchMentorAdapter.ViewHolder>() {
@@ -28,7 +29,7 @@ class SearchMentorAdapter(private val items: List<Mentor>) : RecyclerView.Adapte
         holder.price.text = item.price
         holder.role.text = item.role
         holder.status.text = item.status
-        holder.image.setImageResource(item.imageResource)
+        holder.image.setImageURI(item.image.toUri())
     }
 
     override fun getItemCount() = items.size

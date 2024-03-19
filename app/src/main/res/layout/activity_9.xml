@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/hi"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -41,7 +41,6 @@
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="start"
                     android:layout_gravity="center_vertical"
-                    android:text="Hi, I'm John Cooper"
                     android:textColor="#FFFFFF"
                     android:textSize="30sp"
                     android:textStyle="bold"
@@ -50,11 +49,11 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/john_cooper"
                     app:civ_border_color="#7ED8D2"
-                    app:civ_border_width="10dp"
+                    app:civ_border_width="3dp"
                     android:layout_gravity="end"
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="30dp"
@@ -132,7 +131,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:isIndicator="true"
                 android:numStars="5"
                 android:outlineAmbientShadowColor="#157177"
                 android:padding="10dp"

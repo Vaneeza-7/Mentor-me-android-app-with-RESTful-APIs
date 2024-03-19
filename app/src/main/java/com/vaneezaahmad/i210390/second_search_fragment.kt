@@ -42,10 +42,11 @@ class second_search_fragment : Fragment(R.layout.second_fragment_search) {
             startActivity(intent)
         }*/
 
+        val mentors = ArrayList<Mentor>()
         val recycler_view = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
         recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-        recycler_view.adapter = SearchMentorAdapter(listOf(
-            Mentor("Vaneeza Ahmad", "Rs. 1000", "Entrepreneur", "Available", R.drawable.card, "Entrepreneurship"),
+        recycler_view.adapter = SearchMentorAdapter(mentors)
+           /* Mentor("Vaneeza Ahmad", "Rs. 1000", "Entrepreneur", "Available", R.drawable.card, "Entrepreneurship"),
             Mentor("Ali Khan", "Rs. 1500", "Engineer", "Available", R.drawable.card, "Engineering"),
             Mentor("Sara Khan", "Rs. 2000", "Doctor", "Available", R.drawable.card, "Medicine"),
             Mentor("Ahmed Khan", "Rs. 2500", "Designer", "Available", R.drawable.card, "Designing"),
@@ -61,7 +62,7 @@ class second_search_fragment : Fragment(R.layout.second_fragment_search) {
             Mentor("Zain Khan", "Rs. 7500", "Artist", "Available", R.drawable.card, "Art"),
             Mentor("Zara Khan", "Rs. 8000", "Teacher", "Available", R.drawable.card, "Teaching"),
             Mentor("Zoha Khan", "Rs. 8500", "Chef", "Available", R.drawable.card, "Cooking"),
-            Mentor("Zainab Khan", "Rs. 9000", "Photographer", "Available", R.drawable.card, "Photography")))
+            Mentor("Zainab Khan", "Rs. 9000", "Photographer", "Available", R.drawable.card, "Photography")))*/
 
 
     }

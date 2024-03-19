@@ -67,10 +67,11 @@ class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemCl
         val categories = ArrayList<Category>()
         categories.add(Category("All"))
         categories.add(Category("Education"))
+        categories.add(Category("Technology"))
         categories.add(Category("Entrepreneurship"))
         categories.add(Category("Personal Growth"))
         categories.add(Category("Career Development"))
-        categories.add(Category("Stress Management"))
+        categories.add(Category("Cooking"))
 
         val categoriesRecyclerView = view.findViewById<RecyclerView>(R.id.categoriesRecyclerView)
         categoriesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -78,10 +79,23 @@ class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemCl
 
         //mentor recycler view
         mentors = ArrayList<Mentor>()
-        mentors.add(Mentor("John Cooper", "Rs. 1000", "Mentor", "Available", R.drawable.john_cooper, "Education"))
-        mentors.add(Mentor("Mentor 2", "Rs. 1500", "Mentor", "Available", R.drawable.card, "Education"))
-        mentors.add(Mentor("Mentor 3", "Rs. 2000", "Mentor", "Available", R.drawable.card, "Education"))
-        mentors.add(Mentor("Mentor 4", "Rs. 2500", "Mentor", "Available", R.drawable.card, "Technology"))
+        val firebaseRef2 = FirebaseDatabase.getInstance().getReference("Mentors")
+        firebaseRef2.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (mentorSnapshot in dataSnapshot.children) {
+                        val mentor = mentorSnapshot.getValue(Mentor::class.java)
+                        if (mentor != null) {
+                            mentors.add(mentor)
+                        }
+                    }
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
 
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

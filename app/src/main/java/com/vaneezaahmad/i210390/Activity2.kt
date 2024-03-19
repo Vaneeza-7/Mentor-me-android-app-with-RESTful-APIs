@@ -3,6 +3,7 @@ package com.vaneezaahmad.i210390
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -29,8 +30,8 @@ class Activity2 : AppCompatActivity() {
             );
         }
 
-        var email = findViewById<TextView>(R.id.email)
-        var pass = findViewById<TextView>(R.id.password)
+        var email = findViewById<EditText>(R.id.email)
+        var pass = findViewById<EditText>(R.id.password)
         var login = findViewById<TextView>(R.id.login)
 /*        login.setOnClickListener {
             startActivity(

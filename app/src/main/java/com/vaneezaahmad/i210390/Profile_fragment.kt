@@ -169,22 +169,54 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
         }
 
         val mentors = ArrayList<Mentor>()
-        mentors.add(Mentor("John Cooper", "Rs. 1000", "Mentor", "Available", R.drawable.john_cooper, "Education"))
-        mentors.add(Mentor("Mentor 2", "Rs. 1500", "Mentor", "Available", R.drawable.card, "Education"))
-        mentors.add(Mentor("Mentor 3", "Rs. 2000", "Mentor", "Available", R.drawable.card, "Education"))
-        mentors.add(Mentor("Mentor 4", "Rs. 2500", "Mentor", "Available", R.drawable.card, "Technology"))
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMentorsRecyclerView)
+
+        val favoritesRef = FirebaseDatabase.getInstance().getReference("favorites").child(uid.toString())
+        val mentorsRef = FirebaseDatabase.getInstance().getReference("Mentors")
+
+        favoritesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val favoriteMentorUids = dataSnapshot.children.map { it.key ?: "" }
+                    mentorsRef.get().addOnSuccessListener { mentorSnapshot ->
+                        val allMentors = mentorSnapshot.children.mapNotNull { it.getValue(Mentor::class.java) }
+                        val favoriteMentors = allMentors.filter { favoriteMentorUids.contains(it.uid) }
+                        // Now, favoriteMentors contains the mentors whose UIDs are in the favorites.
+                        // You can update your RecyclerView adapter with this list.
+                        (recyclerView.adapter as MentorAdapter).updateMentors(favoriteMentors)
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(null, "Failed to read value.", Toast.LENGTH_SHORT).show()
+            }
+        })
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = MentorAdapter(mentors)
 
         //review recycler view
         val reviews = ArrayList<Review>()
-        reviews.add(Review("John Cooper", 4.5f, "My experience with John was amazing. He is a great mentor and a great person."))
-        reviews.add(Review("Martina Watson", 4f, "My experience with Martina was amazing. She is a great mentor and a great person."))
-        reviews.add(Review("Emma Rose", 3.5f, "My experience with Emma was amazing. She is a great mentor and a great person."))
-
         val review_recyclerView = view.findViewById<RecyclerView>(R.id.myReviewsRecyclerView)
+
+        val firebaseRevRef = FirebaseDatabase.getInstance().getReference("reviews").child(uid.toString())
+        firebaseRevRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (reviewSnapshot in dataSnapshot.children) {
+                        val review = reviewSnapshot.getValue(Review::class.java)
+                        if (review != null) {
+                            reviews.add(review)
+                        }
+                    }
+                    review_recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
+
         review_recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         review_recyclerView.adapter = ReviewAdapter(reviews)
     }
