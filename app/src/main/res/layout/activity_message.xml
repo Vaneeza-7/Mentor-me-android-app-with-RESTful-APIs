@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".MessageActivity">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/message_box2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/square_rounded"
+                android:hint="Type something..."
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="#50C1C8">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/back"
+                        android:layout_width="28dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/baseline_arrow_back_24"
+                        android:backgroundTint="@color/white"
+                        android:padding="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="John Cooper"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_marginTop="20dp"
+                        android:textColor="#FFFFFF"
+                        android:padding="15dp"
+                        app:layout_constraintStart_toEndOf="@id/back"
+                        app:layout_constraintTop_toTopOf="@id/back" />
+
+
+                    <ImageButton
+                        android:id="@+id/call"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="10dp"
+                        android:padding="10dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/baseline_call_24"
+                        app:layout_constraintEnd_toStartOf="@+id/video"
+                        app:layout_constraintTop_toTopOf="@id/heading"
+                        app:layout_constraintBottom_toBottomOf="@id/heading"
+                        android:contentDescription="calling"/>
+
+                    <ImageButton
+                        android:id="@+id/video"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="20dp"
+                        android:padding="10dp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/video_camera_fill_svgrepo_com"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/heading"
+                        app:layout_constraintBottom_toBottomOf="@id/heading"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chat_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout"
+                app:layout_constraintBottom_toTopOf="@+id/message_box" />
+
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/message_box"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:hint="Type something..."
+                android:background="@drawable/square_rounded"
+                android:layout_margin="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:pointerIcon="arrow"
+                android:inputType="text"
+                android:autofillHints=""
+                android:importantForAutofill="auto"
+                android:drawableStart="@drawable/outline_camera_alt_24"
+                android:drawableEnd="@drawable/baseline_schedule_send_24"
+                android:drawableTint="#8DD8DC"
+                android:drawablePadding="20dp"
+                android:paddingEnd="50dp"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageButton
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/baseline_schedule_send_24"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/message_box"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:padding="10dp"
+                android:contentDescription="Send"/>
+
+            <ImageButton
+                android:id="@+id/attach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/baseline_attach_file_24"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/message_box"
+                app:layout_constraintTop_toTopOf="@id/message_box"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:contentDescription="Attach"/>
+
+            <ImageButton
+                android:id="@+id/mic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/baseline_mic_24"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/send"
+                app:layout_constraintTop_toTopOf="@id/message_box"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:padding="10dp"
+                android:contentDescription="Mic"/>
+
+            <ImageButton
+                android:id="@+id/camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/outline_camera_alt_24"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/mic"
+                app:layout_constraintTop_toTopOf="@id/message_box"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:contentDescription="camera"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/baseline_image_24"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/attach"
+                app:layout_constraintTop_toTopOf="@id/message_box"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:contentDescription="emoji"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
