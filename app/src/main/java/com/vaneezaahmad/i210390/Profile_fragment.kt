@@ -206,9 +206,11 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
                     // Loop through each child (each child is a review keyed by the user's UID)
                     for (uidSnapshot in dataSnapshot.children) {
                         // get the Review object from the UID snapshot
-                        val review = uidSnapshot.getValue(Review::class.java)
-                        if (review != null) {
-                            reviews.add(review)
+                        if(uidSnapshot.key == uid) {
+                            val review = uidSnapshot.getValue(Review::class.java)
+                            if (review != null) {
+                                reviews.add(review)
+                            }
                         }
                     }
                     review_recyclerView.adapter = ReviewAdapter(reviews)

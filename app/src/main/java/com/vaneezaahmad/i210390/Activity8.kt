@@ -28,6 +28,7 @@ class Activity8 : AppCompatActivity() {
         val mentorDescription = intent.getStringExtra("mentorDescription")
         val mentorImage = intent.getStringExtra("mentorImage")
         val mentorEmail = intent.getStringExtra("mentorEmail")
+        val mentorPrice = intent.getStringExtra("mentorPrice")
 
         name.text = "Hi! I'm " + mentorName
         role.text = mentorRole
@@ -58,9 +59,13 @@ class Activity8 : AppCompatActivity() {
 
         val book = findViewById<TextView>(R.id.bookSession)
         book.setOnClickListener {
-            startActivity(
-                Intent(this, Activity11::class.java)
-            );
+
+                Intent(this, Activity11::class.java).also{
+                    it.putExtra("mentorName", mentorName)
+                    it.putExtra("mentorImage", mentorImage)
+                    it.putExtra("mentorPrice", mentorPrice)
+                    startActivity(it)
+                }
         }
     }
 }

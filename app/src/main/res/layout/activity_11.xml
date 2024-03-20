@@ -71,7 +71,7 @@
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/john_cooper"
                 app:civ_border_color="#7ED8D2"
-                app:civ_border_width="10dp"
+                app:civ_border_width="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/heading" />
             
@@ -218,9 +218,9 @@
         app:layout_constraintStart_toEndOf="@id/timeSlot1"
         app:layout_constraintEnd_toStartOf="@+id/timeSlot3"
         android:background="@drawable/square_rounded"
-        android:backgroundTint="#0B8EAB"
+        android:backgroundTint="#DBEDED"
         android:padding="10dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:fontFamily="sans-serif-condensed"
         android:textStyle="normal"
         android:textSize="20sp"
