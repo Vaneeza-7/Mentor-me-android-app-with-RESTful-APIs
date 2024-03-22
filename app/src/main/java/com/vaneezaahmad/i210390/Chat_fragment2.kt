@@ -1,13 +1,9 @@
 package com.vaneezaahmad.i210390
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputEditText
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -18,55 +14,41 @@ class Chat_fragment2 : Fragment(R.layout.fragment2_chat){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       // val mentor = arguments?.getParcelable<Mentor>("mentor")
-       /* val back = view.findViewById<ImageButton>(R.id.back)
+        val userRef = database.getReference("users")
+        val mentorUid = mAuth.currentUser?.uid
+        val messageRef = database.getReference("messages")
+        val chats =  mutableListOf<User>();
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
-        back.setOnClickListener {
-            // Replace the current fragment with the new fragment
-            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container_view, Chat_fragment())
-            fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
-            fragmentTransaction.commit()
-        }
-        view.findViewById<ImageButton>(R.id.camera).setOnClickListener {
-            val intent = Intent(requireContext(), Activity12::class.java)
-            startActivity(intent)
-        }
-
-        view.findViewById<ImageButton>(R.id.video).setOnClickListener {
-            val intent = Intent(requireContext(), Activity14::class.java)
-            startActivity(intent)
-        }
-
-        view.findViewById<ImageButton>(R.id.call).setOnClickListener {
-            val intent = Intent(requireContext(), Activity15::class.java)
-            startActivity(intent)
-        }
-
-        val sendButton = view.findViewById<ImageButton>(R.id.send)
-        val messageBox = view.findViewById<TextInputEditText>(R.id.message_box)
-
-        sendButton.setOnClickListener {
-            val messageText = messageBox.text.toString()
-            if (messageText.isNotEmpty()) {
-
-                val sender = mAuth.currentUser?.uid
-                val receiver = "receiverId"
-                val timestamp = System.currentTimeMillis()
-                val read = false
-                val senderImage = "senderImage"
-
-                val message = sender?.let { it1 ->
-                    Message(messageText,
-                        it1, receiver, timestamp, read, senderImage)
+        messageRef.get().addOnSuccessListener { dataSnapshot ->
+            for (messageSnapshot in dataSnapshot.children) {
+                val message = messageSnapshot.getValue(Message::class.java)
+                if (message != null) {
+                    if (message.sender == mentorUid) {
+                        // The receiver is the other user
+                        userRef.child(message.receiver).get().addOnSuccessListener { userSnapshot ->
+                            val user = userSnapshot.getValue(User::class.java)
+                            if (user != null && user !in chats) {
+                                chats.add(user)
+                                // Set the adapter here after the user is added to the chats list
+                                recyclerView.adapter = UserAdapter(chats)
+                                recyclerView.adapter?.notifyDataSetChanged()
+                            }
+                        }
+                    } else if (message.receiver == mentorUid) {
+                        // The sender is the other user
+                        userRef.child(message.sender).get().addOnSuccessListener { userSnapshot ->
+                            val user = userSnapshot.getValue(User::class.java)
+                            if (user != null && user !in chats) {
+                                chats.add(user)
+                                // Set the adapter here after the user is added to the chats list
+                                recyclerView.adapter = UserAdapter(chats)
+                                recyclerView.adapter?.notifyDataSetChanged()
+                            }
+                        }
+                    }
                 }
-
-                val messageRef = database.getReference("messages")
-                messageRef.push().setValue(message)
-
-                // Clear the message box for the next message
-                messageBox.text?.clear()
             }
-        }*/
+        }
     }
 }

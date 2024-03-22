@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 
 
 class Activity7 : AppCompatActivity() {
+    var mAuth = FirebaseAuth.getInstance();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_7)
@@ -22,7 +24,7 @@ class Activity7 : AppCompatActivity() {
         setCurrentFragment(fragment1)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView.setOnItemSelectedListener {
+        /*bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> setCurrentFragment(fragment1)
                 R.id.navigation_search -> setCurrentFragment(fragment2)
@@ -30,7 +32,7 @@ class Activity7 : AppCompatActivity() {
                 R.id.navigation_profile -> setCurrentFragment(fragment4)
             }
             true
-        }
+        }*/
 
         /*val plus = findViewById<FloatingActionButton>(R.id.fab)
         plus.setOnClickListener {
@@ -44,6 +46,32 @@ class Activity7 : AppCompatActivity() {
             startActivity(
                 Intent(this, Activity10::class.java)
             );
+        }
+
+        val mentorUid = intent.getStringExtra("mentorUid")
+        val mentorEmail = intent.getStringExtra("mentorEmail")
+        val fragment5 = Chat_fragment2();
+        if(mentorUid == mAuth.currentUser?.uid){
+            bottomNavigationView.setOnItemSelectedListener {
+                when (it.itemId) {
+                    R.id.navigation_home -> setCurrentFragment(fragment1)
+                    R.id.navigation_search -> setCurrentFragment(fragment2)
+                    R.id.navigation_chats -> setCurrentFragment(fragment5)
+                    R.id.navigation_profile -> setCurrentFragment(fragment4)
+                }
+                true
+            }
+        }
+        else {
+            bottomNavigationView.setOnItemSelectedListener {
+                when (it.itemId) {
+                    R.id.navigation_home -> setCurrentFragment(fragment1)
+                    R.id.navigation_search -> setCurrentFragment(fragment2)
+                    R.id.navigation_chats -> setCurrentFragment(fragment3)
+                    R.id.navigation_profile -> setCurrentFragment(fragment4)
+                }
+                true
+            }
         }
 
     }

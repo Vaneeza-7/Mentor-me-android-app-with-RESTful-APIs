@@ -1,13 +1,21 @@
 package com.vaneezaahmad.i210390
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -24,6 +32,7 @@ class MessageAdapter(private var messages: List<Message>) : RecyclerView.Adapter
         val mentorMessageLayout = view.findViewById<View>(R.id.mentor_message_layout)
     }
     var mAuth = FirebaseAuth.getInstance()
+    var database = FirebaseDatabase.getInstance()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
         return MessageViewHolder(view)
@@ -45,7 +54,11 @@ class MessageAdapter(private var messages: List<Message>) : RecyclerView.Adapter
             holder.mentorMessageLayout.visibility = View.VISIBLE
             holder.message.text = message.message
             holder.timestamp.text = convertTimestampToTime(message.timestamp)
-            Glide.with(holder.receiverImage.context).load(message.receiverImage).into(holder.receiverImage)
+            Glide.with(holder.receiverImage.context).load(message.senderImage).into(holder.receiverImage)
+            holder.message.setTextColor(ContextCompat.getColor(holder.message.context, R.color.black))
+            val backgroundColor = ContextCompat.getColor(holder.mentorMessageLayout.context, R.color.white)
+            ViewCompat.setBackgroundTintList(holder.mentorMessageLayout, ColorStateList.valueOf(backgroundColor))
+            holder.message.background = ContextCompat.getDrawable(holder.mentorMessageLayout.context, R.color.white)
         }
             //TODO Change colour of message bubble
     }

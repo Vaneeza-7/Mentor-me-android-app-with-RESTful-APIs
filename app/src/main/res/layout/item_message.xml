@@ -24,17 +24,20 @@
             app:civ_border_width="3dp"/>
 
         <LinearLayout
+            android:id="@+id/messageBubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/square_rounded"
             android:padding="8dp"
+            android:backgroundTint="@color/white"
             android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/text_message_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:textAppearance="?attr/textAppearanceListItem"
             android:text="Hello, You there?" />
 
@@ -73,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/white"
                 android:text="Hello, You there?" />
 
             <TextView

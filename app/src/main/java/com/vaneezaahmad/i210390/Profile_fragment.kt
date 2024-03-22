@@ -70,7 +70,7 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
             mAuth.signOut()
             Toast.makeText(requireContext(), "Logged Out", Toast.LENGTH_SHORT).show()
-            val intent = Intent(requireContext(), Activity2::class.java)
+            val intent = Intent(requireContext(), ActivityChoose::class.java)
             startActivity(intent)
             activity?.finish()
         }

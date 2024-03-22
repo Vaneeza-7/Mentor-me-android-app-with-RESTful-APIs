@@ -6,8 +6,9 @@ data class Message(
     val receiver: String,
     val timestamp: Long,
     val read : Boolean,
-    val receiverImage : String
+    val receiverImage : String,
+    val senderImage : String
 )
 {
-    constructor() : this("", "", "", -1, false, "")
+    constructor() : this("", "", "", -1, false, "", "")
 }

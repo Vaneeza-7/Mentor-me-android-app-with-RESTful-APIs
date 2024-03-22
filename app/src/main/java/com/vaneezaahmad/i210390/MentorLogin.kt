@@ -31,7 +31,10 @@ class MentorLogin : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val user = mAuth.currentUser
-                            startActivity(Intent(this, Activity7::class.java))
+                            val i = Intent(this, Activity7::class.java)
+                            i.putExtra("mentorEmail", emailStr);
+                            i.putExtra("mentorUid", user?.uid);
+                            startActivity(i)
                             Toast.makeText(this, "Authentication successful.",
                                 Toast.LENGTH_SHORT).show()
                             finish()
