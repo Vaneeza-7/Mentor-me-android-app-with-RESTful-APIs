@@ -1,14 +1,15 @@
 package com.vaneezaahmad.i210390
 
 data class Message(
-    val message: String,
+    var message: String,
     val sender: String,
     val receiver: String,
-    val timestamp: Long,
-    val read : Boolean,
-    val receiverImage : String,
-    val senderImage : String
+    var timestamp: Long,
+    var read : Boolean,
+    var receiverImage : String,
+    var senderImage : String,
+    val key : String? = null
 )
 {
-    constructor() : this("", "", "", -1, false, "", "")
+    constructor() : this("", "", "", -1, false, "", "", null)
 }
