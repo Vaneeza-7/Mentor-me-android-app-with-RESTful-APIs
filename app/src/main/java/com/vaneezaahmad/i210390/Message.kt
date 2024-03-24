@@ -8,8 +8,10 @@ data class Message(
     var read : Boolean,
     var receiverImage : String,
     var senderImage : String,
-    val key : String? = null
+    val key : String? = null,
+    val audioUrl: String? = null,
+    val type: String = "text"
 )
 {
-    constructor() : this("", "", "", -1, false, "", "", null)
+    constructor() : this("", "", "", -1, false, "", "", null, null, "text")
 }
