@@ -10,8 +10,9 @@ data class Message(
     var senderImage : String,
     val key : String? = null,
     val audioUrl: String? = null,
+    val mediaUrl: String? = null,
     val type: String = "text"
 )
 {
-    constructor() : this("", "", "", -1, false, "", "", null, null, "text")
+    constructor() : this("", "", "", -1, false, "", "", null, null, null, "text")
 }

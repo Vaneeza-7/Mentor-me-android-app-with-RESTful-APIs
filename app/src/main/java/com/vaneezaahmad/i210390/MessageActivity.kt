@@ -1,12 +1,23 @@
 package com.vaneezaahmad.i210390
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.media.MediaRecorder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -15,21 +26,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import android.Manifest
-import android.annotation.SuppressLint
-import android.media.MediaRecorder
-import androidx.core.content.PackageManagerCompat.LOG_TAG
-import java.io.IOException
-import android.media.AudioAttributes
-import android.content.Context
-import android.content.pm.PackageManager
-import android.media.MediaPlayer
-import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.core.net.toUri
 import com.google.firebase.storage.FirebaseStorage
-import io.agora.base.internal.voiceengine.WebRtcAudioRecord.setAudioSource
 import java.io.File
 
 
@@ -59,6 +56,7 @@ class MessageActivity : AppCompatActivity() {
         var receiverImage: String ? = ""
         var senderImage : String ? = ""
         var audioUrl = ""
+        var mediaUrl = ""
 
 
         if(mentorName != null) {
@@ -70,6 +68,40 @@ class MessageActivity : AppCompatActivity() {
 
         back.setOnClickListener {
                 finish()
+        }
+
+
+        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val uri = data?.data
+                val mimeType = contentResolver.getType(uri!!) // Get the MIME type
+                val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
+                // Save the uri to firebase storage
+                val storageRef = FirebaseStorage.getInstance();
+                val st = storageRef.reference.child("chatMedia/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.$extension")
+                val uploadTask = st.putFile(uri!!)
+                uploadTask.addOnSuccessListener {
+                    Toast.makeText(this, "Media uploaded successfully", Toast.LENGTH_SHORT).show()
+                    st.downloadUrl.addOnSuccessListener {
+                        mediaUrl = it.toString()
+                        Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to upload media", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+
+        val gallery = findViewById<ImageButton>(R.id.gallery)
+        gallery.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("*/*")
+            val mimeTypes = arrayOf("image/*", "video/*")
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            resultLauncher.launch(intent)
+
         }
 
         var mentorUid = intent.getStringExtra("mentorUid")
@@ -232,11 +264,15 @@ class MessageActivity : AppCompatActivity() {
 
                 if(messageText.isNotEmpty() && audioUrl.isEmpty()){
                     val type = "text"
-                    message = Message(messageText, sender, receiver, timestamp, read, receiverImage ?: "", senderImage ?: "", key = messageKey, audioUrl = audioUrl, type = type)
+                    message = Message(messageText, sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = "", mediaUrl = "", type = type)
+                }
+                else if (mediaUrl.isNotEmpty()) {
+                    val type = "media"
+                    message = Message("Media Message", sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = "", mediaUrl = mediaUrl, type = type)
                 }
                 else {
                     val type = "audio"
-                    message = Message("Voice Message", sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = audioUrl, type = type)
+                    message = Message("Voice Message", sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = audioUrl, mediaUrl = "", type = type)
                 }
                 messageRef.setValue(message).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {

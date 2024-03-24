@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.media.MediaPlayer
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.core.content.ContextCompat
 import androidx.core.content.PackageManagerCompat
 import androidx.core.view.ViewCompat
@@ -43,6 +45,20 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
         val mentorVoiceMessageLayout = view.findViewById<View>(R.id.mentor_voice_message_layout)
         val user_voice_message_time = view.findViewById<TextView>(R.id.user_voice_message_time)
         val mentor_voice_message_time = view.findViewById<TextView>(R.id.mentor_voice_message_time)
+        val user_image_message_layout = view.findViewById<View>(R.id.user_image_message_layout)
+        val mentor_image_message_layout = view.findViewById<View>(R.id.mentor_image_message_layout)
+        val user_image_message_time = view.findViewById<TextView>(R.id.user_image_message_time)
+        val mentor_image_message_time = view.findViewById<TextView>(R.id.mentor_image_message_time)
+        val user_image_message_icon = view.findViewById<ImageView>(R.id.user_image_message_icon)
+        val mentor_image_message_icon = view.findViewById<ImageView>(R.id.mentor_image_message_icon)
+        val user_video_message_layout = view.findViewById<View>(R.id.user_video_message_layout)
+        val mentor_video_message_layout = view.findViewById<View>(R.id.mentor_video_message_layout)
+        val user_video_message_time = view.findViewById<TextView>(R.id.user_video_message_time)
+        val mentor_video_message_time = view.findViewById<TextView>(R.id.mentor_video_message_time)
+        val user_video_message_icon = view.findViewById<VideoView>(R.id.user_video_message_icon)
+        val mentor_video_message_icon = view.findViewById<VideoView>(R.id.mentor_video_message_icon)
+        val receiverImage3 = view.findViewById<ImageView>(R.id.profile_image3)
+        val receiverImage4 = view.findViewById<ImageView>(R.id.profile_image4)
     }
     var mAuth = FirebaseAuth.getInstance()
     var database = FirebaseDatabase.getInstance()
@@ -142,6 +158,84 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
                     }
                 }
             }
+            "media" -> {
+                val mediaType = getMediaType(message.mediaUrl!!)
+                if(mediaType == "image") {
+
+
+                    // Handle media messages
+                    if (isCurrentUser) {
+                        holder.user_image_message_layout.visibility = View.VISIBLE
+                        holder.mentor_image_message_layout.visibility = View.GONE
+                        holder.user_image_message_time.text =
+                            convertTimestampToTime(message.timestamp)
+                        Glide.with(holder.user_image_message_icon.context).load(message.mediaUrl)
+                            .into(holder.user_image_message_icon)
+                        holder.user_image_message_icon.setOnClickListener {
+                            showImageDialog(position)
+                            true
+                        }
+                        holder.user_image_message_layout.setOnLongClickListener {
+                            deleteMessage(position)
+                            true
+                        }
+
+
+                    } else {
+                        holder.user_image_message_layout.visibility = View.GONE
+                        holder.mentor_image_message_layout.visibility = View.VISIBLE
+                        holder.mentor_image_message_time.text =
+                            convertTimestampToTime(message.timestamp)
+                        Glide.with(holder.receiverImage3.context).load(message.senderImage)
+                            .into(holder.receiverImage3)
+                        Glide.with(holder.mentor_image_message_icon.context).load(message.mediaUrl)
+                            .into(holder.mentor_image_message_icon)
+                        holder.mentor_image_message_icon.setOnClickListener {
+                           showImageDialog(position)
+                            true
+                        }
+                        holder.mentor_image_message_layout.setOnLongClickListener {
+                            deleteMessage(position)
+                            true
+                        }
+                    }
+                }
+                if(mediaType=="video")
+                {
+                    // Handle media messages
+                    if (isCurrentUser) {
+                        holder.user_video_message_layout.visibility = View.VISIBLE
+                        holder.mentor_video_message_layout.visibility = View.GONE
+                        holder.user_video_message_time.text =
+                            convertTimestampToTime(message.timestamp)
+                        val videoUri = Uri.parse(message.mediaUrl)
+                        holder.user_video_message_icon.setVideoURI(videoUri)
+                        holder.user_video_message_icon.setOnPreparedListener { mp ->
+                            mp.start()
+                        }
+                        holder.user_video_message_layout.setOnLongClickListener {
+                            deleteMessage(position)
+                            true
+                        }
+                    } else {
+                        holder.user_video_message_layout.visibility = View.GONE
+                        holder.mentor_video_message_layout.visibility = View.VISIBLE
+                        holder.mentor_video_message_time.text =
+                            convertTimestampToTime(message.timestamp)
+                        Glide.with(holder.receiverImage4.context).load(message.senderImage)
+                            .into(holder.receiverImage4)
+                        val videoUri = Uri.parse(message.mediaUrl)
+                        holder.mentor_video_message_icon.setVideoURI(videoUri)
+                        holder.mentor_video_message_icon.setOnPreparedListener { mp ->
+                            mp.start()
+                        }
+                        holder.mentor_video_message_layout.setOnLongClickListener {
+                            deleteMessage(position)
+                            true
+                        }
+                    }
+                }
+            }
         }
 
     }
@@ -235,4 +329,31 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
             true
         }
     }
+
+    fun getMediaType(mediaUrl: String): String {
+        // Extract the URL before any query parameters
+        val baseUrl = mediaUrl.substringBefore("?")
+        // Now, get the extension
+        val extension = baseUrl.substringAfterLast(".", "").lowercase(Locale.getDefault())
+
+        val imageExtensions = listOf("jpg", "png", "gif", "bmp", "webp", "heif", "ind", "jpeg", "svg", "ico")
+        val videoExtensions = listOf("mp4", "avi", "flv", "mov", "wmv", "3gp", "mkv", "webm")
+
+        return when {
+            imageExtensions.contains(extension) -> "image"
+            videoExtensions.contains(extension) -> "video"
+            else -> "unknown"
+        }
+    }
+
+    fun showImageDialog(position: Int) {
+        val builder = AlertDialog.Builder(context)
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.dialog_image_layout, null)
+        val imageView = view.findViewById<ImageView>(R.id.dialog_image_view)
+        Glide.with(context).load(messages[position].mediaUrl).into(imageView)
+        builder.setView(view)
+        builder.show()
+    }
+
 }
