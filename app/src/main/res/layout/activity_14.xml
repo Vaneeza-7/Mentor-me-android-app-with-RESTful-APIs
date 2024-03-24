@@ -7,8 +7,8 @@
     android:background="#DDF7F7"
     tools:context=".Activity14">
 
-    <VideoView
-        android:id="@+id/videoView"
+    <FrameLayout
+        android:id="@+id/remote_user"
         android:layout_width="match_parent"
         android:layout_height="612dp"
         app:layout_constraintBottom_toTopOf="@+id/micbutton"
@@ -81,7 +81,8 @@
             app:layout_constraintStart_toEndOf="@id/switchButton"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-    <ImageView
+    <FrameLayout
+        android:id="@+id/local_user"
         android:layout_width="162dp"
         android:layout_height="218dp"
         android:layout_margin="30dp"

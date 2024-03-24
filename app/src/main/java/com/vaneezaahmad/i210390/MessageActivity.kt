@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
+import com.vaneezaahmad.i210390.AgoraManager
 
 
 class MessageActivity : AppCompatActivity() {
@@ -57,6 +58,7 @@ class MessageActivity : AppCompatActivity() {
         var senderImage : String ? = ""
         var audioUrl = ""
         var mediaUrl = ""
+        val agoraManager = AgoraManager()
 
 
         if(mentorName != null) {
@@ -199,8 +201,15 @@ class MessageActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.video).setOnClickListener {
-            val intent = Intent(this, Activity14::class.java)
-            startActivity(intent)
+           if( !agoraManager.checkPermission(this@MessageActivity))
+           {
+               ActivityCompat.requestPermissions(this@MessageActivity, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_RECORD_AUDIO_PERMISSION)
+           }
+            else
+           {
+               val intent = Intent(this, Activity14::class.java)
+               startActivity(intent)
+           }
         }
 
         findViewById<ImageButton>(R.id.call).setOnClickListener {
