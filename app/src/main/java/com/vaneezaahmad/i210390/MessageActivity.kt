@@ -58,8 +58,6 @@ class MessageActivity : AppCompatActivity() {
         var senderImage : String ? = ""
         var audioUrl = ""
         var mediaUrl = ""
-        val agoraManager = AgoraManager()
-
 
         if(mentorName != null) {
             heading.text = mentorName
@@ -201,15 +199,8 @@ class MessageActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.video).setOnClickListener {
-           if( !agoraManager.checkPermission(this@MessageActivity))
-           {
-               ActivityCompat.requestPermissions(this@MessageActivity, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_RECORD_AUDIO_PERMISSION)
-           }
-            else
-           {
-               val intent = Intent(this, Activity14::class.java)
+              val intent = Intent(this, Activity14::class.java)
                startActivity(intent)
-           }
         }
 
         findViewById<ImageButton>(R.id.call).setOnClickListener {

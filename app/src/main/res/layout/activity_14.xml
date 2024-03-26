@@ -11,7 +11,7 @@
         android:id="@+id/remote_user"
         android:layout_width="match_parent"
         android:layout_height="612dp"
-        app:layout_constraintBottom_toTopOf="@+id/micbutton"
+        app:layout_constraintBottom_toTopOf="@+id/mutebutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageButton
-        android:id="@+id/micbutton"
+        android:id="@+id/mutebutton"
         android:layout_width="80dp"
         android:layout_height="75dp"
         android:layout_margin="10dp"
@@ -54,7 +54,7 @@
         android:background="@drawable/circle_filled"
         android:backgroundTint="#157177"
         android:src="@drawable/video_off_svgrepo_com"
-        app:layout_constraintStart_toEndOf="@+id/micbutton"
+        app:layout_constraintStart_toEndOf="@+id/mutebutton"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 
@@ -71,7 +71,7 @@
 
 
     <ImageButton
-            android:id="@+id/closeButton"
+            android:id="@+id/LeaveCall"
             android:layout_width="80dp"
             android:layout_height="75dp"
             android:layout_margin="10dp"
@@ -88,7 +88,7 @@
         android:layout_margin="30dp"
         android:background="@drawable/square_rounded"
         android:backgroundTint="#F0F0F0"
-        app:layout_constraintBottom_toBottomOf="@id/videoView"
+        app:layout_constraintBottom_toBottomOf="@id/remote_user"
         app:layout_constraintEnd_toEndOf="parent" />
 
 
