@@ -3,13 +3,17 @@ package com.vaneezaahmad.i210390
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.ImageButton
@@ -19,6 +23,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -26,23 +32,103 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
-import com.vaneezaahmad.i210390.AgoraManager
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
 
-class MessageActivity : AppCompatActivity() {
+class MessageActivity : ScreenshotDetectionActivity() {
     val mAuth = FirebaseAuth.getInstance()
     val database = FirebaseDatabase.getInstance()
     private var recorder: MediaRecorder? = null
     private var fileName: String? = null
+    private var photoUri: Uri? = null
+    private var currentPhotoPath: String? = null
+
+
     companion object {
         const val REQUEST_RECORD_AUDIO_PERMISSION = 200
+        private const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 100
+        private const val REQUEST_CODE_CAMERA = 101
     }
+
+    /*override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            REQUEST_CODE_READ_EXTERNAL_STORAGE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission was granted
+                    // You can start the screenshot detection here
+                    Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Permission was denied
+                    // Show a message to the user explaining why the permission is needed
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+            // Handle other permission results
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        }
+    }*/
+
+    override fun onScreenCaptured(path: String) {
+        super.onScreenCaptured(path)
+        Toast.makeText(this, "Screenshot captured: $path", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onScreenCapturedWithDeniedPermission() {
+        super.onScreenCapturedWithDeniedPermission()
+        //Toast.makeText(this, "Please grant permission", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Screenshot Captured", Toast.LENGTH_SHORT).show()
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            Log.d(ContentValues.TAG, "FCM token: $token")
+            Toast.makeText(baseContext, "FCM Token: $token", Toast.LENGTH_SHORT).show()
+
+            sendPushNotification(
+                token,
+                "Screenshot Captured",
+                "Screenshot",
+                "A screenshot has been captured",
+                mapOf("key" to "value")
+            )
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
+
+
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // If not, request the permission
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_EXTERNAL_STORAGE)
+        }
 
         val back = findViewById<ImageButton>(R.id.back)
         val heading = findViewById<TextView>(R.id.heading)
@@ -193,9 +279,73 @@ class MessageActivity : AppCompatActivity() {
 
         }
 
+        val resultLauncherCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                //val uri = data?.data
+                val mimeType = contentResolver.getType(photoUri!!) // Get the MIME type
+                val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
+                // Save the uri to firebase storage
+                val storageRef = FirebaseStorage.getInstance();
+                val st = storageRef.reference.child("chatMedia/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.$extension")
+                val uploadTask = st.putFile(photoUri!!)
+                uploadTask.addOnSuccessListener {
+                    Toast.makeText(this, "Media uploaded successfully", Toast.LENGTH_SHORT).show()
+                    st.downloadUrl.addOnSuccessListener {
+                        mediaUrl = it.toString()
+                        Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
+                    }
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to upload media", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+
         findViewById<ImageButton>(R.id.camera).setOnClickListener {
-            val intent = Intent(this, Activity12::class.java)
-            startActivity(intent)
+          /*  val intent = Intent(this, Activity12::class.java)
+            if(mentorName != null) {
+                intent.putExtra("mentorName", mentorName)
+                intent.putExtra("mentorImage", mentorImage)
+            }
+            else {
+                intent.putExtra("userName", userName)
+                intent.putExtra("userImage", userImage)
+            }
+            //startActivity(intent);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE_CAMERA)
+            } else {*/
+
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_CAMERA)
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if (takePictureIntent.resolveActivity(packageManager) != null) {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.vaneezaahmad.i210390.fileprovider",
+                        it
+                    )
+                     photoUri = FileProvider.getUriForFile(
+                        this,
+                        "com.vaneezaahmad.i210390.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    resultLauncherCamera.launch(takePictureIntent)
+                }
+            }
+
+            //}
         }
 
         findViewById<ImageButton>(R.id.video).setOnClickListener {
@@ -286,6 +436,7 @@ class MessageActivity : AppCompatActivity() {
 
             //}
         }
+
     }
 
     fun fetchCurrentUserImage(currentUserId: String, onComplete: (String?) -> Unit) {
@@ -355,6 +506,55 @@ class MessageActivity : AppCompatActivity() {
             release()
         }
         recorder = null
+    }
+
+    fun sendPushNotification(token: String, title: String, subtitle: String, body: String, data: Map<String, String> = emptyMap()) {
+        val url = "https://fcm.googleapis.com/fcm/send"
+        val bodyJson = JSONObject()
+        bodyJson.put("to", token)
+        bodyJson.put("notification",
+            JSONObject().also {
+                it.put("title", title)
+                it.put("subtitle", subtitle)
+                it.put("body", body)
+                it.put("sound", "social_notification_sound.wav")
+            }
+        )
+        if (data.isNotEmpty()) {
+            bodyJson.put("data", JSONObject(data))
+        }
+        var key="AAAAMbKQQnE:APA91bEw8UMuubt6jFAA69kX3przxhr7n3hqcsyq089ajTW-ZpHS5ZFJQ1zlNgPGJXJhiWt5eiXLID6IsZS5Tc37PQVwvNb9G9vB1ZAlning83utDYaLYHpBNmB3aKqZJxkbmpdx3YIU"
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Authorization", "key=$key")
+            .post(
+                bodyJson.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
+            )
+            .build()
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(
+            object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    Log.d("TAG", "onResponse: ${response} ")
+                }
+                override fun onFailure(call: Call, e: IOException) {Log.d("TAG", "onFailure: ${e.message.toString()}")
+                } } )
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
     }
 
 }

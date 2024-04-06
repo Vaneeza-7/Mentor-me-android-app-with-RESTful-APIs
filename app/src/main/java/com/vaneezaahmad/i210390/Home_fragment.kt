@@ -58,6 +58,20 @@ class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemCl
             }
         })
 
+        /*val FirebaseRef2 = FirebaseDatabase.getInstance().getReference("Mentors").child(uid.toString())
+        FirebaseRef2.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Get the username
+                    val username = dataSnapshot.child("name").value.toString()
+                    view.findViewById<TextView>(R.id.text_name).text = username
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })*/
+
         //category recycler view
         val categories = ArrayList<Category>()
         categories.add(Category("All"))

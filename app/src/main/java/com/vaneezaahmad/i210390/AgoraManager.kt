@@ -8,6 +8,7 @@ import io.agora.rtc2.RtcEngine
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.util.Log
 import android.view.SurfaceView
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -21,8 +22,8 @@ class AgoraManager   {
     //private val PERMISSION_id = 22
     //private val REQUESTED_PERMISSIONS = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
     private val appId = ""
-    private val channelName = ""
-    private val token = ""
+    private val channelName = "vaneezaMentorMe"
+    private val token = "007eJxTYDDoOmpnYPvnQdJNG7VPbQlOR0wFhf+ZvD927/21q34fN6opMKQYpJobWhgbWiSlWJoYWaQlJRqapRobphilJlmaJRkZSrkypTUEMjLEy+9kYIRCEJ+foSwxLzW1KtE3Na8kv8g3lYEBABbdJBI="
     private val uid = 0
     private var isJoined = false
     private var isMuted = false
@@ -35,6 +36,7 @@ class AgoraManager   {
                     super.onJoinChannelSuccess(channel, uid, elapsed)
                     isJoined = true
                     showMessage(context, "You have joined the channel")
+                    Log.d("Agora", "Joined channel successfully. Channel: $channel, UID: $uid")
                 }
 
                 override fun onUserJoined(uid: Int, elapsed: Int) {
@@ -87,8 +89,53 @@ class AgoraManager   {
 
     }
 
+    fun initAgoraEngineForAudioCall(context: Context, appId: String) {
+        try {
+            rtcEngine = RtcEngine.create(context, appId, object : IRtcEngineEventHandler() {
+                override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
+                    super.onJoinChannelSuccess(channel, uid, elapsed)
+                    isJoined = true
+                    showMessage(context, "Audio call joined successfully")
+                }
+
+                override fun onUserOffline(uid: Int, reason: Int) {
+                    super.onUserOffline(uid, reason)
+                    showMessage(context, "User $uid offline")
+                }
+
+                // Add more handlers if needed
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun joinChannelForAudioCall(channelName: String, uid: Int, context: Context) {
+        // Check for RECORD_AUDIO permission
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            val channelOption = ChannelMediaOptions()
+            channelOption.channelProfile = Constants.CHANNEL_PROFILE_COMMUNICATION
+            channelOption.clientRoleType = Constants.CLIENT_ROLE_BROADCASTER
+            rtcEngine?.joinChannel(token, channelName, null, uid)
+        } else {
+            // Request for RECORD_AUDIO permission or inform the user they need to grant it
+            showMessage(context, "Audio permission is required for audio calls.")
+        }
+    }
+
+    fun leaveChannelForAudioCall(context: Context) {
+        if (!isJoined) {
+            showMessage(context, "You are not in a channel")
+        } else {
+            rtcEngine?.leaveChannel()
+            showMessage(context, "You have left the channel")
+            isJoined = false
+        }
+    }
+
     fun muteLocalAudioStream(isMute: Boolean) {
         rtcEngine?.muteLocalAudioStream(isMute)
+
     }
 
     fun muteLocalVideoStream(isMute: Boolean) {

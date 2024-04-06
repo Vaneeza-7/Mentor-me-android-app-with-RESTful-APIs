@@ -11,7 +11,7 @@
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="612dp"
-            app:layout_constraintBottom_toTopOf="@+id/micbutton"
+            app:layout_constraintBottom_toTopOf="@+id/mutebutton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/time" />
 
         <ImageButton
-            android:id="@+id/micbutton"
+            android:id="@+id/mutebutton"
             android:layout_width="80dp"
             android:layout_height="75dp"
             android:layout_marginStart="30dp"
@@ -74,7 +74,7 @@
             android:backgroundTint="#157177"
             android:src="@drawable/outline_mic_off_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/closeButton"/>
+            app:layout_constraintBottom_toTopOf="@id/LeaveCall"/>
 
         <ImageButton
             android:id="@+id/speaker"
@@ -85,8 +85,8 @@
             android:background="@drawable/circle_filled"
             android:backgroundTint="#157177"
             android:src="@drawable/speaker_wave_2_svgrepo_com"
-            app:layout_constraintStart_toEndOf="@+id/micbutton"
-            app:layout_constraintBottom_toTopOf="@id/closeButton" />
+            app:layout_constraintStart_toEndOf="@+id/mutebutton"
+            app:layout_constraintBottom_toTopOf="@id/LeaveCall" />
 
 
         <ImageButton
@@ -99,11 +99,11 @@
             android:backgroundTint="#157177"
             android:src="@drawable/baseline_pause_24"
             app:layout_constraintStart_toEndOf="@id/speaker"
-            app:layout_constraintBottom_toTopOf="@id/closeButton" />
+            app:layout_constraintBottom_toTopOf="@id/LeaveCall" />
 
 
         <ImageButton
-            android:id="@+id/closeButton"
+            android:id="@+id/LeaveCall"
             android:layout_width="80dp"
             android:layout_height="75dp"
             android:background="@drawable/circle_filled"
