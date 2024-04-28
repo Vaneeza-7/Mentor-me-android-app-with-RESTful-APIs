@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 
 class Activity2 : AppCompatActivity() {
-    var mAuth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_2)
@@ -38,31 +39,35 @@ class Activity2 : AppCompatActivity() {
                 Intent(this, Activity7::class.java)
             );
         }*/
+        //web api request to mentorme
+        val url = "http://192.168.100.38/mentorme/login.php"
         login.setOnClickListener {
             val emailStr = email.text.toString()
             val passStr = pass.text.toString()
             if (emailStr.isNotEmpty() && passStr.isNotEmpty()) {
-                mAuth.signInWithEmailAndPassword(emailStr, passStr)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            val user = mAuth.currentUser
-                            Toast.makeText(this, "Authentication successful.",
-                                Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, Activity7::class.java))
-                            finish()
-                            // ...
+                val request = object : StringRequest(
+                    Method.POST, url,
+                    { response ->
+                        if (response == "1") {
+                            startActivity(
+                                Intent(this, Activity7::class.java)
+                            );
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(this, "Authentication failed.",
-                               Toast.LENGTH_SHORT).show()
-                            // ...
+                            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
                         }
+                    },
+                    { error ->
+                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
                     }
-                    .addOnFailureListener(this) { exception ->
-                        Toast.makeText(this, exception.localizedMessage,
-                            Toast.LENGTH_LONG).show()
+                ) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val map = HashMap<String, String>()
+                        map["email"] = emailStr
+                        map["password"] = passStr
+                        return map
                     }
+                }
+                Volley.newRequestQueue(this).add(request)
             }
 
         }
