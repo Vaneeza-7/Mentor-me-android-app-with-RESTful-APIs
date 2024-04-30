@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
@@ -18,11 +20,12 @@ import com.google.firebase.database.database
 import com.hbb20.CountryPickerView
 import com.hbb20.countrypicker.models.CPCountry
 import com.jaredrummler.materialspinner.MaterialSpinner
+import org.json.JSONObject
 
 
 class Activity3 : AppCompatActivity() {
-    var mAuth = FirebaseAuth.getInstance()
-    val database = Firebase.database;
+    //var mAuth = FirebaseAuth.getInstance()
+    //val database = Firebase.database;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_3)
@@ -44,6 +47,7 @@ class Activity3 : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                  countryName = selectedCountry?.name ?: "Unknown"
+                countryName = countryName.toString();
 
             }
         }
@@ -71,12 +75,8 @@ class Activity3 : AppCompatActivity() {
             ).show()
         }*/
 
+        val url = getString(R.string.IP) + "mentorme/insert.php"
         var button = findViewById<View>(R.id.button)
-        /*button.setOnClickListener {
-            startActivity(
-                Intent(this, Activity4::class.java)
-            );
-        }*/
         button.setOnClickListener {
             val nameStr = name.text.toString()
             val emailStr = email.text.toString()
@@ -84,44 +84,37 @@ class Activity3 : AppCompatActivity() {
             val phoneStr = phone.text.toString()
 
             if (nameStr.isNotEmpty() && emailStr.isNotEmpty() && passStr.isNotEmpty() && phoneStr.isNotEmpty() && selectedCity.isNotEmpty() && countryName.isNotEmpty()) {
-                mAuth.createUserWithEmailAndPassword(emailStr, passStr)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success
-                            val user = mAuth.currentUser
-                            val databaseReference = database.getReference()
-
-                            // object to hold the user's additional information
-                            val userData = hashMapOf(
-                                "name" to nameStr,
-                                "email" to emailStr,
-                                "phone" to phoneStr,
-                                "country" to countryName,
-                                "city" to selectedCity
-                            )
-
-                            // Save the additional user data in Realtime Database using the UID as key
-                            user?.uid?.let { uid ->
-                                databaseReference.child("users").child(uid).setValue(userData)
-                                    .addOnSuccessListener {
-                                        // Data save success
-                                        Toast.makeText(this, "User data saved successfully.", Toast.LENGTH_SHORT).show()
-                                        phoneSignup(phoneStr)
-                                        //finish()
-                                    }
-                                    .addOnFailureListener {
-                                        // Handle data save failure
-                                        Toast.makeText(this, "Failed to save user data.", Toast.LENGTH_SHORT).show()
-                                    }
-                            } ?: Toast.makeText(this, "User ID is null, can't save user data.", Toast.LENGTH_SHORT).show()
+                val request = object : StringRequest(
+                    Method.POST, url,
+                    { response ->
+                        val JsonResponse = JSONObject(response)
+                        val status = JsonResponse.getInt("status")
+                        if (status == 1) {
+                            //phoneSignup(phoneStr)
+                            startActivity(
+                                Intent(this, Activity7::class.java)
+                            );
+                            Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Couldn't register user", Toast.LENGTH_SHORT).show()
                         }
+                    },
+                    { error ->
+                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
                     }
-                    .addOnFailureListener(this) { exception ->
-                        Toast.makeText(this, exception.localizedMessage, Toast.LENGTH_LONG).show()
+                ) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val map = HashMap<String, String>()
+                        map["email"] = emailStr
+                        map["password"] = passStr
+                        map["name"] = nameStr
+                        map["phone"] = phoneStr
+                        map["country"] = countryName
+                        map["city"] = selectedCity
+                        return map
                     }
+                }
+                Volley.newRequestQueue(this).add(request)
             }
         }
 

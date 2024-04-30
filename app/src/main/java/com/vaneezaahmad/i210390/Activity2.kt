@@ -40,7 +40,7 @@ class Activity2 : AppCompatActivity() {
             );
         }*/
         //web api request to mentorme
-        val url = "http://192.168.100.38/mentorme/login.php"
+        val url = getString(R.string.IP) + "mentorme/login.php"
         login.setOnClickListener {
             val emailStr = email.text.toString()
             val passStr = pass.text.toString()

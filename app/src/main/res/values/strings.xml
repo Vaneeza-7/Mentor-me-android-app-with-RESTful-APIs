@@ -5,4 +5,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="msg_token_fmt">msgtokenfmt</string>
+    <string name ="IP">http://172.16.132.251/</string>
 </resources>
