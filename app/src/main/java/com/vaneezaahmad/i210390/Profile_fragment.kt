@@ -32,7 +32,7 @@ import java.io.ByteArrayOutputStream
 class Profile_fragment : Fragment(R.layout.fragment_profile){
     //private lateinit var selectImageLauncher: ActivityResultLauncher<String>
     private var imageString: String? = null
-
+    private var imageStringCp: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,19 +52,30 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             Method.POST, url,
             { response ->
                 val jsonResponse = JSONObject(response)
-                if (jsonResponse.has("name") && jsonResponse.has("city") && jsonResponse.has("dp")) {
+                if (jsonResponse.has("name") && jsonResponse.has("city") && jsonResponse.has("dp") && jsonResponse.has("cp")) {
                     val name = jsonResponse.getString("name")
                     val city = jsonResponse.getString("city")
                     val dp = jsonResponse.getString("dp")
+                    val cp = jsonResponse.getString("cp")
                     if(name == "null" || city == "null" ) {
                         view.findViewById<TextView>(R.id.name).text = "User"
                         view.findViewById<TextView>(R.id.location) .text = "Dhok Mandaal"
-                       // view.findViewById<CircleImageView>(R.id.profileImage).setImageResource(R.drawable.profile_modified)
                     }
                     else {
                         view.findViewById<TextView>(R.id.name).text = name
                         view.findViewById<TextView>(R.id.location) .text = city
-                        //val bitmap = base64ToBitmap(dp)
+                    }
+                    if (dp == "null" || dp == "") {
+                        Glide.with(this).load(R.drawable.profile_modified).into(view.findViewById<CircleImageView>(R.id.profileImage))
+                    }
+                    else {
+                        Glide.with(this).load(dp).into(view.findViewById<CircleImageView>(R.id.profileImage))
+                    }
+                    if (cp == "null" || cp == "") {
+                        Glide.with(this).load(R.drawable.editprofile).into(view.findViewById<ImageView>(R.id.editProfile))
+                    }
+                    else {
+                        Glide.with(this).load(cp).into(view.findViewById<ImageView>(R.id.editProfile))
                     }
 
                 } else {
@@ -125,7 +136,24 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
                 // Convert the bitmap to Base64 string
                 imageString = bitmapToBase64(bitmap)
-                uploadImage(imageString!!, email!!)
+                uploadImage(imageString!!, email!!, "DP")
+            }
+        }
+
+        val selectCoverLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val bitmap = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, it)
+                } else {
+                    val source = ImageDecoder.createSource(requireContext().contentResolver, it)
+                    ImageDecoder.decodeBitmap(source)
+                }
+                val imageView = view.findViewById<ImageView>(R.id.editProfile)
+                imageView.setImageBitmap(bitmap)
+
+                // Convert the bitmap to Base64 string
+                imageStringCp = bitmapToBase64(bitmap)
+                uploadImage(imageStringCp!!, email!!, "Cover")
             }
         }
 
@@ -137,7 +165,7 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
         }
 
         view.findViewById<Button>(R.id.iconButton2).setOnClickListener {
-          //  selectCoverLauncher.launch("image/*")
+            selectCoverLauncher.launch("image/*")
             //selectAndUploadImage(view, "coverImages", R.drawable.editprofile)
         }
 
@@ -161,13 +189,16 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
-    fun base64ToBitmap(base64String: String): Bitmap {
-        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-    }
-
-    private fun uploadImage(image: String, email: String) {
-        val url = getString(R.string.IP) + "mentorme/uploaddp.php"
+    private fun uploadImage(image: String, email: String, type:String) {
+        var url = "";
+        if(type == "Cover")
+        {
+            url = getString(R.string.IP) + "mentorme/uploadCover.php"
+        }
+        else
+        {
+            url = getString(R.string.IP) + "mentorme/uploaddp.php"
+        }
         val requestQueue = Volley.newRequestQueue(requireContext())
 
         val imageRequest = object : StringRequest(Method.POST, url,
@@ -190,10 +221,12 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
                 val params = HashMap<String, String>()
                 params["image"] = image
                 params["email"] = email
+                params["localhost"] = getString(R.string.IP)
                 return params
             }
         }
         requestQueue.add(imageRequest)
     }
+
 
 }
