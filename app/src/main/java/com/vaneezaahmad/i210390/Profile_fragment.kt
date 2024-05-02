@@ -1,8 +1,14 @@
 package com.vaneezaahmad.i210390
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +27,11 @@ import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 
 class Profile_fragment : Fragment(R.layout.fragment_profile){
     //private lateinit var selectImageLauncher: ActivityResultLauncher<String>
+    private var imageString: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,15 +52,19 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             Method.POST, url,
             { response ->
                 val jsonResponse = JSONObject(response)
-                if (jsonResponse.has("name") && jsonResponse.has("city")) {
+                if (jsonResponse.has("name") && jsonResponse.has("city") && jsonResponse.has("dp")) {
                     val name = jsonResponse.getString("name")
                     val city = jsonResponse.getString("city")
-                    if(name == "null") {
+                    val dp = jsonResponse.getString("dp")
+                    if(name == "null" || city == "null" ) {
                         view.findViewById<TextView>(R.id.name).text = "User"
+                        view.findViewById<TextView>(R.id.location) .text = "Dhok Mandaal"
+                       // view.findViewById<CircleImageView>(R.id.profileImage).setImageResource(R.drawable.profile_modified)
                     }
                     else {
                         view.findViewById<TextView>(R.id.name).text = name
                         view.findViewById<TextView>(R.id.location) .text = city
+                        //val bitmap = base64ToBitmap(dp)
                     }
 
                 } else {
@@ -100,11 +112,26 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             activity?.finish()
         }
 
+        val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val bitmap = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, it)
+                } else {
+                    val source = ImageDecoder.createSource(requireContext().contentResolver, it)
+                    ImageDecoder.decodeBitmap(source)
+                }
+                val imageView = view.findViewById<CircleImageView>(R.id.profileImage)
+                imageView.setImageBitmap(bitmap)
+
+                // Convert the bitmap to Base64 string
+                imageString = bitmapToBase64(bitmap)
+                uploadImage(imageString!!, email!!)
+            }
+        }
+
         view.findViewById<Button>(R.id.iconButton).setOnClickListener {
 
-        //    selectImageLauncher.launch("image/*")
-            /*val intent = Intent(requireContext(), Activity12::class.java)
-            startActivity(intent)*/
+             selectImageLauncher.launch("image/*")
 
             //selectAndUploadImage(view, "images", R.drawable.profile_modified)
         }
@@ -125,6 +152,48 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
         review_recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         review_recyclerView.adapter = ReviewAdapter(reviews)
+    }
+
+    fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+
+    fun base64ToBitmap(base64String: String): Bitmap {
+        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    }
+
+    private fun uploadImage(image: String, email: String) {
+        val url = getString(R.string.IP) + "mentorme/uploaddp.php"
+        val requestQueue = Volley.newRequestQueue(requireContext())
+
+        val imageRequest = object : StringRequest(Method.POST, url,
+            { response ->
+                val jsonResponse = JSONObject(response)
+                val status = jsonResponse.getInt("status")
+                val message = jsonResponse.getString("message")
+                if(status == 1) {
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                Log.d("ImageError", error.toString())
+                Toast.makeText(context, "An error occured", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["image"] = image
+                params["email"] = email
+                return params
+            }
+        }
+        requestQueue.add(imageRequest)
     }
 
 }
