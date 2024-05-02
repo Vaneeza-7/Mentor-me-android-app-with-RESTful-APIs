@@ -9,8 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthProvider
+
 
 class Activity4 : AppCompatActivity() {
     private val otp = arrayOfNulls<String>(6)
@@ -106,7 +105,7 @@ class Activity4 : AppCompatActivity() {
             appendNumber("0", circles)
         }
         backspace.setOnClickListener {
-            if(otpIndex > 0) {
+            if (otpIndex > 0) {
                 circles[otpIndex - 1].setText("")
                 otpIndex--
             }
@@ -116,26 +115,9 @@ class Activity4 : AppCompatActivity() {
 
         var btn = findViewById<TextView>(R.id.submit)
         btn.setOnClickListener {
-            val otpStr = otp.joinToString(separator = "") { it ?: "" } // convert the OTP array to a string
-            if(token != null && otpStr.length == 6) {
-                var credential = PhoneAuthProvider.getCredential(token!!, otpStr)
-                var auth = FirebaseAuth.getInstance()
-                auth.signInWithCredential(credential)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Login successful", LENGTH_LONG).show()
-                        var i = Intent(this, Activity7::class.java)
-                        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        startActivity(i)
-                    }
-
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(this, "Failed to login: ${exception.localizedMessage}", LENGTH_LONG).show()
-                        Log.d("Failed to login", exception.localizedMessage ?: "Error")
-                    }
-            }
-            else
-            {
-                Toast.makeText(this, "Invalid OTP", LENGTH_LONG).show()
+            val otpStr =
+                otp.joinToString(separator = "") { it ?: "" } // convert the OTP array to a string
+            if (token != null && otpStr.length == 6) {
             }
         }
     }

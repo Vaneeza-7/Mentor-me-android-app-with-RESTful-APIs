@@ -9,16 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.bumptech.glide.Glide
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.database
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
 
 
 class Activity11 : AppCompatActivity() {
-    val mAuth = FirebaseAuth.getInstance()
-    val database = Firebase.database
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_11)
@@ -81,15 +76,15 @@ class Activity11 : AppCompatActivity() {
 
         book.setOnClickListener {
             val booking = Booking(
-                mAuth.currentUser!!.uid,
+                "Vaneeza Ahmad",
                 mentorName!!,
                 mentorPrice!!,
                 mentorImage!!,
                 date,
                 time
             )
-            val bookingRef = database.getReference("bookings")
-            bookingRef.push().setValue(booking)
+            //val bookingRef = database.getReference("bookings")
+            //bookingRef.push().setValue(booking)
             Toast.makeText(this, "Booking Successful", Toast.LENGTH_SHORT).show()
             finish()
         }

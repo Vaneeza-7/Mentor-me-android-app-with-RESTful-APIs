@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 class Activity2 : AppCompatActivity() {
 
@@ -48,11 +49,15 @@ class Activity2 : AppCompatActivity() {
                 val request = object : StringRequest(
                     Method.POST, url,
                     { response ->
+                        //val jsonResponse = JSONObject(response)
+                        //val status = jsonResponse.getInt("status")
                         if (response == "1") {
-                            startActivity(
-                                Intent(this, Activity7::class.java)
-                            );
-                        } else {
+                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            var intent = Intent(this, Activity7::class.java)
+                            intent.putExtra("email", emailStr)
+                            startActivity(intent)
+                        } else
+                        {
                             Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
                         }
                     },

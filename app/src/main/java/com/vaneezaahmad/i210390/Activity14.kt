@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.SurfaceView
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import com.google.firebase.auth.FirebaseAuth
 import com.vaneezaahmad.i210390.AgoraManager
 import android.Manifest
 import android.content.pm.PackageManager
@@ -16,8 +15,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
 class Activity14 : AppCompatActivity() {
-    val mAuth = FirebaseAuth.getInstance()
-    val uid = mAuth.currentUser?.uid
     private lateinit var agoraManager:AgoraManager
     private lateinit var timer: CountDownTimer
     val PERMISSION_ID = 22

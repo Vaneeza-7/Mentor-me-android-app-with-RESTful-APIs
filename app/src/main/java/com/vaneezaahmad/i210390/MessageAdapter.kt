@@ -20,11 +20,6 @@ import androidx.core.content.PackageManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -60,8 +55,6 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
         val receiverImage3 = view.findViewById<ImageView>(R.id.profile_image3)
         val receiverImage4 = view.findViewById<ImageView>(R.id.profile_image4)
     }
-    var mAuth = FirebaseAuth.getInstance()
-    var database = FirebaseDatabase.getInstance()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
         return MessageViewHolder(view)
@@ -69,8 +62,7 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = messages[position]
-        val isCurrentUser = message.sender == mAuth.currentUser?.uid
-
+       val isCurrentUser = true;
         when (message.type) {
             "text" -> {
                 if (isCurrentUser) {
@@ -285,7 +277,7 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
 
 
             val messageKey = messages[position].key
-            database.getReference("messages").child(messageKey!!).setValue(messages[position])
+          //  database.getReference("messages").child(messageKey!!).setValue(messages[position])
         }
 
         builder.setNegativeButton("Cancel") { dialog, _ ->
@@ -298,7 +290,7 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
     private fun deleteMessage(position: Int) {
 
         val messageKey = messages[position].key
-        database.getReference("messages").child(messageKey!!).removeValue()
+      //  database.getReference("messages").child(messageKey!!).removeValue()
 
 
         messages.removeAt(position)

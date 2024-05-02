@@ -10,13 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Firebase
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.database.database
+//import com.google.firebase.auth.PhoneAuthProvider
 import com.hbb20.CountryPickerView
 import com.hbb20.countrypicker.models.CPCountry
 import com.jaredrummler.materialspinner.MaterialSpinner
@@ -128,36 +122,36 @@ class Activity3 : AppCompatActivity() {
 
     fun phoneSignup (phoneStr: String) {
 
-        var callbacks = object :PhoneAuthProvider.OnVerificationStateChangedCallbacks()
-        {
-            override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-                Toast.makeText(this@Activity3, "Verification completed", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@Activity3, Activity7::class.java) )
-
-            }
-
-            override fun onVerificationFailed(p0: FirebaseException) {
-                Toast.makeText(this@Activity3, "Verification failed", Toast.LENGTH_SHORT).show()
-                Log.d("Verification failed", p0.localizedMessage)
-            }
-
-            override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
-                super.onCodeSent(p0, p1)
-                var i = Intent(this@Activity3, Activity4::class.java)
-                i.putExtra("token", p0)
-                i.putExtra("phone", phoneStr)
-                startActivity(i)
-                Log.d("Code sent", "Code sent" )
-                Toast.makeText(this@Activity3, "Code sent", Toast.LENGTH_SHORT).show()
-            }
-
-        }
-        var options = PhoneAuthOptions.newBuilder()
-            .setPhoneNumber(phoneStr)
-            .setTimeout(60L, java.util.concurrent.TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(callbacks)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
+///*        var callbacks = object :PhoneAuthProvider.OnVerificationStateChangedCallbacks()
+//        {
+//            override fun onVerificationCompleted(p0: PhoneAuthCredential) {
+//                Toast.makeText(this@Activity3, "Verification completed", Toast.LENGTH_SHORT).show()
+//                startActivity(Intent(this@Activity3, Activity7::class.java) )
+//
+//            }
+//
+//            override fun onVerificationFailed(p0: FirebaseException) {
+//                Toast.makeText(this@Activity3, "Verification failed", Toast.LENGTH_SHORT).show()
+//                Log.d("Verification failed", p0.localizedMessage)
+//            }
+//
+//            override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
+//                super.onCodeSent(p0, p1)
+//                var i = Intent(this@Activity3, Activity4::class.java)
+//                i.putExtra("token", p0)
+//                i.putExtra("phone", phoneStr)
+//                startActivity(i)
+//                Log.d("Code sent", "Code sent" )
+//                Toast.makeText(this@Activity3, "Code sent", Toast.LENGTH_SHORT).show()
+//            }
+//
+//        }
+//        var options = PhoneAuthOptions.newBuilder()
+//            .setPhoneNumber(phoneStr)
+//            .setTimeout(60L, java.util.concurrent.TimeUnit.SECONDS)
+//            .setActivity(this)
+//            .setCallbacks(callbacks)
+//            .build()
+//        PhoneAuthProvider.verifyPhoneNumber(options)*/
     }
 }

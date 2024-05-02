@@ -27,13 +27,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.storage.FirebaseStorage
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -52,8 +47,6 @@ import java.util.UUID
 
 
 class MessageActivity : ScreenshotDetectionActivity() {
-    val mAuth = FirebaseAuth.getInstance()
-    val database = FirebaseDatabase.getInstance()
     private var recorder: MediaRecorder? = null
     private var fileName: String? = null
     private var photoUri: Uri? = null
@@ -164,18 +157,6 @@ class MessageActivity : ScreenshotDetectionActivity() {
                 val mimeType = contentResolver.getType(uri!!) // Get the MIME type
                 val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
                 // Save the uri to firebase storage
-                val storageRef = FirebaseStorage.getInstance();
-                val st = storageRef.reference.child("chatMedia/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.$extension")
-                val uploadTask = st.putFile(uri!!)
-                uploadTask.addOnSuccessListener {
-                    Toast.makeText(this, "Media uploaded successfully", Toast.LENGTH_SHORT).show()
-                    st.downloadUrl.addOnSuccessListener {
-                        mediaUrl = it.toString()
-                        Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(this, "Failed to upload media", Toast.LENGTH_SHORT).show()
-                }
 
             }
         }
@@ -192,52 +173,10 @@ class MessageActivity : ScreenshotDetectionActivity() {
 
         var mentorUid = intent.getStringExtra("mentorUid")
 
-        val userRef = database.getReference("users")
         var userUid : String = ""
-        userRef.get().addOnSuccessListener {
-            for (user in it.children) {
-                val userObj = user.getValue(User::class.java)
-                if (userObj != null) {
-                    if (userObj.email == userEmail) {
-                        userUid = user.key.toString()
-                        userImage = userObj.image
-                    }
-                }
-            }
-        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.chat_recycler_view)
         val messages = mutableListOf<Message>()
-        val messagesRef = database.getReference("messages")
-        messagesRef.orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                messages.clear()
-                for (message in snapshot.children) {
-                    val messageObj = message.getValue(Message::class.java)
-                    if (messageObj != null) {
-                        if (messageObj.sender == mAuth.currentUser?.uid && messageObj.receiver == mentorUid) {
-                            messages.add(messageObj)
-                        }
-                        if (messageObj.sender == mentorUid && messageObj.receiver == mAuth.currentUser?.uid) {
-                            messages.add(messageObj)
-                        }
-                        if (messageObj.sender == mAuth.currentUser?.uid.toString() && messageObj.receiver == userUid) {
-                            messages.add(messageObj)
-                        }
-                        if (messageObj.sender == userUid && messageObj.receiver == mAuth.currentUser?.uid.toString()) {
-                            messages.add(messageObj)
-                        }
-                    }
-                }
-                recyclerView.adapter = MessageAdapter(this@MessageActivity, messages)
-                recyclerView.adapter?.notifyDataSetChanged()
-                recyclerView.scrollToPosition(messages.size - 1)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-            }
-        })
 
         var isRecording = false
 
@@ -252,18 +191,18 @@ class MessageActivity : ScreenshotDetectionActivity() {
                     if(file.exists()) {
                         //playRecordedAudio(fileName!!)
                         Log.d("Audio", "Audio file saved at $fileName")
-                        val storageRef = FirebaseStorage.getInstance();
-                        val st = storageRef.reference.child("voiceMessages/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.3gp")
-                        val uploadTask = st.putFile(Uri.fromFile(file))
-                        uploadTask.addOnSuccessListener {
-                            Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
-                            st.downloadUrl.addOnSuccessListener {
-                                    audioUrl = it.toString()
-                            }
-                        }.addOnFailureListener {
-                            Toast.makeText(this, "Failed to upload audio file", Toast.LENGTH_SHORT)
-                                .show()
-                        }
+                        //val storageRef = FirebaseStorage.getInstance();
+                        //val st = storageRef.reference.child("voiceMessages/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.3gp")
+                       // val uploadTask = st.putFile(Uri.fromFile(file))
+//                        uploadTask.addOnSuccessListener {
+//                            Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
+//                            st.downloadUrl.addOnSuccessListener {
+//                                    audioUrl = it.toString()
+//                            }
+//                        }.addOnFailureListener {
+//                            Toast.makeText(this, "Failed to upload audio file", Toast.LENGTH_SHORT)
+//                                .show()
+//                        }
                     }
                      else
                     {
@@ -286,18 +225,18 @@ class MessageActivity : ScreenshotDetectionActivity() {
                 val mimeType = contentResolver.getType(photoUri!!) // Get the MIME type
                 val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
                 // Save the uri to firebase storage
-                val storageRef = FirebaseStorage.getInstance();
-                val st = storageRef.reference.child("chatMedia/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.$extension")
-                val uploadTask = st.putFile(photoUri!!)
-                uploadTask.addOnSuccessListener {
-                    Toast.makeText(this, "Media uploaded successfully", Toast.LENGTH_SHORT).show()
-                    st.downloadUrl.addOnSuccessListener {
-                        mediaUrl = it.toString()
-                        Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(this, "Failed to upload media", Toast.LENGTH_SHORT).show()
-                }
+                //val storageRef = FirebaseStorage.getInstance();
+                //val st = storageRef.reference.child("chatMedia/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.$extension")
+                //val uploadTask = st.putFile(photoUri!!)
+//                uploadTask.addOnSuccessListener {
+//                    Toast.makeText(this, "Media uploaded successfully", Toast.LENGTH_SHORT).show()
+//                    st.downloadUrl.addOnSuccessListener {
+//                        mediaUrl = it.toString()
+//                        Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
+//                    }
+//                }.addOnFailureListener {
+//                    Toast.makeText(this, "Failed to upload media", Toast.LENGTH_SHORT).show()
+//                }
 
             }
         }
@@ -378,26 +317,18 @@ class MessageActivity : ScreenshotDetectionActivity() {
 
 
 //getting current user's profile image
-        val currentUserId = mAuth.currentUser?.uid
-        if (currentUserId != null) {
-            fetchCurrentUserImage(currentUserId) { imageUrl ->
-                if (imageUrl != null) {
-                    senderImage = imageUrl
-                } else {
-                    // Handle case where image is not found
-                }
-            }
-        }
+
 
         sendButton.setOnClickListener {
             val messageText = messageBox.text.toString()
             //if (messageText.isNotEmpty()) {
 
                 var message : Message;
-                val sender = mAuth.currentUser?.uid.toString()
+                val sender = "vaneezay"
                 val receiver : String;
                 val timestamp = System.currentTimeMillis()
                 val read = false
+                val messageKey = UUID.randomUUID().toString()
 
                 if (userEmail != null) {
                     // If userEmail is not null, then the sender is the mentor and the receiver is the user
@@ -408,9 +339,6 @@ class MessageActivity : ScreenshotDetectionActivity() {
                     receiver = mentorUid!!
                     receiverImage = mentorImage
                 }
-
-                val messageRef = database.getReference("messages").push()
-                val messageKey = messageRef.key
 
                 if(messageText.isNotEmpty() && audioUrl.isEmpty()){
                     val type = "text"
@@ -424,15 +352,15 @@ class MessageActivity : ScreenshotDetectionActivity() {
                     val type = "audio"
                     message = Message("Voice Message", sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = audioUrl, mediaUrl = "", type = type)
                 }
-                messageRef.setValue(message).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        messageBox.text?.clear()
-                    }
-                    else
-                    {
-                        Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
-                    }
-                }
+//                messageRef.setValue(message).addOnCompleteListener(this) { task ->
+//                    if (task.isSuccessful) {
+//                        messageBox.text?.clear()
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
 
             //}
         }
@@ -441,39 +369,6 @@ class MessageActivity : ScreenshotDetectionActivity() {
 
     fun fetchCurrentUserImage(currentUserId: String, onComplete: (String?) -> Unit) {
         // find the image in the Mentors reference
-        val mentorRef = database.getReference("Mentors").child(currentUserId)
-        mentorRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val mentor = dataSnapshot.getValue(Mentor::class.java)
-                if (mentor != null && mentor.image.isNotEmpty()) {
-                    onComplete(mentor.image)
-                } else {
-                    // If not found in Mentors, then look in the Users reference
-                    val userRef = database.getReference("users").child(currentUserId)
-                    userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            val user = snapshot.getValue(User::class.java)
-                            if (user != null && user.image.isNotEmpty()) {
-                                onComplete(user.image)
-                            } else {
-                                // User image also not found, handle accordingly
-                                onComplete(null)
-                            }
-                        }
-
-                        override fun onCancelled(databaseError: DatabaseError) {
-                            // Handle error case
-                            onComplete(null)
-                        }
-                    })
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle error case
-                onComplete(null)
-            }
-        })
     }
 
     @RequiresApi(Build.VERSION_CODES.S)

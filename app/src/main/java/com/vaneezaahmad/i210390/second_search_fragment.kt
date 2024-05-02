@@ -9,11 +9,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.FirebaseDatabase
 import com.jaredrummler.materialspinner.MaterialSpinner
 
 class second_search_fragment : Fragment(R.layout.second_fragment_search) {
-val database = FirebaseDatabase.getInstance()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,17 +42,5 @@ val database = FirebaseDatabase.getInstance()
         }*/
 
         val mentors = ArrayList<Mentor>()
-        val mentorRef = database.getReference("Mentors")
-        mentorRef.get().addOnSuccessListener {
-            for (mentor in it.children) {
-                val mentorObj = mentor.getValue(Mentor::class.java)
-                if (mentorObj != null) {
-                    mentors.add(mentorObj)
-                }
-            }
-            val recycler_view = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
-            recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
-            recycler_view.adapter = SearchMentorAdapter(mentors)
-        }
     }
 }

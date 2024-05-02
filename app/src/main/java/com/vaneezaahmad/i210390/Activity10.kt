@@ -15,16 +15,9 @@ import android.widget.VideoView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
-import com.google.firebase.storage.FirebaseStorage
 import com.jaredrummler.materialspinner.MaterialSpinner
 
 class Activity10 : AppCompatActivity() {
-    var mAuth = FirebaseAuth.getInstance();
-    val database = Firebase.database;
     var ddp: String = "";
     var vid: String = "";
     var imageUri :Uri? = null;
@@ -179,59 +172,6 @@ class Activity10 : AppCompatActivity() {
             val categoryStr = spinner_category.text.toString()
 
             if (nameStr.isNotEmpty() && emailStr.isNotEmpty() && passStr.isNotEmpty() && roleStr.isNotEmpty() && descStr.isNotEmpty() && priceStr.isNotEmpty() && statusStr.isNotEmpty() && categoryStr.isNotEmpty()) {
-                mAuth.createUserWithEmailAndPassword(emailStr, passStr)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val user = mAuth.currentUser
-                            val imageStorageRef = FirebaseStorage.getInstance().reference.child("MentorDpImages/${user!!.uid}")
-                            imageStorageRef.putFile(imageUri!!)
-                                .addOnSuccessListener {
-                                    imageStorageRef.downloadUrl.addOnSuccessListener { imageUrl ->
-                                        ddp = imageUrl.toString()
-
-                                        // Start video upload
-                                        val videoStorageRef = FirebaseStorage.getInstance().reference.child("MentorVideos/${user.uid}")
-                                        videoStorageRef.putFile(videoUri!!)
-                                            .addOnSuccessListener {
-                                                videoStorageRef.downloadUrl.addOnSuccessListener { videoUrl ->
-                                                    // Both image and video uploaded successfully, now save user data
-                                                    val databaseReference = database.getReference()
-                                                    val userData = hashMapOf(
-                                                        "name" to nameStr,
-                                                        "email" to emailStr,
-                                                        "role" to roleStr,
-                                                        "description" to descStr,
-                                                        "price" to priceStr,
-                                                        "status" to statusStr,
-                                                        "category" to categoryStr,
-                                                        "image" to ddp, // Image URL
-                                                        "video" to videoUrl.toString() // Video URL
-                                                    )
-                                                    databaseReference.child("Mentors").child(user.uid).setValue(userData)
-                                                        .addOnSuccessListener {
-                                                            Toast.makeText(this, "Mentor data saved successfully.", Toast.LENGTH_SHORT).show()
-                                                            startActivity(Intent(this, Activity7::class.java))
-                                                        }
-                                                        .addOnFailureListener {
-                                                            Toast.makeText(this, "Failed to save mentor data.", Toast.LENGTH_SHORT).show()
-                                                        }
-                                                }
-                                            }
-                                            .addOnFailureListener {
-                                                Toast.makeText(this, "Failed to upload video", Toast.LENGTH_SHORT).show()
-                                            }
-                                    }
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
-                                }
-                        } else {
-                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(this, exception.localizedMessage, Toast.LENGTH_LONG).show()
-                    }
             }
         }
 

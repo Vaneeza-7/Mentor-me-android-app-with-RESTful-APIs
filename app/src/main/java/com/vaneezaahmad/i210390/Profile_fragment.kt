@@ -16,19 +16,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
+import org.json.JSONObject
 
 class Profile_fragment : Fragment(R.layout.fragment_profile){
-    var mAuth = FirebaseAuth.getInstance();
-    var uid = mAuth.currentUser?.uid.toString()
-    val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
     //private lateinit var selectImageLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
@@ -43,12 +37,42 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val email = arguments?.getString("email")
 
+        var url = getString(R.string.IP) + "mentorme/getUserData.php"
+        val request = object : StringRequest(
+            Method.POST, url,
+            { response ->
+                val jsonResponse = JSONObject(response)
+                if (jsonResponse.has("name") && jsonResponse.has("city")) {
+                    val name = jsonResponse.getString("name")
+                    val city = jsonResponse.getString("city")
+                    if(name == "null") {
+                        view.findViewById<TextView>(R.id.name).text = "User"
+                    }
+                    else {
+                        view.findViewById<TextView>(R.id.name).text = name
+                        view.findViewById<TextView>(R.id.location) .text = city
+                    }
 
-        //view.findViewById<CardView>(R.id.card).setOnClickListener {
-          //  val intent = Intent(requireContext(), Activity8::class.java)
-            //startActivity(intent)
-        //}
+                } else {
+
+                    Toast.makeText(context, "Not complete JsonObject", Toast.LENGTH_SHORT).show()
+                }
+
+            },
+            { error ->
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val map = HashMap<String, String>()
+                map["email"] = email.toString()
+                return map
+            }
+        }
+        val queue = Volley.newRequestQueue(context)
+        queue.add(request)
 
 
         view.findViewById<ImageView>(R.id.backButton).setOnClickListener {
@@ -58,6 +82,7 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
         view.findViewById<ImageButton>(R.id.more).setOnClickListener {
             val intent = Intent(requireContext(), Activity16::class.java)
+            intent.putExtra("email", email  )
             startActivity(intent)
         }
 
@@ -68,94 +93,16 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
         view.findViewById<ImageButton>(R.id.logout).setOnClickListener {
 
-            mAuth.signOut()
+            //mAuth.signOut()
             Toast.makeText(requireContext(), "Logged Out", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), ActivityChoose::class.java)
             startActivity(intent)
             activity?.finish()
         }
 
-        //var uid = mAuth.currentUser?.uid.toString()
-        //val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
-        firebaseRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Get the username
-                    val username = dataSnapshot.child("name").value.toString()
-                    val city = dataSnapshot.child("city").value.toString()
-                    view.findViewById<TextView>(R.id.name).text = username
-                    view.findViewById<TextView>(R.id.location).text = city
-
-                    val image = dataSnapshot.child("image").value.toString()
-                    val imageView = view.findViewById<CircleImageView>(R.id.profileImage)
-                    if(image.isNotEmpty() && image != "null") {
-                        Glide.with(this@Profile_fragment).load(image).into(imageView)
-                    }
-                    else
-                    {
-                        imageView.setImageResource(R.drawable.profile_modified)
-                    }
-
-                    val coverImage = dataSnapshot.child("coverImage").value.toString()
-                    val coverImageView = view.findViewById<ImageView>(R.id.editProfile)
-                    if(coverImage.isNotEmpty() && coverImage != "null") {
-                        Glide.with(this@Profile_fragment).load(coverImage).into(coverImageView)
-                    }
-                    else
-                    {
-                        coverImageView.setImageResource(R.drawable.editprofile)
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
-        })
-
-        val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if(uri != null) {
-                val storageRef = FirebaseStorage.getInstance().reference.child("images/${mAuth.currentUser?.uid.toString()}")
-                storageRef.putFile(uri).addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener {
-                        val url = it.toString()
-                        val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
-                        firebaseRef.child("image").setValue(url).addOnSuccessListener {
-
-                        // Load the image into the ImageView
-                        val imageView = view.findViewById<CircleImageView>(R.id.profileImage)
-                        Glide.with(this).load(url).into(imageView)
-                        }
-                    }
-                }.addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to upload image: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
-        val selectCoverLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if(uri != null) {
-                val storageRef = FirebaseStorage.getInstance().reference.child("coverImages/${mAuth.currentUser?.uid.toString()}")
-                storageRef.putFile(uri).addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener {
-                        val url = it.toString()
-                        val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
-                        firebaseRef.child("coverImage").setValue(url).addOnSuccessListener {
-
-                            // Load the image into the ImageView
-                            val imageView = view.findViewById<ImageView>(R.id.editProfile)
-                            Glide.with(this).load(url).into(imageView)
-                        }
-                    }
-                }.addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to upload image: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-            }
-
-        }
-
         view.findViewById<Button>(R.id.iconButton).setOnClickListener {
 
-            selectImageLauncher.launch("image/*")
+        //    selectImageLauncher.launch("image/*")
             /*val intent = Intent(requireContext(), Activity12::class.java)
             startActivity(intent)*/
 
@@ -163,66 +110,18 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
         }
 
         view.findViewById<Button>(R.id.iconButton2).setOnClickListener {
-            selectCoverLauncher.launch("image/*")
+          //  selectCoverLauncher.launch("image/*")
             //selectAndUploadImage(view, "coverImages", R.drawable.editprofile)
         }
 
         val mentors = ArrayList<Mentor>()
         val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMentorsRecyclerView)
-
-        val favoritesRef = FirebaseDatabase.getInstance().getReference("favorites").child(uid.toString())
-        val mentorsRef = FirebaseDatabase.getInstance().getReference("Mentors")
-
-        favoritesRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val favoriteMentorUids = dataSnapshot.children.map { it.key ?: "" }
-                    mentorsRef.get().addOnSuccessListener { mentorSnapshot ->
-                        val allMentors = mentorSnapshot.children.mapNotNull { Pair(it.key, it.getValue(Mentor::class.java)) }
-                        val favoriteMentors = allMentors.filter { favoriteMentorUids.contains(it.first) }.mapNotNull { it.second }
-                        // Now, favoriteMentors contains the mentors whose UIDs are in the favorites.
-                        // You can update your RecyclerView adapter with this list.
-                        (recyclerView.adapter as MentorAdapter).updateMentors(favoriteMentors)
-                    }
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(null, "Failed to read value.", Toast.LENGTH_SHORT).show()
-            }
-        })
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = MentorAdapter(mentors)
 
         //review recycler view
         val reviews = ArrayList<Review>()
         val review_recyclerView = view.findViewById<RecyclerView>(R.id.myReviewsRecyclerView)
-
-        val reviewsRef = FirebaseDatabase.getInstance().getReference("reviews")
-        reviewsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val reviews = mutableListOf<Review>()
-                    // Loop through each child (each child is a review keyed by the user's UID)
-                    for (uidSnapshot in dataSnapshot.children) {
-                        // get the Review object from the UID snapshot
-                        if(uidSnapshot.key == uid) {
-                            val review = uidSnapshot.getValue(Review::class.java)
-                            if (review != null) {
-                                reviews.add(review)
-                            }
-                        }
-                    }
-                    review_recyclerView.adapter = ReviewAdapter(reviews)
-                    review_recyclerView.adapter?.notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle possible errors
-                Log.e("Firebase", "Error fetching data", databaseError.toException())
-            }
-        })
 
         review_recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         review_recyclerView.adapter = ReviewAdapter(reviews)

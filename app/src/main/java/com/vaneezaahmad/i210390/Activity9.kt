@@ -10,15 +10,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.database
 import de.hdodenhof.circleimageview.CircleImageView
 
 
 class Activity9 : AppCompatActivity() {
-    var mAuth = FirebaseAuth.getInstance()
-    var database = Firebase.database;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_9)
@@ -56,8 +51,6 @@ class Activity9 : AppCompatActivity() {
             Toast.makeText(applicationContext, "Review Submitted", Toast.LENGTH_SHORT).show()
             if (mentorName != null) {
                 var review = Review(mentorName, simpleRatingBar.rating, review.text.toString())
-                mAuth.currentUser?.uid?.let { it1 -> database.getReference("reviews").child(it1).setValue(review) }
-                finish()
             }
         }
 

@@ -7,10 +7,9 @@ import android.content.Intent
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 
 class Activity6 : AppCompatActivity() {
-    var mAuth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_6)
@@ -41,16 +40,6 @@ class Activity6 : AppCompatActivity() {
             val reEnterPassword = findViewById<EditText>(R.id.reEnterPassword).text.toString()
 
             if (newPassword == reEnterPassword) {
-                // call a function to update the password in database
-                mAuth.currentUser?.updatePassword(newPassword)
-                Toast.makeText(this, "Password updated successfully", Toast.LENGTH_SHORT).show()
-                startActivity(
-                    Intent(this, Activity7::class.java)
-                );
-                finish();
-            } else {
-                // Show an error message to the user
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -7,14 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
+
+//import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.database.DataSnapshot
+//import com.google.firebase.database.DatabaseError
+//import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.database.ValueEventListener
 
 
 class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemClickListener {
@@ -38,39 +44,41 @@ class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemCl
             startActivity(intent)
         }
 
-        //view.findViewById<CardView>(R.id.card).setOnClickListener {
-          //  val intent = Intent(requireContext(), Activity8::class.java)
-           // startActivity(intent)
-        //}
+        val email = arguments?.getString("email")
 
-        var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val firebaseRef = FirebaseDatabase.getInstance().getReference("users").child(uid.toString())
-        firebaseRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Get the username
-                    val username = dataSnapshot.child("name").value.toString()
-                    view.findViewById<TextView>(R.id.text_name).text = username
+        //fetch user name here
+        var url = getString(R.string.IP) + "mentorme/getUserData.php"
+        val request = object : StringRequest(
+            Method.POST, url,
+            { response ->
+                val jsonResponse = JSONObject(response)
+                if (jsonResponse.has("name")) {
+                    val name = jsonResponse.getString("name")
+                    if(name == "null") {
+                        view.findViewById<TextView>(R.id.text_name).text = "User"
+                    }
+                    else {
+                        view.findViewById<TextView>(R.id.text_name).text = name
+                    }
+
+                } else {
+
+                    Toast.makeText(context, "No name in JsonObject", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onCancelled(databaseError: DatabaseError) {
+            },
+            { error ->
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
             }
-        })
-
-        /*val FirebaseRef2 = FirebaseDatabase.getInstance().getReference("Mentors").child(uid.toString())
-        FirebaseRef2.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Get the username
-                    val username = dataSnapshot.child("name").value.toString()
-                    view.findViewById<TextView>(R.id.text_name).text = username
-                }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val map = HashMap<String, String>()
+                map["email"] = email.toString()
+                return map
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
-        })*/
+        }
+        val queue = Volley.newRequestQueue(context)
+        queue.add(request)
 
         //category recycler view
         val categories = ArrayList<Category>()
@@ -87,24 +95,12 @@ class Home_fragment : Fragment(R.layout.fragment_home), CategoryAdapter.OnItemCl
         categoriesRecyclerView.adapter = CategoryAdapter(categories, this)
 
         //mentor recycler view
-        mentors = ArrayList<Mentor>()
-        val firebaseRef2 = FirebaseDatabase.getInstance().getReference("Mentors")
-        firebaseRef2.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (mentorSnapshot in dataSnapshot.children) {
-                        val mentor = mentorSnapshot.getValue(Mentor::class.java)
-                        if (mentor != null) {
-                            mentors.add(mentor)
-                        }
-                    }
-                    recyclerView.adapter?.notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
-        })
+        mentors = ArrayList<Mentor>();
+        mentors.add(Mentor("John Doe", "100", "Teacher", "Active", "android.resource://com.vaneezaahmad.i210390/drawable/${R.drawable.john_cooper}", "Education", "Experienced teacher", "john.doe@example.com", "video_url"))
+        mentors.add(Mentor("Jane Smith", "120", "Engineer", "Active","android.resource://com.vaneezaahmad.i210390/drawable/${R.drawable.drake}" , "Technology", "Experienced engineer", "jane.smith@example.com", "video_url"))
+        mentors.add(Mentor("Bob Johnson", "150", "Entrepreneur", "Active", "android.resource://com.vaneezaahmad.i210390/drawable/${R.drawable.john_cooper}", "Entrepreneurship", "Successful entrepreneur", "bob.johnson@example.com", "video_url"))
+        mentors.add(Mentor("Alice Williams", "80", "Chef", "Active", "android.resource://com.vaneezaahmad.i210390/drawable/${R.drawable.john_cooper}", "Cooking", "Professional chef", "alice.williams@example.com", "video_url"))
+        mentors.add(Mentor("Charlie Brown", "90", "Coach", "Active", "android.resource://com.vaneezaahmad.i210390/drawable/${R.drawable.john_cooper}", "Personal Growth", "Life coach", "charlie.brown@example.com", "video_url"));
 
         recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

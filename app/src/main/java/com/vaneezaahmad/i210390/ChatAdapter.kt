@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.database.FirebaseDatabase
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ChatAdapter (val chats: List<Mentor>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
-    private val database = FirebaseDatabase.getInstance()
     class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name = view.findViewById<TextView>(R.id.username)
         val profileImage = view.findViewById<CircleImageView>(R.id.profile_image)
@@ -29,17 +27,7 @@ class ChatAdapter (val chats: List<Mentor>) : RecyclerView.Adapter<ChatAdapter.C
         holder.name.text = chat.name
         Glide.with(holder.profileImage.context).load(chat.image).into(holder.profileImage)
         var mentorUid : String = ""
-        val mentorRef = database.getReference("Mentors")
-        mentorRef.get().addOnSuccessListener {
-            for (mentor in it.children) {
-                val mentorObj = mentor.getValue(Mentor::class.java)
-                if (mentorObj != null) {
-                    if (mentorObj.email == chat.email) {
-                        mentorUid = mentor.key.toString()
-                    }
-                }
-            }
-        }
+
         holder.relativeLayout.setOnClickListener {
             val intent = Intent(holder.relativeLayout.context, MessageActivity::class.java)
             intent.putExtra("mentorName", chat.name)

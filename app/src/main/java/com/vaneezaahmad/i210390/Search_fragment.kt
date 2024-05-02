@@ -12,10 +12,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class Search_fragment : Fragment(R.layout.fragment_search){
@@ -25,26 +21,6 @@ class Search_fragment : Fragment(R.layout.fragment_search){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val firebaseRef2 = FirebaseDatabase.getInstance().getReference("Mentors")
-        firebaseRef2.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (mentorSnapshot in dataSnapshot.children) {
-                        val mentor = mentorSnapshot.getValue(Mentor::class.java)
-                        if (mentor != null) {
-                            mentors.add(mentor)
-                        }
-                    }
-                    adapter.notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
-        })
-
-        adapter = SearchListAdapter(mentors)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

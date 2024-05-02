@@ -10,54 +10,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+
 
 class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<MentorAdapter.MentorViewHolder>() {
-    var mAuth = FirebaseAuth.getInstance()
-    var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    private val database = FirebaseDatabase.getInstance()
-    private val favoritesRef = database.getReference("favorites").child(uid.toString())
-    private val mentorsRef = database.getReference("Mentors")
     private val favoriteMentorIds = mutableSetOf<String>()
     private val mentorUids = mutableMapOf<Mentor, String>()
 
     init {
-        mentorsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    var position = 0
-                    for (mentorSnapshot in dataSnapshot.children) {
-                        val mentor = mentorSnapshot.getValue(Mentor::class.java)
-                        if (mentor != null) {
-                            mentorUids[mentor] = mentorSnapshot.key!! // Set the unique ID of the mentor
-                            //position++
-                        //mentors.add(mentor)
-                        }
-                    }
-                    notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(null, "Failed to read value.", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
     init {
-        favoritesRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                favoriteMentorIds.clear()
-                for (snapshot in dataSnapshot.children) {
-                    favoriteMentorIds.add(snapshot.key ?: "")
-                }
-                notifyDataSetChanged()
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(null, "Failed to read value.", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     class MentorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -91,9 +52,9 @@ class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<Me
 
         holder.favorite.setOnClickListener {
             if (isFavorite) {
-                favoritesRef.child(mentorUid!!).removeValue()
+               // favoritesRef.child(mentorUid!!).removeValue()
             } else {
-                favoritesRef.child(mentorUid!!).setValue(true)
+                //favoritesRef.child(mentorUid!!).setValue(true)
             }
         }
 

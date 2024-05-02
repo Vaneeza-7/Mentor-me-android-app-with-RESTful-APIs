@@ -7,9 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.database
 
 class BookingAdapter (private var bookings: List<Booking>): RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 

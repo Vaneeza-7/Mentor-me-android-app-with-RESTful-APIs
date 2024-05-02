@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 
 class MentorLogin : AppCompatActivity() {
-    var mAuth = FirebaseAuth.getInstance();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mentor_login)
@@ -27,28 +25,6 @@ class MentorLogin : AppCompatActivity() {
             val emailStr = email.text.toString()
             val passStr = pass.text.toString()
             if (emailStr.isNotEmpty() && passStr.isNotEmpty()) {
-                mAuth.signInWithEmailAndPassword(emailStr, passStr)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val user = mAuth.currentUser
-                            val i = Intent(this, Activity7::class.java)
-                            i.putExtra("mentorEmail", emailStr);
-                            i.putExtra("mentorUid", user?.uid);
-                            startActivity(i)
-                            Toast.makeText(this, "Authentication successful.",
-                                Toast.LENGTH_SHORT).show()
-                            finish()
-                            // ...
-                        } else {
-
-                            Toast.makeText(this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    .addOnFailureListener(this) {
-                        Toast.makeText(this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                    }
             }
 
         }

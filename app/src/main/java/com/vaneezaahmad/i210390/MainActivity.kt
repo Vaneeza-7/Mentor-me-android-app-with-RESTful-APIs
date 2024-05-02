@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import org.json.JSONObject
 import okhttp3.OkHttpClient
@@ -22,7 +21,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
-    val mAuth = FirebaseAuth.getInstance();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,20 +36,20 @@ class MainActivity : AppCompatActivity() {
 
         }*/
 
-        if(mAuth.currentUser != null){
-            Handler(Looper.getMainLooper()).postDelayed({
-                startActivity(Intent(this, Activity7::class.java))
-                finish()
-            }, 5000) // 5000 milliseconds = 5 seconds
-        }
-        else
-        {
+        //if(mAuth.currentUser != null){
             Handler(Looper.getMainLooper()).postDelayed({
                 startActivity(Intent(this, ActivityChoose::class.java))
                 finish()
             }, 5000) // 5000 milliseconds = 5 seconds
-
-        }
+        //}
+//        else
+//        {
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                startActivity(Intent(this, ActivityChoose::class.java))
+//                finish()
+//            }, 5000) // 5000 milliseconds = 5 seconds
+//
+//        }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
