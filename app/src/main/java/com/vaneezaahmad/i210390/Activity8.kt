@@ -25,6 +25,7 @@ class Activity8 : AppCompatActivity() {
         val mentorImage = intent.getStringExtra("mentorImage")
         val mentorEmail = intent.getStringExtra("mentorEmail")
         val mentorPrice = intent.getStringExtra("mentorPrice")
+        val videoDisguised = intent.getStringExtra("videoDisguised")
 
         name.text = "Hi! I'm " + mentorName
         role.text = mentorRole
@@ -35,9 +36,7 @@ class Activity8 : AppCompatActivity() {
 
         val back = findViewById<ImageView>(R.id.arrow)
         back.setOnClickListener {
-            startActivity(
-                Intent(this, Activity7::class.java)
-            );
+            finish();
 
         }
 
@@ -49,6 +48,8 @@ class Activity8 : AppCompatActivity() {
                     it.putExtra("mentorDescription", mentorDescription)
                     it.putExtra("mentorImage", mentorImage)
                     it.putExtra("mentorEmail", mentorEmail)
+                    it.putExtra("mentorPrice", mentorPrice)
+                    it.putExtra("videoDisguised", videoDisguised)
                     startActivity(it)
                 }
         }
@@ -60,6 +61,8 @@ class Activity8 : AppCompatActivity() {
                     it.putExtra("mentorName", mentorName)
                     it.putExtra("mentorImage", mentorImage)
                     it.putExtra("mentorPrice", mentorPrice)
+                    it.putExtra("videoDisguised", videoDisguised)
+                    it.putExtra("mentorEmail", mentorEmail)
                     startActivity(it)
                 }
         }

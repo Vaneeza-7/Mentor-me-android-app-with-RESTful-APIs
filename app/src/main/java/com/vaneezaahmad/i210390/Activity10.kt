@@ -183,11 +183,18 @@ class Activity10 : AppCompatActivity() {
                             }
                             if (videoString != null) {
                                 uploadVideo(videoString!!, emailStr)
-                             //   Toast.makeText(this, "Video uploaded", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, ActivityMentor::class.java)
+                                intent.putExtra("email", emailStr)
+                                startActivity(intent)
                             }
-                            val intent = Intent(this, ActivityMentor::class.java)
-                            intent.putExtra("email", emailStr)
-                            startActivity(intent)
+                            else
+                            {
+                                Toast.makeText(this, "Couldn't upload video", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, ActivityMentor::class.java)
+                                intent.putExtra("email", emailStr)
+                                startActivity(intent)
+                            }
+
                         } else {
                             Toast.makeText(this, "Couldn't register mentor", Toast.LENGTH_SHORT).show()
                         }

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class SearchMentorAdapter(private val items: List<Mentor>) : RecyclerView.Adapter<SearchMentorAdapter.ViewHolder>() {
 
@@ -29,7 +30,9 @@ class SearchMentorAdapter(private val items: List<Mentor>) : RecyclerView.Adapte
         holder.price.text = item.price
         holder.role.text = item.role
         holder.status.text = item.status
-        holder.image.setImageURI(item.image.toUri())
+        Glide.with(holder.image.context)
+            .load(item.image.toUri())
+            .into(holder.image)
     }
 
     override fun getItemCount() = items.size

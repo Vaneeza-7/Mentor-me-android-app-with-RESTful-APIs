@@ -12,9 +12,7 @@ class NotificationsActivity : AppCompatActivity() {
 
         val back = findViewById<ImageView>(R.id.arrow)
         back.setOnClickListener {
-            startActivity(
-                Intent(this, Activity7::class.java)
-            );
+            finish();
         }
     }
 }

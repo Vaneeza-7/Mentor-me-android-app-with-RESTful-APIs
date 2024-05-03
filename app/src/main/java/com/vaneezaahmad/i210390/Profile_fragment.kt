@@ -69,13 +69,15 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
                         Glide.with(this).load(R.drawable.profile_modified).into(view.findViewById<CircleImageView>(R.id.profileImage))
                     }
                     else {
-                        Glide.with(this).load(dp).into(view.findViewById<CircleImageView>(R.id.profileImage))
+                        val timestamp = System.currentTimeMillis()
+                        Glide.with(this).load("$dp?timestamp=$timestamp").into(view.findViewById<CircleImageView>(R.id.profileImage))
                     }
                     if (cp == "null" || cp == "") {
                         Glide.with(this).load(R.drawable.editprofile).into(view.findViewById<ImageView>(R.id.editProfile))
                     }
                     else {
-                        Glide.with(this).load(cp).into(view.findViewById<ImageView>(R.id.editProfile))
+                        val timestamp = System.currentTimeMillis()
+                        Glide.with(this).load("$cp?timestamp=$timestamp").into(view.findViewById<ImageView>(R.id.editProfile))
                     }
 
                 } else {
@@ -85,7 +87,9 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
 
             },
             { error ->
-                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "its "+ email.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "error.message", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, email.toString(), Toast.LENGTH_SHORT).show()
             }
         ) {
             override fun getParams(): MutableMap<String, String> {

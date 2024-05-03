@@ -66,6 +66,7 @@ class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<Me
             intent.putExtra("mentorImage", mentor.image)
             intent.putExtra("mentorEmail", mentor.email)
             intent.putExtra("mentorPrice", mentor.price)
+            intent.putExtra("videoDisguised", mentor.video)
             holder.card.context.startActivity(intent)
         }
     }

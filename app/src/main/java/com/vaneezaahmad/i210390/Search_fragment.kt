@@ -9,15 +9,21 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONArray
 
 
 class Search_fragment : Fragment(R.layout.fragment_search){
 
     private lateinit var adapter: SearchListAdapter
-    private val mentors = ArrayList<Mentor>()
+    private var mentors = ArrayList<Mentor>()
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +32,14 @@ class Search_fragment : Fragment(R.layout.fragment_search){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val email = arguments?.getString("email").toString()
 
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = SearchListAdapter(mentors)
         recyclerView.adapter = adapter
+        fetchMentors(getString(R.string.IP) + "mentorme/getMentors.php", email)
 
         val searchView = view.findViewById<android.widget.SearchView>(R.id.searchView)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -66,8 +75,12 @@ class Search_fragment : Fragment(R.layout.fragment_search){
         val next = view.findViewById<TextView>(R.id.entrepreneurship)
         next.setOnClickListener {
             // Replace the current fragment with the new fragment
+            val fragment = second_search_fragment()
+            fragment.arguments = Bundle().apply {
+                putString("email", email)
+            }
             val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container_view, second_search_fragment())
+            fragmentTransaction.replace(R.id.fragment_container_view, fragment)
             fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
             fragmentTransaction.commit()
         }
@@ -76,10 +89,60 @@ class Search_fragment : Fragment(R.layout.fragment_search){
 
         back.setOnClickListener {
             // Replace the current fragment with the new fragment
-            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container_view, Home_fragment())
-            fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
-            fragmentTransaction.commit()
+//            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+//            fragmentTransaction.replace(R.id.fragment_container_view, Home_fragment())
+//            fragmentTransaction.addToBackStack(null) // Optional: Add transaction to back stack
+//            fragmentTransaction.commit()
+
+            requireActivity().supportFragmentManager.popBackStack()
         }
+    }
+
+    fun fetchMentors(url: String, email: String?) {
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonArrayRequest = JsonArrayRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                val mentors = parseMentors(response, email.toString())
+                this.mentors = mentors as ArrayList<Mentor>
+                adapter = SearchListAdapter(mentors)
+                recyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
+            },
+            { error ->
+                error.printStackTrace()
+                Toast.makeText(context, "Could not fetch mentors", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        requestQueue.add(jsonArrayRequest)
+    }
+
+    fun parseMentors(jsonArray: JSONArray, email: String?): List<Mentor> {
+        val mentors = mutableListOf<Mentor>()
+
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val dpUrl = jsonObject.getString("dp")
+            val timestamp = System.currentTimeMillis()
+            val dpUrlWithTimestamp = if (dpUrl.isNotEmpty()) "$dpUrl?timestamp=$timestamp" else dpUrl
+
+            val mentor = Mentor(
+                jsonObject.getString("name"),
+                jsonObject.getString("price"),
+                jsonObject.getString("role"),
+                jsonObject.getString("status"),
+                dpUrlWithTimestamp,  // to avoid cache issues
+                jsonObject.getString("category"),
+                jsonObject.getString("description"),
+                jsonObject.getString("email"),
+                email.toString()
+                //jsonObject.getString("video")
+            )
+            mentors.add(mentor)
+        }
+
+
+        return mentors
     }
 }

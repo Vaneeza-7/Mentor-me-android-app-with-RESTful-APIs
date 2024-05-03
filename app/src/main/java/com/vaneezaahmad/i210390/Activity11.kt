@@ -6,10 +6,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
+import org.json.JSONObject
 import java.util.Calendar
 
 
@@ -30,6 +33,8 @@ class Activity11 : AppCompatActivity() {
         val mentorName = intent.getStringExtra("mentorName")
         val mentorImage = intent.getStringExtra("mentorImage")
         val mentorPrice = intent.getStringExtra("mentorPrice")
+        val mentorEmail = intent.getStringExtra("mentorEmail")
+        val email = intent.getStringExtra("videoDisguised")
         var time : String = ""
         var date :String = ""
 
@@ -54,9 +59,7 @@ class Activity11 : AppCompatActivity() {
 
         val back = findViewById<ImageView>(R.id.back)
         back.setOnClickListener {
-            startActivity(
-                Intent(this, Activity8::class.java)
-            );
+            finish();
         }
 
         timeSlot1.setOnClickListener {
@@ -83,10 +86,43 @@ class Activity11 : AppCompatActivity() {
                 date,
                 time
             )
-            //val bookingRef = database.getReference("bookings")
-            //bookingRef.push().setValue(booking)
-            Toast.makeText(this, "Booking Successful", Toast.LENGTH_SHORT).show()
-            finish()
+            if(email!=null && mentorEmail !=null && date != "" && time != "" && mentorName != null && mentorPrice != null && mentorImage != null){
+                val url = getString(R.string.IP) + "mentorme/bookSession.php"
+                val request = object : StringRequest(
+                    Method.POST, url,
+                    { response ->
+                        val JsonResponse = JSONObject(response)
+                        val status = JsonResponse.getInt("status")
+                        if (status == 1) {
+                            Toast.makeText(this, "Session Booked", Toast.LENGTH_SHORT).show()
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Session not Booked", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    { error ->
+                        Toast.makeText(this, "error.message", Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val map = HashMap<String, String>()
+                        map["useremail"] = email
+                        map["mentoremail"] = mentorEmail
+                        map["mentorname"] = mentorName
+                        map["date"] = date
+                        map["time"] = time
+                        map["price"] = mentorPrice
+                        map["mentorimage"] = mentorImage
+                        return map
+                    }
+                }
+                val queue = Volley.newRequestQueue(this)
+                queue.add(request)
+            }
+            else{
+                Toast.makeText(this, "Please select date and time", Toast.LENGTH_SHORT).show()
+
+            }
         }
     }
 }

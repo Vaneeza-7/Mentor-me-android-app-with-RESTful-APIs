@@ -69,13 +69,15 @@ class MentorProfileFragment : Fragment(R.layout.mentorprofile_fragment){
                         Glide.with(this).load(R.drawable.profile_modified).into(view.findViewById<CircleImageView>(R.id.profileImage))
                     }
                     else {
-                        Glide.with(this).load(dp).into(view.findViewById<CircleImageView>(R.id.profileImage))
+                        val timestamp = System.currentTimeMillis()
+                        Glide.with(this).load("$dp?timestamp=$timestamp").into(view.findViewById<CircleImageView>(R.id.profileImage))
                     }
                     if (cp == "null" || cp == "") {
                         Glide.with(this).load(R.drawable.editprofile).into(view.findViewById<ImageView>(R.id.editProfile))
                     }
                     else {
-                        Glide.with(this).load(cp).into(view.findViewById<ImageView>(R.id.editProfile))
+                        val timestamp = System.currentTimeMillis()
+                        Glide.with(this).load("$cp?timestamp=$timestamp").into(view.findViewById<ImageView>(R.id.editProfile))
                     }
 
                 } else {
