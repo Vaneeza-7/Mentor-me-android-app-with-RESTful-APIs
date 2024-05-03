@@ -2,11 +2,9 @@ package com.vaneezaahmad.i210390
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class Activity7 : AppCompatActivity() {
@@ -29,22 +27,6 @@ class Activity7 : AppCompatActivity() {
         setCurrentFragment(fragment1)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
-        /*bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.navigation_home -> setCurrentFragment(fragment1)
-                R.id.navigation_search -> setCurrentFragment(fragment2)
-                R.id.navigation_chats -> setCurrentFragment(fragment3)
-                R.id.navigation_profile -> setCurrentFragment(fragment4)
-            }
-            true
-        }*/
-
-        /*val plus = findViewById<FloatingActionButton>(R.id.fab)
-        plus.setOnClickListener {
-            startActivity(
-                Intent(this, Activity8::class.java)
-            );
-        }*/
 
         val plus = findViewById<com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton>(R.id.custom_fab)
         plus.setOnClickListener {
@@ -55,7 +37,7 @@ class Activity7 : AppCompatActivity() {
 
         val mentorUid = intent.getStringExtra("mentorUid")
         val mentorEmail = intent.getStringExtra("mentorEmail")
-        val fragment5 = Chat_fragment2();
+        val fragment5 = MentorChatFragment();
         if(mentorUid != null && mentorEmail != null){//check current user is mentor
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {

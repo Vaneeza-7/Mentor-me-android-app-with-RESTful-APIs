@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDF7F7"
+    tools:context=".ActivityMentor">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container_view">
+    </FrameLayout>
+
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottom_app_bar"
+        app:backgroundTint="#157177"
+        app:fabCradleMargin="2dp"
+        app:fabAlignmentMode="center"
+        app:fabAnchorMode="cradle"
+        app:fabCradleRoundedCornerRadius="50dp"
+        app:hideOnScroll="true">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nav_view"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemIconTint="#51A7A5"
+            android:background="@drawable/background_transparent"
+            app:itemTextColor="#51A7A5"
+            app:itemRippleColor="#FFFFFF"
+            />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#157177"
+            android:src="@drawable/baseline_add_circle_24"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:fabSize="normal"
+            app:rippleColor="#FFFFFF" />-->
+
+    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+        android:id="@+id/custom_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#157177"
+        app:fabIcon="@drawable/baseline_add_circle_24"
+        app:layout_anchor="@id/bottom_app_bar"
+        app:fabSize="normal"
+        app:layout_anchorGravity="center|top"
+        app:fabRippleColor="@color/white"
+        app:rippleColor="#FFFFFF"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
