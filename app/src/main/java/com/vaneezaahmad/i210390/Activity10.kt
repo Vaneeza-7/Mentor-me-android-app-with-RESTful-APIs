@@ -2,10 +2,15 @@ package com.vaneezaahmad.i210390
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,15 +18,22 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.activity.result.contract.ActivityResultContracts
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.jaredrummler.materialspinner.MaterialSpinner
+import de.hdodenhof.circleimageview.CircleImageView
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 
 class Activity10 : AppCompatActivity() {
     var ddp: String = "";
     var vid: String = "";
     var imageUri :Uri? = null;
     var videoUri:Uri? = null;
+    private var imageString: String? = null
+    private var videoString: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_10)
@@ -96,20 +108,15 @@ class Activity10 : AppCompatActivity() {
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     imageUri = result.data?.data
                     camera.setImageURI(imageUri)
-                    /*val storage = FirebaseStorage.getInstance()
-                    val storageRef = storage.reference.child("MentorDpImages/${mAuth.currentUser?.uid.toString()}")
-                    storageRef.putFile(imageUri!!)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT)
-                                .show()
-                            storageRef.downloadUrl.addOnSuccessListener {
-                                ddp = it.toString()
-                            }
+                        val bitmap = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                            MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri!!)
+                        } else {
+                            val source = ImageDecoder.createSource(this.contentResolver, imageUri!!)
+                            ImageDecoder.decodeBitmap(source)
                         }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT)
-                                .show()
-                        }*/
+                        // Convert the bitmap to Base64 string
+                        imageString = bitmapToBase64(bitmap)
+                        //uploadImage(imageString!!, email!!, "DP")
                 }
 
             }
@@ -123,21 +130,8 @@ class Activity10 : AppCompatActivity() {
                         video.visibility = View.GONE
                         videoView.start()
                     }
-                    /* val storage = FirebaseStorage.getInstance()
-                     val storageRef =
-                         storage.reference.child("MentorVideo/${mAuth.currentUser?.uid.toString()}")
-                     storageRef.putFile(videoUri!!)
-                         .addOnSuccessListener {
-                             Toast.makeText(this, "Video uploaded successfully", Toast.LENGTH_SHORT)
-                                 .show()
-                             storageRef.downloadUrl.addOnSuccessListener {
-                                 ddp = it.toString()
-                             }
-                         }
-                         .addOnFailureListener {
-                             Toast.makeText(this, "Failed to upload video", Toast.LENGTH_SHORT)
-                                 .show()
-                         }*/
+                    val videoBytes = contentResolver.openInputStream(videoUri!!)?.readBytes()
+                    videoString = Base64.encodeToString(videoBytes, Base64.DEFAULT)
                 }
             }
 
@@ -160,6 +154,8 @@ class Activity10 : AppCompatActivity() {
                 )
             )
         }
+        ///////////////add image and video to database/////////////////////
+        ////also ake php files for this////
 
         upload.setOnClickListener {
             val nameStr = name.text.toString()
@@ -172,8 +168,122 @@ class Activity10 : AppCompatActivity() {
             val categoryStr = spinner_category.text.toString()
 
             if (nameStr.isNotEmpty() && emailStr.isNotEmpty() && passStr.isNotEmpty() && roleStr.isNotEmpty() && descStr.isNotEmpty() && priceStr.isNotEmpty() && statusStr.isNotEmpty() && categoryStr.isNotEmpty()) {
+                val url = getString(R.string.IP) + "mentorme/addMentor.php"
+                val request = object : StringRequest(
+                    Method.POST, url,
+                    { response ->
+                        val JsonResponse = JSONObject(response)
+                        val status = JsonResponse.getInt("status")
+                        if (status == 1) {
+
+                            Toast.makeText(this, "Mentor registered successfully", Toast.LENGTH_SHORT).show()
+                            if (imageString != null) {
+                                uploadImage(imageString!!, emailStr)
+                               // Toast.makeText(this, "Image uploaded", Toast.LENGTH_SHORT).show()
+                            }
+                            if (videoString != null) {
+                                uploadVideo(videoString!!, emailStr)
+                             //   Toast.makeText(this, "Video uploaded", Toast.LENGTH_SHORT).show()
+                            }
+                           // val intent = Intent(this, Activity7::class.java)
+                           // intent.putExtra("email", emailStr)
+                            //startActivity(intent)
+                        } else {
+                            Toast.makeText(this, "Couldn't register mentor", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    { error ->
+                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    override fun getParams(): MutableMap<String, String> {
+                        val map = HashMap<String, String>()
+                        map["email"] = emailStr
+                        map["name"] = nameStr
+                        map["password"] = passStr
+                        map["role"] = roleStr
+                        map["description"] = descStr
+                        map["price"] = priceStr
+                        map["status"] = statusStr
+                        map["category"] = categoryStr
+                        return map
+                    }
+                }
+                Volley.newRequestQueue(this).add(request)
             }
         }
 
     }
+
+    fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+
+    private fun uploadImage(image: String, email: String) {
+
+        val url = getString(R.string.IP) + "mentorme/uploaddpMentor.php"
+        val requestQueue = Volley.newRequestQueue(this)
+
+        val imageRequest = object : StringRequest(Method.POST, url,
+            { response ->
+                val jsonResponse = JSONObject(response)
+                val status = jsonResponse.getInt("status")
+                val message = jsonResponse.getString("message")
+                if(status == 1) {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                Log.d("ImageError", error.toString())
+                Toast.makeText(this, "An error occured", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["image"] = image
+                params["email"] = email
+                params["localhost"] = getString(R.string.IP)
+                return params
+            }
+        }
+        requestQueue.add(imageRequest)
+    }
+
+    private fun uploadVideo(video: String, email: String) {
+        val url = getString(R.string.IP) + "mentorme/uploadVideoMentor.php"
+        val requestQueue = Volley.newRequestQueue(this)
+
+        val videoRequest = object : StringRequest(Method.POST, url,
+            { response ->
+                val jsonResponse = JSONObject(response)
+                val status = jsonResponse.getInt("status")
+                val message = jsonResponse.getString("message")
+                if(status == 1) {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                Log.d("VideoError", error.toString())
+                Toast.makeText(this, "An error occured", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["video"] = video
+                params["email"] = email
+                params["localhost"] = getString(R.string.IP)
+                return params
+            }
+        }
+        requestQueue.add(videoRequest)
+    }
+
+
 }
