@@ -19,8 +19,9 @@ import com.google.android.material.card.MaterialCardView
 import org.json.JSONObject
 
 
-class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<MentorAdapter.MentorViewHolder>() {
+class FavoriteMentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<FavoriteMentorAdapter.MentorViewHolder>() {
     var favoriteMentors = mutableListOf<String>()
+    private var filteredMentors = mentors.filter { mentor -> favoriteMentors.contains(mentor.email) }
     var count = 0;
     init {
 
@@ -83,13 +84,12 @@ class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<Me
     override fun getItemCount() = mentors.size
 
     fun updateMentors(newMentors: List<Mentor>) {
-        this.mentors = newMentors
+        filteredMentors = newMentors.filter { mentor -> favoriteMentors.contains(mentor.email) }
         notifyDataSetChanged()
     }
 
     fun fetchFavoriteMentors(context: Context, userEmail: String) {
         val url = context.getString(R.string.IP) + "mentorme/getfavEmails.php"
-
         val requestQueue = Volley.newRequestQueue(context)
         val stringRequest = object : StringRequest(Method.POST, url,
             Response.Listener<String> { response ->
@@ -101,8 +101,8 @@ class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<Me
                         for (i in 0 until mentorsArray.length()) {
                             favoriteMentors.add(mentorsArray.getString(i))
                         }
-                        notifyDataSetChanged()
-                        Toast.makeText(context, "Favorites updated", Toast.LENGTH_SHORT).show()
+                        updateMentors(mentors.filter { mentor -> favoriteMentors.contains(mentor.email) })
+                       // Toast.makeText(context, "Favorites updated", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "Failed to fetch favorites", Toast.LENGTH_SHORT).show()
                     }
@@ -121,6 +121,12 @@ class MentorAdapter(private var mentors: List<Mentor>) : RecyclerView.Adapter<Me
         }
         requestQueue.add(stringRequest)
     }
+
+    fun updateFilteredMentors() {
+        filteredMentors = mentors.filter { mentor -> favoriteMentors.contains(mentor.email) }
+        notifyDataSetChanged()
+    }
+
     private fun updateFavorite(userEmail: String, mentorEmail:String, context: Context, add: Boolean) {
         val url = context.getString(R.string.IP) + (if (add) "mentorme/addfavorite.php" else "mentorme/deletefavorite.php")
 

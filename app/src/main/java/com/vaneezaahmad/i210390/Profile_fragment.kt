@@ -22,10 +22,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 
@@ -33,6 +36,10 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
     //private lateinit var selectImageLauncher: ActivityResultLauncher<String>
     private var imageString: String? = null
     private var imageStringCp: String? = null
+    var reviews = ArrayList<Review>()
+    private lateinit var review_recyclerView: RecyclerView
+    private lateinit var mentors: ArrayList<Mentor>
+    private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -173,17 +180,15 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
             //selectAndUploadImage(view, "coverImages", R.drawable.editprofile)
         }
 
-        val mentors = ArrayList<Mentor>()
-        val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMentorsRecyclerView)
+        recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMentorsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = MentorAdapter(mentors)
+        fetchMentors(getString(R.string.IP) + "mentorme/getFavoriteMentors.php", email)
 
         //review recycler view
-        val reviews = ArrayList<Review>()
-        val review_recyclerView = view.findViewById<RecyclerView>(R.id.myReviewsRecyclerView)
 
+        review_recyclerView = view.findViewById<RecyclerView>(R.id.myReviewsRecyclerView)
         review_recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        review_recyclerView.adapter = ReviewAdapter(reviews)
+        fetchReviews(getString(R.string.IP) + "mentorme/getReviews.php", email)
     }
 
     fun bitmapToBase64(bitmap: Bitmap): String {
@@ -232,5 +237,99 @@ class Profile_fragment : Fragment(R.layout.fragment_profile){
         requestQueue.add(imageRequest)
     }
 
+    fun fetchReviews(url: String, email: String?) {
+        val requestQueue = Volley.newRequestQueue(context)
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            { response ->
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONArray("reviews")
+                val reviews = parseReviews(jsonArray, email.toString())
+                this.reviews = reviews as ArrayList<Review>
+                review_recyclerView.adapter = ReviewAdapter(reviews)
+            },
+            { error ->
+                error.printStackTrace()
+                Toast.makeText(context, "Could not fetch reviews", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val map = HashMap<String, String>()
+                map["useremail"] = email.toString()
+                return map
+            }
+        }
 
+        requestQueue.add(stringRequest)
+    }
+
+    fun parseReviews(jsonArray: JSONArray, email: String?): List<Review> {
+        val reviews = mutableListOf<Review>()
+
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val review = Review(
+                jsonObject.getString("mentorname"),
+                jsonObject.getDouble("rating").toFloat(),
+                jsonObject.getString("text")
+            )
+            reviews.add(review)
+        }
+
+        return reviews
+    }
+
+    fun fetchMentors(url: String, email: String?) {
+        val requestQueue = Volley.newRequestQueue(context)
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            { response ->
+                val jsonObject = JSONObject(response)
+                val jsonArray = jsonObject.getJSONArray("mentors")
+                val mentors = parseMentors(jsonArray, email.toString())
+                this.mentors = mentors as ArrayList<Mentor>
+                recyclerView.adapter = MentorAdapter(mentors)
+            },
+            { error ->
+                error.printStackTrace()
+                Toast.makeText(context, "Could not fetch mentors", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val map = HashMap<String, String>()
+                map["useremail"] = email.toString()
+                return map
+            }
+        }
+
+        requestQueue.add(stringRequest)
+    }
+
+    fun parseMentors(jsonArray: JSONArray, email: String?): List<Mentor> {
+        val mentors = mutableListOf<Mentor>()
+
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val dpUrl = jsonObject.getString("dp")
+            val timestamp = System.currentTimeMillis()
+            val dpUrlWithTimestamp = if (dpUrl.isNotEmpty()) "$dpUrl?timestamp=$timestamp" else dpUrl
+
+            val mentor = Mentor(
+                jsonObject.getString("name"),
+                jsonObject.getString("price"),
+                jsonObject.getString("role"),
+                jsonObject.getString("status"),
+                dpUrlWithTimestamp,  // to avoid cache issues
+                jsonObject.getString("category"),
+                jsonObject.getString("description"),
+                jsonObject.getString("email"),
+                email.toString()
+                //jsonObject.getString("video")
+            )
+            mentors.add(mentor)
+        }
+
+
+        return mentors
+    }
 }
