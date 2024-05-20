@@ -33,7 +33,7 @@ class ChatAdapter (val chats: List<Mentor>) : RecyclerView.Adapter<ChatAdapter.C
             intent.putExtra("mentorName", chat.name)
             intent.putExtra("mentorEmail", chat.email)
             intent.putExtra("mentorImage", chat.image)
-            intent.putExtra("mentorUid", mentorUid)
+            intent.putExtra("userEmailDisguised", chat.video)
             holder.relativeLayout.context.startActivity(intent)
         }
     }

@@ -19,14 +19,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.PackageManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
+import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MessageAdapter(private val context: Context, private var messages: MutableList<Message>) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
+class MessageAdapter(private val context: Context, private var messages: MutableList<Message>, private val userDisguisedEmail: String) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
     class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val message = view.findViewById<TextView>(R.id.text_message_body)
         val timestamp = view.findViewById<TextView>(R.id.text_message_time)
@@ -62,7 +66,11 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = messages[position]
-       val isCurrentUser = true;
+        var isCurrentUser = false;
+        if(message.sender == userDisguisedEmail)
+        {
+            isCurrentUser = true;
+        }
         when (message.type) {
             "text" -> {
                 if (isCurrentUser) {
@@ -85,7 +93,11 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
                     holder.mentorMessageLayout.visibility = View.VISIBLE
                     holder.message.text = message.message
                     holder.timestamp.text = convertTimestampToTime(message.timestamp)
-                    Glide.with(holder.receiverImage.context).load(message.senderImage)
+                    val url = message.senderImage
+                    val timestamp = System.currentTimeMillis()
+                    val cacheBustedUrl = "$url?timestamp=$timestamp"
+                    Glide.with(holder.receiverImage.context)
+                        .load(cacheBustedUrl)
                         .into(holder.receiverImage)
                     holder.message.setTextColor(
                         ContextCompat.getColor(
@@ -269,7 +281,7 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
             val newMessage = input.text.toString()
             messages[position].message = newMessage
             messages[position].timestamp = System.currentTimeMillis()
-            messages[position].read = false
+            messages[position].status = "sent"
             messages[position].receiverImage = messages[position].receiverImage
             messages[position].senderImage = messages[position].senderImage
             notifyItemChanged(position)
@@ -277,7 +289,29 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
 
 
             val messageKey = messages[position].key
-          //  database.getReference("messages").child(messageKey!!).setValue(messages[position])
+            val requestQueue = Volley.newRequestQueue(context)
+            val url = context.getString(R.string.IP) + "mentorme/updateMessage.php"
+            val stringRequest = object : StringRequest(Method.POST, url,
+                Response.Listener<String> { response ->
+                    val jsonResponse = JSONObject(response)
+                    if (jsonResponse.getInt("status") == 1) {
+                        Toast.makeText(context, "Message updated", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Failed to update message", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                Response.ErrorListener { error ->
+                    Toast.makeText(context, error.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                }) {
+                override fun getParams(): Map<String, String> {
+                    val params = HashMap<String, String>()
+                    params["mkey"] = messageKey!!
+                    params["message"] = newMessage
+                    return params
+                }
+            }
+            requestQueue.add(stringRequest)
+
         }
 
         builder.setNegativeButton("Cancel") { dialog, _ ->
@@ -290,9 +324,27 @@ class MessageAdapter(private val context: Context, private var messages: Mutable
     private fun deleteMessage(position: Int) {
 
         val messageKey = messages[position].key
-      //  database.getReference("messages").child(messageKey!!).removeValue()
-
-
+        val requestQueue = Volley.newRequestQueue(context)
+        val url = context.getString(R.string.IP) + "mentorme/deleteMessage.php"
+        val stringRequest = object : StringRequest(Method.POST, url,
+            Response.Listener<String> { response ->
+                val jsonResponse = JSONObject(response)
+                if (jsonResponse.getInt("status") == 1) {
+                    Toast.makeText(context, "Message deleted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Failed to delete message", Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(context, error.message ?: "Network error", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["mkey"] = messageKey!!
+                return params
+            }
+        }
+        requestQueue.add(stringRequest)
         messages.removeAt(position)
         notifyItemRemoved(position)
     }

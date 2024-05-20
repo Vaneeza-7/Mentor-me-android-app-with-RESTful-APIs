@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.ImageButton
@@ -26,6 +27,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.textfield.TextInputEditText
 
 import com.google.firebase.messaging.FirebaseMessaging
@@ -51,6 +54,8 @@ class MessageActivity : ScreenshotDetectionActivity() {
     private var fileName: String? = null
     private var photoUri: Uri? = null
     private var currentPhotoPath: String? = null
+    var recyclerView : RecyclerView? = null
+    var messages = mutableListOf<Message>()
 
 
     companion object {
@@ -132,6 +137,7 @@ class MessageActivity : ScreenshotDetectionActivity() {
         var mentorImage = intent.getStringExtra("mentorImage")
         var userName = intent.getStringExtra("userName")
         var userEmail = intent.getStringExtra("userEmail")
+        var userEmailDisguised = intent.getStringExtra("userEmailDisguised")
         var userImage = intent.getStringExtra("userImage")
         var receiverImage: String ? = ""
         var senderImage : String ? = ""
@@ -171,12 +177,21 @@ class MessageActivity : ScreenshotDetectionActivity() {
 
         }
 
-        var mentorUid = intent.getStringExtra("mentorUid")
+      //  var mentorUid = intent.getStringExtra("mentorUid")
 
-        var userUid : String = ""
+       // var userUid : String = ""
+////fetch messages here
+         recyclerView = findViewById<RecyclerView>(R.id.chat_recycler_view)
+        messages = mutableListOf<Message>()
+        if(userEmail!=null)
+        {
+            fetchMessages(getString(R.string.IP) + "mentorme/getMessages.php", userEmailDisguised!!, userEmail!!)
+        }
+        else
+        {
+            fetchMessages(getString(R.string.IP) + "mentorme/getMessages.php", userEmailDisguised!!, mentorEmail!! )
+        }
 
-        val recyclerView = findViewById<RecyclerView>(R.id.chat_recycler_view)
-        val messages = mutableListOf<Message>()
 
         var isRecording = false
 
@@ -220,24 +235,44 @@ class MessageActivity : ScreenshotDetectionActivity() {
 
         val resultLauncherCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                //val uri = data?.data
-                val mimeType = contentResolver.getType(photoUri!!) // Get the MIME type
-                val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
-                // Save the uri to firebase storage
-                //val storageRef = FirebaseStorage.getInstance();
-                //val st = storageRef.reference.child("chatMedia/${mAuth.currentUser?.uid}/${System.currentTimeMillis()}.$extension")
-                //val uploadTask = st.putFile(photoUri!!)
-//                uploadTask.addOnSuccessListener {
-//                    Toast.makeText(this, "Media uploaded successfully", Toast.LENGTH_SHORT).show()
-//                    st.downloadUrl.addOnSuccessListener {
-//                        mediaUrl = it.toString()
-//                        Toast.makeText(this, "Press Send", Toast.LENGTH_SHORT).show()
-//                    }
-//                }.addOnFailureListener {
-//                    Toast.makeText(this, "Failed to upload media", Toast.LENGTH_SHORT).show()
-//                }
+                val photoUri: Uri? = result.data?.data // Get the URI of the image
+                photoUri?.let { uri ->
+                    val imageStream = contentResolver.openInputStream(uri)
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                    val outputStream = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                    val imageBytes = outputStream.toByteArray()
+                    val encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT)
 
+                    val localhost = getString(R.string.IP) // Get the IP address from string resources
+                    val url = localhost + "mentorme/uploadImage.php"
+
+                    val requestQueue = Volley.newRequestQueue(this)
+                    val stringRequest = object : StringRequest(
+                        Method.POST, url,
+                        { response ->
+                            // Handle response from server
+                            val jsonResponse = JSONObject(response)
+                            if (jsonResponse.getInt("status") == 1) {
+                                mediaUrl = jsonResponse.getString("url")
+                                Toast.makeText(this, "Image uploaded successfully: ${jsonResponse.getString("url")}", Toast.LENGTH_LONG).show()
+                            } else {
+                                Toast.makeText(this, "Failed to upload image: ${jsonResponse.getString("message")}", Toast.LENGTH_LONG).show()
+                            }
+                        },
+                        { error ->
+                            Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_LONG).show()
+                        }
+                    ) {
+                        override fun getParams(): Map<String, String> {
+                            val params = HashMap<String, String>()
+                            params["image"] = encodedImage
+                            params["localhost"] = localhost
+                            return params
+                        }
+                    }
+                    requestQueue.add(stringRequest)
+                }
             }
         }
 
@@ -324,34 +359,67 @@ class MessageActivity : ScreenshotDetectionActivity() {
             //if (messageText.isNotEmpty()) {
 
                 var message : Message;
-                val sender = "vaneezay"
+                val sender : String = userEmailDisguised?:""
                 val receiver : String;
                 val timestamp = System.currentTimeMillis()
-                val read = false
+                val status = "sent"
                 val messageKey = UUID.randomUUID().toString()
+                var type = "text"
 
                 if (userEmail != null) {
                     // If userEmail is not null, then the sender is the mentor and the receiver is the user
-                    receiver = userUid
+                    receiver = userEmail
                     receiverImage = userImage
                 } else {
                     // If userEmail is null, then the sender is the user and the receiver is the mentor
-                    receiver = mentorUid!!
+                    receiver = mentorEmail!!
                     receiverImage = mentorImage
                 }
 
                 if(messageText.isNotEmpty() && audioUrl.isEmpty()){
-                    val type = "text"
-                    message = Message(messageText, sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = "", mediaUrl = "", type = type)
+                    type = "text"
+                    message = Message(messageText, sender, receiver, timestamp, status, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = "", mediaUrl = "", type = type)
                 }
                 else if (mediaUrl.isNotEmpty()) {
-                    val type = "media"
-                    message = Message("Media Message", sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = "", mediaUrl = mediaUrl, type = type)
+                    type = "media"
+                    message = Message("Media Message", sender, receiver, timestamp, status, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = "", mediaUrl = mediaUrl, type = type)
                 }
                 else {
-                    val type = "audio"
-                    message = Message("Voice Message", sender, receiver, timestamp, read, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = audioUrl, mediaUrl = "", type = type)
+                    type = "audio"
+                    message = Message("Voice Message", sender, receiver, timestamp, status, receiverImage?:"", senderImage?:"", key = messageKey, audioUrl = audioUrl, mediaUrl = "", type = type)
                 }
+
+            val requestQueue = Volley.newRequestQueue(this)
+            val url = getString(R.string.IP) + "mentorme/sendMessage.php"
+
+            val stringRequest = object : StringRequest(
+                Method.POST, url,
+                { response ->
+                    messageBox.text?.clear()
+                    Toast.makeText(this, "Message saved successfully", Toast.LENGTH_SHORT).show()
+                },
+                { error ->
+                    // Handle errors here
+                    Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["mkey"] = messageKey
+                    params["message"] = messageText
+                    params["sender"] = sender
+                    params["receiver"] = receiver
+                    params["status"] = status
+                    params["receiverimage"] =  receiverImage?:""
+                    params["audiourl"] = audioUrl
+                    params["mediaurl"] = mediaUrl
+                    params["type"] = type
+                    return params
+                }
+            }
+
+            requestQueue.add(stringRequest)
+
 //                messageRef.setValue(message).addOnCompleteListener(this) { task ->
 //                    if (task.isSuccessful) {
 //                        messageBox.text?.clear()
@@ -450,6 +518,59 @@ class MessageActivity : ScreenshotDetectionActivity() {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
         }
+    }
+
+    fun fetchMessages(url: String, sender: String, receiver: String) {
+        val requestQueue = Volley.newRequestQueue(this)
+        val stringRequest = object : StringRequest(Method.POST, url,
+            { response ->
+                try {
+                    val jsonResponse = JSONObject(response)
+                    if (jsonResponse.getInt("status") == 1) {
+                        val messagesArray = jsonResponse.getJSONArray("messages")
+                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()) // Adjust the format as per your server's response
+                        for (i in 0 until messagesArray.length()) {
+                            val message = messagesArray.getJSONObject(i)
+                            val messageText = message.getString("message")
+                            val sender = message.getString("sender")
+                            val receiver = message.getString("receiver")
+                            val timestampStr = message.getString("timestamp")
+                            val timestamp = sdf.parse(timestampStr)?.time ?: 0L
+                            val status = message.getString("status")
+                            val receiverImage = message.getString("receiverimage")
+                            val senderImage = message.getString("senderimage")
+                            val key = message.getString("mkey")
+                            val audioUrl = message.optString("audiourl", "")
+                            val mediaUrl = message.optString("mediaurl", "")
+                            val type = message.getString("type")
+                            messages.add(Message(messageText, sender, receiver, timestamp, status, receiverImage, senderImage, key, audioUrl, mediaUrl, type))
+                        }
+                        recyclerView?.adapter = MessageAdapter(this, messages, sender)
+                    } else {
+                        Toast.makeText(this, "Failed to fetch messages", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Error parsing the response: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                Toast.makeText(this, error.message ?: "Network error", Toast.LENGTH_SHORT).show()
+            }) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["user_email"] = sender
+                params["chat_partner_email"] = receiver
+                return params
+            }
+        }
+        requestQueue.add(stringRequest)
+    }
+
+    fun bitmapToBase64(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
 }

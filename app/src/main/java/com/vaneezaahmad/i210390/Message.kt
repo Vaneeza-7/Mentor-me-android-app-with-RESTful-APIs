@@ -5,7 +5,7 @@ data class Message(
     val sender: String,
     val receiver: String,
     var timestamp: Long,
-    var read : Boolean,
+    var status : String,
     var receiverImage : String,
     var senderImage : String,
     val key : String? = null,
@@ -14,5 +14,5 @@ data class Message(
     val type: String = "text"
 )
 {
-    constructor() : this("", "", "", -1, false, "", "", null, null, null, "text")
+    constructor() : this("", "", "", -1, "", "", "", null, null, null, "text")
 }

@@ -31,6 +31,7 @@ class UserAdapter(val users: MutableList<User>) : RecyclerView.Adapter<UserAdapt
             intent.putExtra("userName", user.name)
             intent.putExtra("userEmail", user.email)
             intent.putExtra("userImage", user.image)
+            intent.putExtra("userEmailDisguised", user.country)
             holder.relativeLayout.context.startActivity(intent)
         }
     }
